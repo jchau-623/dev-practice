@@ -2,8 +2,12 @@ import React from 'react';
 import { NavLink } from 'react-router-dom';
 import LogoutButton from './auth/LogoutButton';
 import LoginButton from './auth/LoginButton';
+import { useDispatch, useSelector } from 'react-redux';
 
 const NavBar = () => {
+  const dispatch = useDispatch()
+  const user = useSelector(({ session }) => session.user);
+
   return (
     <nav>
       <ul>
@@ -17,12 +21,17 @@ const NavBar = () => {
             Users
           </NavLink>
         </li>
-        <li>
-          <LoginButton />
-        </li>
-        <li>
-          <LogoutButton />
-        </li>
+        {user ? (
+          // If user is logged in, show the logout button
+          <li>
+            <LogoutButton />
+          </li>
+        ) : (
+          // If user is not logged in, show the login button
+          <li>
+            <LoginButton />
+          </li>
+        )}
       </ul>
     </nav>
   );
