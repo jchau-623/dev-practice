@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Redirect } from 'react-router-dom';
 import { login } from '../../store/session';
@@ -11,7 +11,11 @@ const LoginForm = ({ closeLoginModal }) => {
   const user = useSelector(state => state.session.user);
   const dispatch = useDispatch();
 
-  const onLogin = async (e) => {
+  const handleInputChange = (e, setter) => {
+    setter(e.target.value);
+  };
+
+  const handleLogin = async (e) => {
     e.preventDefault();
     const data = await dispatch(login(email, password));
     if (data) {
@@ -21,53 +25,53 @@ const LoginForm = ({ closeLoginModal }) => {
     }
   };
 
-  const updateEmail = (e) => {
-    setEmail(e.target.value);
+
+  const handleModalClick = (e) => {
+    e.stopPropagation(); // Prevent modal click from propagating to parent
   };
 
-  const updatePassword = (e) => {
-    setPassword(e.target.value);
-  };
 
   if (user) {
     return <Redirect to='/' />;
   }
 
   return (
-    <div className="login-modal">
-      <form onSubmit={onLogin} className="login-form-container">
-        <div className="login-form-header">
-          <h2>Welcome to AirBnB</h2>
-        </div>
-        <div className="login-form-group">
-          <label htmlFor='email'>Email</label>
-          <input
-            name='email'
-            type='text'
-            placeholder='Email'
-            value={email}
-            onChange={updateEmail}
-          />
-        </div>
-        <div className="login-form-group">
-          <label htmlFor='password'>Password</label>
-          <input
-            name='password'
-            type='password'
-            placeholder='Password'
-            value={password}
-            onChange={updatePassword}
-          />
-        </div>
-        <div className="login-form-submit">
-          <button type='submit'>Login</button>
-        </div>
-        <div>
-          {errors.map((error, ind) => (
-            <div key={ind}>{error}</div>
-          ))}
-        </div>
-      </form>
+    <div className="login-modal" onClick={closeLoginModal}>
+      <div className="login-form-container" onClick={handleModalClick}>
+        <form onSubmit={handleLogin}>
+          <div className="login-form-header">
+            <h2>Login</h2>
+          </div>
+          <div className="login-form-group">
+            <label htmlFor='email'>Email</label>
+            <input
+              name='email'
+              type='text'
+              placeholder='Email'
+              value={email}
+              onChange={(e) => handleInputChange(e, setEmail)}
+            />
+          </div>
+          <div className="login-form-group">
+            <label htmlFor='password'>Password</label>
+            <input
+              name='password'
+              type='password'
+              placeholder='Password'
+              value={password}
+              onChange={(e) => handleInputChange(e, setPassword)}
+            />
+          </div>
+          <div className="login-form-submit">
+            <button type='submit'>Login</button>
+          </div>
+          <div>
+            {errors.map((error, ind) => (
+              <div key={ind}>{error}</div>
+            ))}
+          </div>
+        </form>
+      </div>
     </div>
   );
 };
