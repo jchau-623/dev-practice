@@ -25,7 +25,6 @@ const LoginForm = ({ closeLoginModal }) => {
     }
   };
 
-
   const handleModalClick = (e) => {
     e.stopPropagation(); // Prevent modal click from propagating to parent
   };
@@ -40,7 +39,7 @@ const LoginForm = ({ closeLoginModal }) => {
       <div className="login-form-container" onClick={handleModalClick}>
         <form onSubmit={handleLogin}>
           <div className="login-form-header">
-            <h2>Login</h2>
+            <h2>Welcome to AirBnB</h2>
           </div>
           <div className="login-form-group">
             <label htmlFor='email'>Email</label>
