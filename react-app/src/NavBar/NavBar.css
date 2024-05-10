@@ -1,11 +1,65 @@
-nav {
-    background-color: #ffffff; /* Background color */
-    border-bottom: 1px solid #e0e0e0; /* Bottom border */
-    padding: 20px 0; /* Top and bottom padding */
-  }
+.navbar {
+  background-color: white;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  padding: 10px 20px;
+}
 
-  ul {
-    list-style-type: none;
-    margin: 0;
-    padding: 0;
-  }
+.navbar-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between; /* Spread the items horizontally */
+}
+
+.navbar-logo img {
+  width: 120px;
+  height: auto;
+}
+
+.navbar-search {
+  flex-grow: 1; /* Take remaining space */
+  display: flex;
+}
+
+.nav-search-input {
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  margin-right: 10px;
+}
+
+.search-btn {
+  padding: 10px 20px;
+  background-color: #ff5a5f;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-weight: bold;
+  font-size: 16px;
+}
+
+.search-btn:hover {
+  background-color: #ff3333;
+}
+
+.navbar-links ul {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+}
+
+.navbar-links li {
+  margin-right: 20px;
+}
+
+.navbar-links a {
+  text-decoration: none;
+  color: black;
+  font-weight: bold;
+  font-size: 18px;
+}
+
+.navbar-user {
+  margin-left: 20px; /* Add some margin between links and user section */
+}
