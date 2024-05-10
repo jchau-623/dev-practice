@@ -3,7 +3,7 @@ import { NavLink } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import './NavBar.css';
 import logo from '../assets/airbnb-logo.png';
-import LogoutButton from '../components/auth/LogoutButton'
+import LogoutButton from '../components/auth/LogoutButton';
 import LoginButton from '../components/auth/LoginButton';
 
 const NavBar = () => {
@@ -17,13 +17,6 @@ const NavBar = () => {
           <NavLink to='/' exact={true} activeClassName='active'>
             <img src={logo} alt='logo' />
           </NavLink>
-        </div>
-        <div className="navbar-search">
-          <input type="text" placeholder="Search destinations" className="nav-search-input"/>
-          <input type="text" placeholder="Check in" className="nav-search-input"/>
-          <input type="text" placeholder="Check out" className="nav-search-input"/>
-          <input type="number" placeholder="Add guests" min="1" className="nav-search-input"/>
-          <button className="search-btn">Search</button>
         </div>
         <div className="navbar-links">
           <ul>
@@ -45,6 +38,13 @@ const NavBar = () => {
             <LoginButton />
           )}
         </div>
+      </div>
+      <div className="navbar-search">
+        <input type="text" placeholder="Search destinations" className="nav-search-input"/>
+        <input type="text" placeholder="Check in" className="nav-search-input"/>
+        <input type="text" placeholder="Check out" className="nav-search-input"/>
+        <input type="number" placeholder="Add guests" min="1" className="nav-search-input"/>
+        <button className="search-btn">Search</button>
       </div>
     </nav>
   );
