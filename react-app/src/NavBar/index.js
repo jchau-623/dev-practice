@@ -1,8 +1,10 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
-import LogoutButton from './auth/LogoutButton';
-import LoginButton from './auth/LoginButton';
+import LogoutButton from '../components/auth/LogoutButton'
+import LoginButton from '../components/auth/LoginButton';
 import { useDispatch, useSelector } from 'react-redux';
+import './NavBar.css'
+import logo from '../../assets/aibnb-logo.png';// Adjust the path accordingly
 
 const NavBar = () => {
   const dispatch = useDispatch()
@@ -13,12 +15,9 @@ const NavBar = () => {
       <ul>
         <li>
           <NavLink to='/' exact={true} activeClassName='active'>
-            Home
-          </NavLink>
-        </li>
-        <li>
-          <NavLink to='/users' exact={true} activeClassName='active'>
-            Users
+            <div className='title-logo' alt='logo'>
+              <img className='logo' src={logo} alt='logo-pic'></img>
+            </div>
           </NavLink>
         </li>
         {user ? (

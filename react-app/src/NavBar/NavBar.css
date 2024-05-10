@@ -1,0 +1,11 @@
+nav {
+    background-color: #ffffff; /* Background color */
+    border-bottom: 1px solid #e0e0e0; /* Bottom border */
+    padding: 20px 0; /* Top and bottom padding */
+  }
+
+  ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+  }

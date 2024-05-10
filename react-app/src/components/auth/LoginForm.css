@@ -51,6 +51,7 @@
   }
 
   .login-form-submit {
+    padding-bottom: 10px;
     text-align: center; /* Center the button */
   }
 

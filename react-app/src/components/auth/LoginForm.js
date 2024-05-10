@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { Redirect } from 'react-router-dom';
+import { Redirect, useHistory } from 'react-router-dom';
 import { login } from '../../store/session';
 import './LoginForm.css';
 
 const LoginForm = ({ closeLoginModal }) => {
+  const history = useHistory();
   const [errors, setErrors] = useState([]);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -28,6 +29,14 @@ const LoginForm = ({ closeLoginModal }) => {
   const handleModalClick = (e) => {
     e.stopPropagation(); // Prevent modal click from propagating to parent
   };
+
+  const demoLogin = async (e) => {
+    e.preventDefault();
+    let email = 'demo@aa.io'
+    let password = 'password'
+    await dispatch(login(email, password))
+    history.push("/");
+  }
 
 
   if (user) {
@@ -63,6 +72,7 @@ const LoginForm = ({ closeLoginModal }) => {
           </div>
           <div className="login-form-submit">
             <button type='submit'>Login</button>
+            <button id='demo-login' onClick={demoLogin}>Demo User</button>
           </div>
           <div>
             {errors.map((error, ind) => (
