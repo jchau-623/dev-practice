@@ -8,6 +8,7 @@ import LoginButton from '../components/auth/LoginButton';
 
 const NavBar = () => {
   const dispatch = useDispatch();
+  
   const user = useSelector(({ session }) => session.user);
 
   return (
