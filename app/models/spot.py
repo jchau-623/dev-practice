@@ -12,6 +12,7 @@ class Spot(db.Model):
     state = db.Column(db.String(255), nullable=False)
     description= db.Column(db.String(255), nullable=False)
     price = db.Column(db.Float, nullable=False)
+    # TODO set up AWS
 
     user = db.relationship('User', back_populates='spots')
 
