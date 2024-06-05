@@ -12,6 +12,12 @@ def validation_errors_to_error_messages(validation_errors):
             errorMessages.append(f'{field} : {error}')
     return errorMessages
 
+
+@spot_routes.route('/', methods=['GET'])
+def get_spots():
+    spots = Spot.query.all()
+    return {'spots': [spot.to_dict() for spot in spots]}
+
 @spot_routes.route('/', methods= ['PATCH'])
 def edit_spot():
     data = request.json
