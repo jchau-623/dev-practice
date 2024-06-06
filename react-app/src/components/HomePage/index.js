@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import SpotList from '../SpotList';
+import IconRibbon from '../IconRibbon';
 
 export default function HomePage() {
   // Use state to store spots data
@@ -18,6 +19,7 @@ export default function HomePage() {
 
   return (
     <div>
+      <IconRibbon />
       <SpotList spots={spots} />
     </div>
   );

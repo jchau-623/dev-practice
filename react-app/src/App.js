@@ -6,7 +6,7 @@ import NavBar from './NavBar';
 import ProtectedRoute from './components/auth/ProtectedRoute';
 import { authenticate } from './store/session';
 import HomePage from './components/HomePage';
-import SpotPage from './components/SpotPage'; // Import the SpotPage component
+import SpotPage from './components/SpotPage'; 
 
 function App() {
   const [loaded, setLoaded] = useState(false);

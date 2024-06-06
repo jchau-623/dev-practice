@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { getSpots } from '../../store/spots';
 import { useHistory } from 'react-router-dom';
+import './SpotList.css';
 
 export default function SpotList() {
     const dispatch = useDispatch();
@@ -13,18 +14,19 @@ export default function SpotList() {
     }, [dispatch]);
 
     const handleSpotClick = (spot) => {
-        // Redirect to the spot page
-        history.push(`/spots/${spot.id}`); // Navigate to the spot page with the spot's ID
+        history.push(`/spots/${spot.id}`);
     };
 
     return (
-        <div>
+        <div className="spot-list">
             {spots.map(spot => (
-                <div key={spot.id} onClick={() => handleSpotClick(spot)}>
-                    <h3>{spot.name}</h3>
-                    <p>{spot.description}</p>
-                    <p>${spot.price}</p>
-                    <img src={spot.image_url} alt="Spot" />
+                <div key={spot.id} className="spot-card" onClick={() => handleSpotClick(spot)}>
+                    <img src={spot.image_url} alt="Spot" className="spot-image" />
+                    <div className="spot-info">
+                        <h3 className="spot-name">{spot.name}</h3>
+                        <p className="spot-description">{spot.description}</p>
+                        <p className="spot-price">${spot.price} per night</p>
+                    </div>
                 </div>
             ))}
         </div>

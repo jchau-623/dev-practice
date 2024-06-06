@@ -1,0 +1,52 @@
+/* SpotList.css */
+
+.spot-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+    justify-content: center;
+    padding: 20px;
+}
+
+.spot-card {
+    background-color: white;
+    border-radius: 12px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    transition: transform 0.2s;
+    width: 300px;
+}
+
+.spot-card:hover {
+    transform: translateY(-5px);
+}
+
+.spot-image {
+    height: 200px;
+    object-fit: cover;
+    width: 100%;
+}
+
+.spot-info {
+    padding: 16px;
+}
+
+.spot-name {
+    font-size: 1.2em;
+    margin: 0;
+}
+
+.spot-description {
+    color: #555;
+    font-size: 0.9em;
+    margin: 8px 0;
+}
+
+.spot-price {
+    color: #333;
+    font-size: 1em;
+    font-weight: bold;
+}
