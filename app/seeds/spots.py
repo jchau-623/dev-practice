@@ -13,6 +13,7 @@ def seed_spots():
             state=fake.state(),
             description='A beautiful house with a stunning lake view.',
             price=200.00,
+            image_url='http://ig-clone-bucket.s3.amazonaws.com/seeds/8120c8697c5d41f4a5ec4abf37c30c53.jpeg',
         ),
         Spot(
             name='Mountain Retreat',
@@ -22,6 +23,7 @@ def seed_spots():
             state=fake.state(),
             description='A cozy retreat in the mountains, perfect for nature lovers.',
             price=150.00,
+            image_url='http://ig-clone-bucket.s3.amazonaws.com/seeds/8120c8697c5d41f4a5ec4abf37c30c53.jpeg',
         ),
         Spot(
             name='Urban Apartment',
@@ -31,6 +33,7 @@ def seed_spots():
             state=fake.state(),
             description='A modern apartment in the heart of the city.',
             price=250.00,
+            image_url='http://ig-clone-bucket.s3.amazonaws.com/seeds/8120c8697c5d41f4a5ec4abf37c30c53.jpeg',
         ),
         Spot(
             name='Beachside Bungalow',
@@ -40,6 +43,7 @@ def seed_spots():
             state=fake.state(),
             description='A charming bungalow steps away from the beach.',
             price=300.00,
+            image_url='http://ig-clone-bucket.s3.amazonaws.com/seeds/8120c8697c5d41f4a5ec4abf37c30c53.jpeg',
         ),
     ]
     for spot in spots:

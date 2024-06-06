@@ -1,5 +1,5 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, SubmitField, FloatField
+from wtforms import StringField, SubmitField, FloatField, FileField
 from wtforms.validators import DataRequired
 from app.models import Spot
 
@@ -10,5 +10,6 @@ class SpotForm(FlaskForm):
     state = StringField('state', validators=[DataRequired('Please include a state')])
     description = StringField('description', validators=[DataRequired('Please include a description')])
     price = FloatField('price', validators=[DataRequired('Please include a price')])
+    image = FileField('image')
     submit = SubmitField("submit")
     # notebook_id = StringField('Notebook_id', validators=DataRequired('Please include a notebook name'))

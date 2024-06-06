@@ -12,7 +12,7 @@ class Spot(db.Model):
     state = db.Column(db.String(255), nullable=False)
     description= db.Column(db.String(255), nullable=False)
     price = db.Column(db.Float, nullable=False)
-    # TODO set up AWS
+    image_url = db.Column(db.String(255), nullable=False)
 
     user = db.relationship('User', back_populates='spots')
 
@@ -27,6 +27,7 @@ class Spot(db.Model):
             'state': self.state,
             'description': self.description,
             'price': self.price,
+            'image_url': self.image_url
         }
 
 
@@ -40,4 +41,5 @@ class Spot(db.Model):
             'state': self.state,
             'description': self.description,
             'price': self.price,
+            'image_url': self.image_url
         }
