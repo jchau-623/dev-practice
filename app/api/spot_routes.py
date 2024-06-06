@@ -32,6 +32,7 @@ def edit_spot():
     state = data['state']
     description = data['description']
     price = data['price']
+    image_url = data['image_url']
 
     new_spot = Spot.query.get(spot_id)
     new_spot.name = name
@@ -40,6 +41,7 @@ def edit_spot():
     new_spot.state = state
     new_spot.description = description
     new_spot.price = price
+    new_spot.image_url = image_url
 
     db.session.commit()
     return {'spot': new_spot.to_dict()}
@@ -85,7 +87,7 @@ def add_spot():
             state = data['state'],
             description = data['description'],
             price = data['price'],
-            image_url = data['url']
+            image_url = data['image_url']
         )
     db.session.add(spot)
     db.session.commit()

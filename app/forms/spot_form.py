@@ -10,6 +10,6 @@ class SpotForm(FlaskForm):
     state = StringField('state', validators=[DataRequired('Please include a state')])
     description = StringField('description', validators=[DataRequired('Please include a description')])
     price = FloatField('price', validators=[DataRequired('Please include a price')])
-    image = FileField('image')
+    image_url = FileField('image_url')
     submit = SubmitField("submit")
     # notebook_id = StringField('Notebook_id', validators=DataRequired('Please include a notebook name'))

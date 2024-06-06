@@ -8,6 +8,7 @@ export default function SpotCard({ spot }) {
         <div className="address">{spot.address}, {spot.city}, {spot.state}</div>
         <div className="description">{spot.description}</div>
         <div className="price">${spot.price} per night</div>
+        <div className="price">${spot.image_url} per night</div>
       </div>
     </div>
   );
