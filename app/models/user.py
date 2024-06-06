@@ -13,6 +13,7 @@ class User(db.Model, UserMixin):
 
     spots = db.relationship('Spot', back_populates='user')
 
+
     @property
     def password(self):
         return self.hashed_password

@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { getSpotById } from '../../store/spots';
+import { getSpots } from '../../store/spots';
 import { useParams } from 'react-router-dom';
 
 export default function SpotPage() {
@@ -10,7 +10,7 @@ export default function SpotPage() {
 
     useEffect(() => {
         if (spotId) {
-            dispatch(getSpotById(spotId));
+            dispatch(getSpots(spotId));
         }
     }, [dispatch, spotId]);
 
