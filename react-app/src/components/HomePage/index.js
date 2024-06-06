@@ -9,7 +9,11 @@ export default function HomePage() {
     // Fetch spots data from your API endpoint
     fetch('/api/spots')
       .then(response => response.json())
-      .then(data => setSpots(data));
+      .then(data => {
+        console.log(data); // Log the fetched data
+        setSpots(data.spots); // Update spots state with the array of spots
+      })
+      .catch(error => console.error('Error fetching spots:', error)); // Log any fetch errors
   }, []);
 
   return (

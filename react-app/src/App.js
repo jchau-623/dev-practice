@@ -6,6 +6,7 @@ import NavBar from './NavBar';
 import ProtectedRoute from './components/auth/ProtectedRoute';
 import { authenticate } from './store/session';
 import HomePage from './components/HomePage';
+import SpotPage from './components/SpotPage'; // Import the SpotPage component
 
 function App() {
   const [loaded, setLoaded] = useState(false);
@@ -32,6 +33,9 @@ function App() {
         <ProtectedRoute path='/' exact={true} >
           <HomePage />
         </ProtectedRoute>
+        <Route path='/spots/:spotId' exact={true}>
+          <SpotPage />
+        </Route>
       </Switch>
     </BrowserRouter>
   );
