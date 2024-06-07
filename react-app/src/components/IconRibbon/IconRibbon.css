@@ -2,7 +2,7 @@
 
 .icon-ribbon-container {
     display: flex;
-    flex-grow: 1; 
+    flex-grow: 1;
     overflow-x: auto;
     margin: 0 auto;
     max-width: 66.66%;
@@ -32,7 +32,7 @@
 .icon {
     font-size: 3em;
     color: #4e7fff;
-    filter: grayscale(100%);
+    /* filter: grayscale(100%); */
 }
 
 .icon-label {
