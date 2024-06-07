@@ -11,8 +11,8 @@ seed_commands = AppGroup('seed')
 @seed_commands.command('all')
 def seed():
     undo_users()
-    undo_spots()
     seed_users()
+    undo_spots()
     seed_spots()
     # Add other seed functions here
 

@@ -3,6 +3,7 @@ def seed_users():
 
     users = [
     User(
+        id=1,
         username='Demo',
         email='demo@aa.io',
         password='password',
@@ -22,5 +23,5 @@ def seed_users():
 # resets the auto incrementing primary key, CASCADE deletes any
 # dependent entities
 def undo_users():
-    db.session.execute('TRUNCATE users RESTART IDENTITY CASCADE;')
+    db.session.query(User).delete()
     db.session.commit()

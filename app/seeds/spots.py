@@ -53,5 +53,5 @@ def seed_spots():
 
 
 def undo_spots():
-    db.session.execute(text('TRUNCATE spots RESTART IDENTITY CASCADE;'))
+    db.session.query(Spot).delete()
     db.session.commit()
