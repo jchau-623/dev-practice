@@ -3,50 +3,66 @@
     flex-wrap: wrap;
     gap: 16px;
     justify-content: center;
+    align-items: flex-start;
     padding: 20px;
 }
 
 .spot-card {
     background-color: white;
     border-radius: 12px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     cursor: pointer;
+    width: 450px;
+    height: 500px;
+    overflow: hidden;
     position: relative;
-    width: 300px;
-    overflow: hidden; /* Ensure overflow hidden to hide arrows initially */
+    transition: box-shadow 0.3s;
+}
+
+.spot-info {
+    padding: 20px;
+    font-family: 'Circular', sans-serif;
+    font-size: 18px;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: rgba(255, 255, 255, 0.9);
+    border-radius: 0 0 12px 12px;
+}
+
+.spot-card:hover {
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
 }
 
 .spot-card:hover .arrow {
-    opacity: 1; /* Show arrows when hovering over the spot card */
-}
-
-.spot-card:hover .spot-image-container .arrow {
-    opacity: 0; /* Hide arrows when hovering only over the image */
+    opacity: 1;
 }
 
 .spot-card:hover .spot-image-container:hover .arrow {
-    opacity: 1; /* Show arrows when hovering over the image */
+    opacity: 1;
 }
 
 .spot-card:hover .spot-image-container:hover .left-arrow {
-    left: 10px; /* Adjust left position */
+    left: 20px;
 }
 
 .spot-card:hover .spot-image-container:hover .right-arrow {
-    right: 10px; /* Adjust right position */
+    right: 20px;
 }
 
 .spot-card:hover .spot-image-container:hover .arrow:hover {
     opacity: 1;
 }
 
-.spot-card:hover .spot-image-container {
+.spot-image-container {
     border-radius: 12px;
     overflow: hidden;
+    position: relative;
 }
 
 .spot-image {
-    height: 200px;
+    height: 50%;
     object-fit: cover;
     width: 100%;
 }
@@ -59,20 +75,20 @@
     cursor: pointer;
     font-size: 24px;
     height: 40px;
-    opacity: 0; /* Initially hide arrows */
+    opacity: 0;
     position: absolute;
-    top: 100px; /* Adjust top position */
+    top: 50%;
     transform: translateY(-50%);
     width: 40px;
     transition: opacity 0.2s;
 }
 
 .left-arrow {
-    left: -50px; /* Initial left position, off the screen */
+    left: -40px;
 }
 
 .right-arrow {
-    right: -50px; /* Initial right position, off the screen */
+    right: -40px;
 }
 
 .arrow:hover {
