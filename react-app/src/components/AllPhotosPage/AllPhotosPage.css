@@ -1,0 +1,15 @@
+.all-photos-page {
+    padding: 20px;
+}
+
+.all-photos-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 10px;
+}
+
+.photo-item img {
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+}

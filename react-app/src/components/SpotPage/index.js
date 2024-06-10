@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { getSpots } from '../../store/spots';
-import { useParams } from 'react-router-dom';
+import { useParams, useHistory } from 'react-router-dom';
 import './SpotPage.css';
 
 export default function SpotPage() {
@@ -9,6 +9,7 @@ export default function SpotPage() {
     const { spotId } = useParams();
     const spots = useSelector(state => state.spots.spots);
     const spot = spots[spotId];
+    const history = useHistory();
 
     useEffect(() => {
         if (!spot) {
@@ -19,6 +20,10 @@ export default function SpotPage() {
     if (!spot) {
         return <div>Loading...</div>;
     }
+
+    const handleShowAllPhotos = () => {
+        history.push(`/spots/${spotId}/photos`);
+    };
 
     return (
         <div className="spot-page">
@@ -34,6 +39,9 @@ export default function SpotPage() {
                             <img src={imageUrl} alt={`Spot ${index + 2}`} />
                         </div>
                     ))}
+                    <button className="show-all-photos-button" onClick={handleShowAllPhotos}>
+                        Show All Photos
+                    </button>
                 </div>
             </div>
             <div className="spot-info">

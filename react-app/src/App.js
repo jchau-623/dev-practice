@@ -6,7 +6,8 @@ import NavBar from './NavBar';
 import ProtectedRoute from './components/auth/ProtectedRoute';
 import { authenticate } from './store/session';
 import HomePage from './components/HomePage';
-import SpotPage from './components/SpotPage'; 
+import SpotPage from './components/SpotPage';
+import AllPhotosPage from './components/AllPhotosPage';
 
 function App() {
   const [loaded, setLoaded] = useState(false);
@@ -33,6 +34,9 @@ function App() {
         <ProtectedRoute path='/' exact={true} >
           <HomePage />
         </ProtectedRoute>
+        <Route path='/spots/:spotId/photos' exact={true}>
+          <AllPhotosPage />
+        </Route>
         <Route path='/spots/:spotId' exact={true}>
           <SpotPage />
         </Route>
