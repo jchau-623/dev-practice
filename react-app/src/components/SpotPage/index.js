@@ -7,33 +7,34 @@ import './SpotPage.css';
 export default function SpotPage() {
     const dispatch = useDispatch();
     const { spotId } = useParams();
-    const spot = useSelector(state => state.spots[spotId]);
+    const spots = useSelector(state => state.spots.spots);
+    const spot = spots[spotId];
 
     useEffect(() => {
-        if (spotId) {
-            dispatch(getSpots(spotId));
+        if (!spot) {
+            dispatch(getSpots());
         }
-    }, [dispatch, spotId]);
+    }, [dispatch, spotId, spot]);
 
     if (!spot) {
         return <div>Loading...</div>;
     }
-
-    const images = spot.images || [];
 
     return (
         <div className="spot-page">
             <div className="spot-header">
                 <h1 className="name">{spot.name}</h1>
                 <p className="address">{spot.address}, {spot.city}, {spot.state}</p>
-                <img src={spot.image_url} alt={spot.name} />
-            </div>
-            <div className="spot-grid">
-                {images.map((image, index) => (
-                    <div key={index} className={`grid-item grid-item-${index}`}>
-                        <img src={image.url} alt={`Spot ${index + 1}`} />
+                <div className="spot-images">
+                    <div className="grid-item first-image">
+                        <img src={spot.image_urls[0]} alt="Spot 1" />
                     </div>
-                ))}
+                    {spot.image_urls.slice(1, 5).map((imageUrl, index) => (
+                        <div key={index} className="grid-item square">
+                            <img src={imageUrl} alt={`Spot ${index + 2}`} />
+                        </div>
+                    ))}
+                </div>
             </div>
             <div className="spot-info">
                 <p className="description">{spot.description}</p>

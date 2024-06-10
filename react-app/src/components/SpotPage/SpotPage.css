@@ -1,64 +1,57 @@
-.spot-page {
-    padding: 20px;
-    background-color: #f7f7f7;
-    font-family: Arial, sans-serif;
-}
-
-.spot-header {
-    padding: 20px;
-    text-align: center;
-}
-
-.name {
-    font-size: 32px;
-    font-weight: bold;
-    margin: 0;
-}
-
-.address {
-    color: #888;
-    font-size: 16px;
-    margin: 5px 0 20px;
-}
-
-.spot-grid {
+.spot-images {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    grid-template-columns: repeat(4, 1fr); /* Four columns */
+    grid-template-rows: repeat(2, 1fr); /* Two rows */
     gap: 10px;
+    justify-content: center; /* Center the images horizontally */
     margin-bottom: 20px;
 }
 
 .grid-item {
     position: relative;
+    max-width: 100%; /* Limit the width of the grid items */
 }
 
 .grid-item img {
     width: 100%;
-    height: 100%;
+    height: auto; /* Let the height adjust proportionally */
     object-fit: cover;
     border-radius: 8px;
     transition: transform 0.2s;
 }
 
-.grid-item:hover img {
-    transform: scale(1.05);
+/* Larger first image */
+.first-image {
+    grid-column: span 2; /* Span two columns */
+    grid-row: span 2; /* Span two rows */
 }
 
-.spot-info {
-    padding: 20px;
-    background-color: white;
-    border-radius: 8px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+/* Smaller images */
+.square {
+    grid-column: span 1; /* Span one column */
+    grid-row: span 1; /* Span one row */
+}
+
+.spot-page {
+    font-family: 'Circular', Arial, sans-serif; /* Apply Circular font to the entire page */
+}
+
+.name {
+    font-weight: bold; /* Make the font bold */
+    font-size: 24px; /* Set the font size */
+}
+
+.address {
+    font-size: 16px; /* Set the font size */
+    color: #484848; /* Set the font color */
 }
 
 .description {
-    font-size: 18px;
-    color: #333;
-    margin-bottom: 20px;
+    font-size: 18px; /* Set the font size */
+    color: #484848; /* Set the font color */
 }
 
 .price {
-    font-size: 20px;
-    font-weight: bold;
-    color: #000;
+    font-size: 20px; /* Set the font size */
+    font-weight: bold; /* Make the font bold */
 }
