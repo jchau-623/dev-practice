@@ -39,9 +39,21 @@ export default function SpotPage() {
                             <img src={imageUrl} alt={`Spot ${index + 2}`} />
                         </div>
                     ))}
-                    <button className="show-all-photos-button" onClick={handleShowAllPhotos}>
-                        Show All Photos
-                    </button>
+                    <div class="show-all-photos-button">
+                        <div class="ellipsis-icon">
+                            <div class="dot"></div>
+                            <div class="dot"></div>
+                            <div class="dot"></div>
+                            <div class="dot"></div>
+                            <div class="dot"></div>
+                            <div class="dot"></div>
+                            <div class="dot"></div>
+                            <div class="dot"></div>
+                            <div class="dot"></div>
+                        </div>
+                        <button onClick={handleShowAllPhotos}>Show All Photos</button>
+                    </div>
+
                 </div>
             </div>
             <div className="spot-info">
