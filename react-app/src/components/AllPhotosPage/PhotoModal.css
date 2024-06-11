@@ -23,12 +23,18 @@
     display: block;
 }
 
-.close {
+.close-btn-photo {
     position: absolute;
-    top: 10px;
-    right: 25px;
+    top: 25%; /* Adjust top position */
+    left: 26%; /* Adjust left position */
     color: white;
     font-size: 30px;
-    font-weight: bold;
     cursor: pointer;
+    background: none;
+    border:none;
+}
+
+.close-btn-photo:hover {
+    border-radius: 8px;
+    background-color: rgba(200, 200, 200, 0.5);;
 }

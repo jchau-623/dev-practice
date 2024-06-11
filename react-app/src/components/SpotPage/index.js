@@ -31,11 +31,11 @@ export default function SpotPage() {
                 <h1 className="name">{spot.name}</h1>
                 <p className="address">{spot.address}, {spot.city}, {spot.state}</p>
                 <div className="spot-images">
-                    <div className="grid-item first-image">
+                    <div onClick={handleShowAllPhotos} className="grid-item first-image">
                         <img src={spot.image_urls[0]} alt="Spot 1" />
                     </div>
                     {spot.image_urls.slice(1, 5).map((imageUrl, index) => (
-                        <div key={index} className="grid-item square">
+                        <div onClick={handleShowAllPhotos} key={index} className="grid-item square">
                             <img src={imageUrl} alt={`Spot ${index + 2}`} />
                         </div>
                     ))}
