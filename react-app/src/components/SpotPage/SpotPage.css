@@ -3,18 +3,18 @@
     grid-template-columns: repeat(4, 1fr); /* Four columns */
     grid-template-rows: repeat(2, 1fr); /* Two rows */
     gap: 10px;
-    justify-content: center; /* Center the images horizontally */
+    justify-content: center;
     margin-bottom: 20px;
 }
 
 .grid-item {
     position: relative;
-    max-width: 100%; /* Limit the width of the grid items */
+    max-width: 100%;
 }
 
 .grid-item img {
     width: 100%;
-    height: auto; /* Let the height adjust proportionally */
+    height: auto;
     object-fit: cover;
     border-radius: 8px;
     transition: transform 0.2s;
@@ -24,12 +24,14 @@
 .first-image {
     grid-column: span 2; /* Span two columns */
     grid-row: span 2; /* Span two rows */
+    cursor: pointer;
 }
 
 /* Smaller images */
 .square {
     grid-column: span 1; /* Span one column */
     grid-row: span 1; /* Span one row */
+    cursor: pointer;
 }
 
 .spot-page {

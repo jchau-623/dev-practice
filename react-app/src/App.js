@@ -31,9 +31,9 @@ function App() {
         <Route path='/sign-up' exact={true}>
           <SignUpModal />
         </Route>
-        <ProtectedRoute path='/' exact={true} >
+        <Route path='/' exact={true} >
           <HomePage />
-        </ProtectedRoute>
+        </Route>
         <Route path='/spots/:spotId/photos' exact={true}>
           <AllPhotosPage />
         </Route>
