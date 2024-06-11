@@ -21,7 +21,7 @@ export default function SignUpModal({ closeSignUpModal }) {
         e.preventDefault();
         console.log("Attempting to sign up...");
         if (password === repeatPassword) {
-            const data = await dispatch(signUp(username, email, password));
+            const data = await dispatch(signUp(username, email, password,repeatPassword));
             if (data) {
                 setErrors(data)
             } else {
@@ -44,7 +44,7 @@ export default function SignUpModal({ closeSignUpModal }) {
                     <button className="close-btn" onClick={closeSignUpModal}>X</button>
                 </div>
                 <form onSubmit={onSignUp}>
-                    <div className="sign-up-form-group">
+                    <div className="error-handling">
                         {errors.map((error, ind) => (
                             <div key={ind}>{error}</div>
                         ))}
@@ -83,7 +83,6 @@ export default function SignUpModal({ closeSignUpModal }) {
                             name='repeat_password'
                             onChange={(e) => handleInputChange(e, setRepeatPassword)}
                             value={repeatPassword}
-                            required={true}
                         />
                     </div>
                     <div className="sign-up-form-submit">

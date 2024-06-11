@@ -49,6 +49,11 @@ export default function LoginModal({ closeLoginModal }) {
           <button className="close-btn-login" onClick={closeLoginModal}>X</button>
         </div>
         <form onSubmit={handleLogin}>
+        <div className="error-handling">
+            {errors.map((error, ind) => (
+              <div key={ind}>{error}</div>
+            ))}
+          </div>
           <div className="login-form-group">
             <label htmlFor='email'>Email</label>
             <input
@@ -72,11 +77,6 @@ export default function LoginModal({ closeLoginModal }) {
           <div className="login-form-submit">
             <button type='submit'>Login</button>
             <button id='demo-login' onClick={demoLogin}>Demo User</button>
-          </div>
-          <div>
-            {errors.map((error, ind) => (
-              <div key={ind}>{error}</div>
-            ))}
           </div>
         </form>
       </div>

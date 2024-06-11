@@ -8,7 +8,7 @@
     justify-content: center;
     align-items: center;
     background-color: rgba(0, 0, 0, 0.4);
-     z-index: 999;
+    z-index: 999;
 }
 
 .sign-up-form-container {
@@ -43,17 +43,20 @@
 }
 
 .sign-up-form-group input {
-    width: 400px; /* Adjusted width */
+    width: 400px;
+    /* Adjusted width */
     padding: 10px;
     font-size: 16px;
     border: 1px solid #ccc;
     border-radius: 5px;
-    box-sizing: border-box; /* Ensure padding is included in the width */
+    box-sizing: border-box;
+    /* Ensure padding is included in the width */
 }
 
 .sign-up-form-submit {
     padding-bottom: 10px;
-    text-align: center; /* Center the button */
+    text-align: center;
+    /* Center the button */
 }
 
 .sign-up-form-submit button {
@@ -75,8 +78,10 @@
 
 .close-btn {
     position: absolute;
-    top: -20px; /* Adjust as needed for vertical positioning */
-    left: -20px; /* Adjust as needed for horizontal positioning */
+    top: -20px;
+    /* Adjust as needed for vertical positioning */
+    left: -20px;
+    /* Adjust as needed for horizontal positioning */
     width: 30px;
     height: 30px;
     border: none;
@@ -84,10 +89,20 @@
     cursor: pointer;
     font-size: 20px;
     font-weight: bold;
-    color: #333; /* Adjust color as needed */
-  }
+    color: #333;
+    /* Adjust color as needed */
+}
 
-  .close-btn:hover {
+.close-btn:hover {
     border-radius: 50%;
     background-color: rgba(150, 150, 150, 0.1);
-  }
+}
+
+.error-handling {
+    display: flex;
+    flex-direction: column;
+    color: #cc4539;
+    align-items: center;
+    text-align: center;
+    margin-bottom: 10px;
+}
