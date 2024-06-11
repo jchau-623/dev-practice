@@ -89,8 +89,6 @@
   position: relative;
   display: inline-block;
 }
-
-/* Dropdown content */
 .dropdown-content {
   display: none;
   position: absolute;
@@ -112,8 +110,8 @@
   background-color: #f1f1f1;
 }
 
-/* Show the dropdown menu when the hamburger icon is clicked */
-.dropdown:hover .dropdown-content {
+/* Show the dropdown menu when the dropdown button is clicked */
+.dropdown.show-dropdown .dropdown-content {
   display: block;
 }
 
@@ -127,6 +125,7 @@
   padding: 8px; /* Add padding */
 }
 
+/* Change color on hover */
 .dropbtn:hover {
   color: #ff5a5f;
 }

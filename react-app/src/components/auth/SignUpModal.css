@@ -1,4 +1,4 @@
-.login-modal {
+.sign-up-modal {
     position: fixed;
     top: 0;
     left: 0;
@@ -9,54 +9,54 @@
     align-items: center;
     background-color: rgba(0, 0, 0, 0.4);
     /* z-index: 999; Ensure modal is above other content */
-  }
+}
 
-  .login-form-container {
-    position: relative;
+.sign-up-form-container {
     width: 400px;
     padding: 40px;
     background-color: #fff;
     border-radius: 10px;
     box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
-  }
+}
 
-  .login-form-header {
+.sign-up-form-header {
     text-align: center;
     margin-bottom: 20px;
-  }
+    position: relative;
+}
 
-  .login-form-header h2 {
+.sign-up-form-header h2 {
     font-size: 24px;
     font-weight: 700;
     margin: 0;
-  }
+}
 
-  .login-form-group {
+.sign-up-form-group {
     margin-bottom: 20px;
-  }
+}
 
-  .login-form-group label {
+.sign-up-form-group label {
     display: block;
     font-size: 16px;
     font-weight: 600;
     margin-bottom: 5px;
-  }
+}
 
-  .login-form-group input {
+.sign-up-form-group input {
     width: 400px; /* Adjusted width */
     padding: 10px;
     font-size: 16px;
     border: 1px solid #ccc;
     border-radius: 5px;
     box-sizing: border-box; /* Ensure padding is included in the width */
-  }
+}
 
-  .login-form-submit {
+.sign-up-form-submit {
     padding-bottom: 10px;
     text-align: center; /* Center the button */
-  }
+}
 
-  .login-form-submit button {
+.sign-up-form-submit button {
     width: 100%;
     padding: 14px;
     font-size: 16px;
@@ -67,16 +67,16 @@
     border-radius: 5px;
     cursor: pointer;
     transition: background-color 0.3s;
-  }
+}
 
-  .login-form-submit button:hover {
+.sign-up-form-submit button:hover {
     background-color: #ff4449;
-  }
+}
 
-  .close-btn-login {
+.close-btn {
     position: absolute;
-    top: 20px; /* Adjust as needed for vertical positioning */
-    left: 20px; /* Adjust as needed for horizontal positioning */
+    top: -20px; /* Adjust as needed for vertical positioning */
+    left: -20px; /* Adjust as needed for horizontal positioning */
     width: 30px;
     height: 30px;
     border: none;
@@ -87,7 +87,7 @@
     color: #333; /* Adjust color as needed */
   }
 
-  .close-btn-login:hover {
+  .close-btn:hover {
     border-radius: 50%;
     background-color: rgba(150, 150, 150, 0.1);
   }

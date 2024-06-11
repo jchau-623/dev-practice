@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Redirect, useHistory } from 'react-router-dom';
 import { login } from '../../store/session';
@@ -44,10 +44,11 @@ export default function LoginModal({ closeLoginModal }) {
   return (
     <div className="login-modal">
       <div className="login-form-container">
+        <div className="login-form-header">
+          <h2>Welcome to AirBnB</h2>
+          <button className="close-btn-login" onClick={closeLoginModal}>X</button>
+        </div>
         <form onSubmit={handleLogin}>
-          <div className="login-form-header">
-            <h2>Welcome to AirBnB</h2>
-          </div>
           <div className="login-form-group">
             <label htmlFor='email'>Email</label>
             <input
