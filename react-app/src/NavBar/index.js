@@ -28,7 +28,7 @@ export default function NavBar() {
   };
 
   return (
-    <nav className="navbar">
+    <nav className="navbar" onClick={handleModalClick}>
       <div className="navbar-container">
         <div className="navbar-logo">
           <NavLink to='/' exact activeClassName='active'>

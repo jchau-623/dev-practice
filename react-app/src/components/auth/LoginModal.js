@@ -37,23 +37,6 @@ export default function LoginModal({ closeLoginModal }) {
     history.push("/");
   }
 
-  // Handle clicks outside of the modal
-  useEffect(() => {
-    const handleClickOutside = (e) => {
-      if (!e.target.closest(".login-form-container")) {
-        // Check if closeLoginModal is a function before calling it
-        if (typeof closeLoginModal === 'function') {
-          closeLoginModal();
-        }
-      }
-    };
-
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-    };
-  }, [closeLoginModal]);
-
   if (user) {
     return <Redirect to='/' />;
   }
