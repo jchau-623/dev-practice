@@ -1,85 +1,97 @@
-from flask import Blueprint, request
-from flask_login import current_user
+from flask import Blueprint, request, jsonify
 from app.models import db, Spot
-from app.forms.spot_form import SpotForm
-from app.aws import (
-    upload_file_to_s3, allowed_file, get_unique_filename)
+from app.forms import SpotForm
 
 spot_routes = Blueprint('spots', __name__)
 
-def validation_errors_to_error_messages(validation_errors):
-    errorMessages = []
-    for field in validation_errors:
-        for error in validation_errors[field]:
-            errorMessages.append(f'{field} : {error}')
-    return errorMessages
+@spot_routes.route('/create', methods=['POST'])
+def create_spot():
+    form = SpotForm()
+    form['csrf_token'].data = request.cookies['csrf_token']
+    if form.validate_on_submit():
+        availability_data = []
+        for entry in form.availability.entries:
+            availability_data.append({
+                "date": entry.data['date'],
+                "status": entry.data['status']
+            })
+        new_spot = Spot(
+            name=form.name.data,
+            user_id=form.user_id.data,
+            address=form.address.data,
+            city=form.city.data,
+            state=form.state.data,
+            description=form.description.data,
+            price=form.price.data,
+            image_urls=form.image_urls.data,
+            num_bedrooms=form.num_bedrooms.data,
+            num_bathrooms=form.num_bathrooms.data,
+            max_guests=form.max_guests.data,
+            amenities=form.amenities.data,
+            house_rules=form.house_rules.data,
+            availability=availability_data,
+            latitude=form.latitude.data,
+            longitude=form.longitude.data,
+            rating=form.rating.data,
+            num_reviews=form.num_reviews.data
+        )
+        db.session.add(new_spot)
+        db.session.commit()
+        return jsonify(new_spot.to_dict()), 201
+    return jsonify(form.errors), 400
+
+@spot_routes.route('/<int:id>', methods=['GET'])
+def get_spot(id):
+    spot = Spot.query.get(id)
+    if spot:
+        return jsonify(spot.to_dict())
+    return jsonify({'error': 'Spot not found'}), 404
 
 @spot_routes.route('/', methods=['GET'])
-def get_spots():
+def get_all_spots():
     spots = Spot.query.all()
-    return {'spots': [spot.to_dict() for spot in spots]}
+    return jsonify([spot.to_dict() for spot in spots])
 
-@spot_routes.route('/', methods=['PATCH'])
-def edit_spot():
-    data = request.json
+@spot_routes.route('/<int:id>', methods=['PUT'])
+def update_spot(id):
+    form = SpotForm()
+    form['csrf_token'].data = request.cookies['csrf_token']
+    spot = Spot.query.get(id)
+    if spot and form.validate_on_submit():
+        availability_data = []
+        for entry in form.availability.entries:
+            availability_data.append({
+                "date": entry.data['date'],
+                "status": entry.data['status']
+            })
+        spot.name = form.name.data
+        spot.user_id = form.user_id.data
+        spot.address = form.address.data
+        spot.city = form.city.data
+        spot.state = form.state.data
+        spot.description = form.description.data
+        spot.price = form.price.data
+        spot.image_urls = form.image_urls.data
+        spot.num_bedrooms = form.num_bedrooms.data
+        spot.num_bathrooms = form.num_bathrooms.data
+        spot.max_guests = form.max_guests.data
+        spot.amenities = form.amenities.data
+        spot.house_rules = form.house_rules.data
+        spot.availability = availability_data
+        spot.latitude = form.latitude.data
+        spot.longitude = form.longitude.data
+        spot.rating = form.rating.data
+        spot.num_reviews = form.num_reviews.data
 
-    spot_id = data['spot_id']
-    spot = Spot.query.get(spot_id)
-
-    if spot:
-        spot.name = data['name']
-        spot.address = data['address']
-        spot.city = data['city']
-        spot.state = data['state']
-        spot.description = data['description']
-        spot.price = data['price']
         db.session.commit()
-        return {'spot': spot.to_dict()}
-    else:
-        return {'error': 'Spot not found'}, 404
+        return jsonify(spot.to_dict())
+    return jsonify(form.errors), 400
 
-@spot_routes.route('/', methods=['DELETE'])
-def delete_spot():
-    data = request.json
-    spot_id = data['spot_id']
-    spot = Spot.query.get(spot_id)
-
+@spot_routes.route('/<int:id>', methods=['DELETE'])
+def delete_spot(id):
+    spot = Spot.query.get(id)
     if spot:
         db.session.delete(spot)
         db.session.commit()
-        return {'deleted_spotId': spot_id}
-    else:
-        return {'error': 'Spot not found'}, 404
-
-@spot_routes.route('/', methods=['POST'])
-def add_spot():
-    current_user_id = current_user.get_id()
-    data = request.json
-    form = SpotForm()
-    if form.validate_on_submit():
-        spot = Spot(
-            user_id=data['user_id'],
-            name=data['name'],
-            address=data['address'],
-            city=data['city'],
-            state=data['state'],
-            description=data['description'],
-            price=data['price']
-        )
-        if 'image_urls' in request.files:
-            for file in request.files.getlist('image_urls'):
-                if file and allowed_file(file.filename):
-                    filename = get_unique_filename(file.filename)
-                    file.filename = filename
-                    upload = upload_file_to_s3(file)
-                    if 'url' in upload:
-                        spot.image_urls.append(upload['url'])
-                    else:
-                        return {'error': upload}, 400
-                else:
-                    return {'error': 'Invalid file type'}, 400
-        db.session.add(spot)
-        db.session.commit()
-        return {'spot': spot.to_dict()}, 201
-    else:
-        return {'errors': validation_errors_to_error_messages(form.errors)}, 400
+        return jsonify({'message': 'Spot deleted successfully'})
+    return jsonify({'error': 'Spot not found'}), 404

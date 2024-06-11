@@ -73,6 +73,9 @@
     border-radius: 50%;
     color: black;
     cursor: pointer;
+    display: flex; /* Added for flexbox */
+    align-items: center; /* Center vertically */
+    justify-content: center; /* Center horizontally */
     font-size: 32px; /* Increased font size */
     height: 36px; /* Increased height */
     width: 36px; /* Increased width */
