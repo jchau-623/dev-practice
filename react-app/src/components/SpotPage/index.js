@@ -56,10 +56,16 @@ export default function SpotPage() {
 
                 </div>
             </div>
-            <div className="spot-info">
+            <div className="spotpage-info">
                 <p className="description">{spot.description}</p>
-                <p className="price">${spot.price} per night</p>
+                <p className="details">
+                    {spot.max_guests} Guests &bull; {spot.num_bedrooms} Bedrooms &bull; {spot.num_bathrooms} Bathrooms
+                </p>
+                <p className="rating">
+                    <i className="fas fa-star"></i> {spot.rating} ({spot.num_reviews} Reviews)
+                </p>
             </div>
+
         </div>
     );
 }

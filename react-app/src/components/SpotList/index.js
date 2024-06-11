@@ -34,13 +34,19 @@ const SpotList = () => {
             {spots.map((spot, index) => (
                 <div key={spot.id} className="spot-card" onClick={() => handleSpotClick(spot)}>
                     <div className="spot-image-container">
-                        <img src={spot.image_urls[currentImageIndices[spot.id] || 0]} alt="Spot" className="spot-image" /> {/* Updated to access currentImageIndex for the specific spot */}
+                        <img src={spot.image_urls[currentImageIndices[spot.id] || 0]} alt="Spot" className="spot-image" />
                         <button className="arrow left-arrow" onClick={(e) => handleArrowClick(e, 'prev', spot.id)}>&lt;</button>
                         <button className="arrow right-arrow" onClick={(e) => handleArrowClick(e, 'next', spot.id)}>&gt;</button>
                     </div>
                     <div className="spot-info">
-                        <h3 className="spot-name">{spot.name}</h3>
-                        <p className="spot-description">{spot.description}</p>
+                        <div className="spotinfo-header">
+                            <h3 className="spot-name">{spot.name}</h3>
+                            <div className="rating">
+                                <i className="fas fa-star"></i>
+                                <p className="spot-rating">{spot.rating}</p>
+                            </div>
+                        </div>
+                        <p className="spot-description">{spot.description.length > 50 ? spot.description.slice(0, 50) + '...' : spot.description}</p>
                         <p className="spot-price">${spot.price} per night</p>
                     </div>
                 </div>
