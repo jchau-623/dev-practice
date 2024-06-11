@@ -1,20 +1,37 @@
-import React from 'react';
+import React, { useState, useRef } from 'react';
 import { NavLink } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
-import './NavBar.css';
+import { useSelector } from 'react-redux';
 import logo from '../assets/airbnb-logo.png';
 import LogoutButton from '../components/auth/LogoutButton';
-import LoginButton from '../components/auth/LoginButton';
+import LoginModal from '../components/auth/LoginModal';
+import SignUpModal from '../components/auth/SignUpModal';
+import './NavBar.css';
 
-const NavBar = () => {
-  const dispatch = useDispatch();
+export default function NavBar() {
   const user = useSelector(({ session }) => session.user);
+  const [dropdownOpen, setDropdownOpen] = useState(false);
+  const [showLoginModal, setShowLoginModal] = useState(false);
+  const [showSignUpModal, setShowSignUpModal] = useState(false);
+  const dropdownRef = useRef(null);
+
+  // Toggle dropdown open/close
+  const toggleDropdown = () => {
+    setDropdownOpen(!dropdownOpen);
+  };
+
+  // Close modals when clicking outside of them
+  const handleModalClick = (e) => {
+    if (!dropdownRef.current.contains(e.target)) {
+      setShowLoginModal(false);
+      setShowSignUpModal(false);
+    }
+  };
 
   return (
     <nav className="navbar">
       <div className="navbar-container">
         <div className="navbar-logo">
-          <NavLink to='/' exact={true} activeClassName='active'>
+          <NavLink to='/' exact activeClassName='active'>
             <img src={logo} alt='logo' />
           </NavLink>
         </div>
@@ -32,11 +49,23 @@ const NavBar = () => {
           </ul>
         </div>
         <div className="navbar-user">
-          {user ? (
-            <LogoutButton />
-          ) : (
-            <LoginButton />
-          )}
+          <div className="dropdown" ref={dropdownRef}>
+            <button onClick={toggleDropdown} className="dropbtn">
+              &#9776; {/* Hamburger icon */}
+            </button>
+            {dropdownOpen && (
+              <div className="dropdown-content">
+                {user ? (
+                  <LogoutButton />
+                ) : (
+                  <div className="navbar-auth">
+                    <button onClick={() => setShowLoginModal(true)}>Login</button>
+                    <button onClick={() => setShowSignUpModal(true)}>Sign Up</button>
+                  </div>
+                )}
+              </div>
+            )}
+          </div>
         </div>
       </div>
       <div className="navbar-search">
@@ -46,8 +75,12 @@ const NavBar = () => {
         <input type="number" placeholder="Add guests" min="1" className="nav-search-input"/>
         <button className="search-btn">Search</button>
       </div>
+      {showLoginModal && (
+        <LoginModal closeModal={() => setShowLoginModal(false)} />
+      )}
+      {showSignUpModal && (
+        <SignUpModal closeModal={() => setShowSignUpModal(false)} />
+      )}
     </nav>
   );
 }
-
-export default NavBar;

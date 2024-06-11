@@ -1,10 +1,10 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Redirect, useHistory } from 'react-router-dom';
 import { login } from '../../store/session';
-import './LoginForm.css';
+import './LoginModal.css';
 
-const LoginForm = ({ closeLoginModal }) => {
+export default function LoginModal({ closeLoginModal }) {
   const history = useHistory();
   const [errors, setErrors] = useState([]);
   const [email, setEmail] = useState('');
@@ -22,12 +22,11 @@ const LoginForm = ({ closeLoginModal }) => {
     if (data) {
       setErrors(data);
     } else {
-      closeLoginModal(); // Close modal on successful login
+      // Check if closeLoginModal is a function before calling it
+      if (typeof closeLoginModal === 'function') {
+        closeLoginModal(); // Close modal on successful login
+      }
     }
-  };
-
-  const handleModalClick = (e) => {
-    e.stopPropagation(); // Prevent modal click from propagating to parent
   };
 
   const demoLogin = async (e) => {
@@ -38,14 +37,30 @@ const LoginForm = ({ closeLoginModal }) => {
     history.push("/");
   }
 
+  // Handle clicks outside of the modal
+  useEffect(() => {
+    const handleClickOutside = (e) => {
+      if (!e.target.closest(".login-form-container")) {
+        // Check if closeLoginModal is a function before calling it
+        if (typeof closeLoginModal === 'function') {
+          closeLoginModal();
+        }
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [closeLoginModal]);
 
   if (user) {
     return <Redirect to='/' />;
   }
 
   return (
-    <div className="login-modal" onClick={closeLoginModal}>
-      <div className="login-form-container" onClick={handleModalClick}>
+    <div className="login-modal">
+      <div className="login-form-container">
         <form onSubmit={handleLogin}>
           <div className="login-form-header">
             <h2>Welcome to AirBnB</h2>
@@ -83,6 +98,4 @@ const LoginForm = ({ closeLoginModal }) => {
       </div>
     </div>
   );
-};
-
-export default LoginForm;
+}

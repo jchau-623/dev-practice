@@ -1,36 +1,28 @@
-import React, { useEffect, useState } from 'react';
-import { Modal } from '../../context/Modal';
-import LoginForm from './LoginForm';
-
+import React, { useState } from 'react';
+import { Modal } from '../../context/Modal'; // Assuming you have a modal context for rendering modals
+import LoginModal from './LoginModal'; // Import your LoginModal component
 
 export default function LoginButton() {
-    const [showLoginModal,setShowLoginModal] = useState(false)
+    const [showLoginModal, setShowLoginModal] = useState(false);
 
     const openLoginModal = () => {
         setShowLoginModal(true);
-      };
+    };
 
-      const closeLoginModal = () => {
+    const closeLoginModal = () => {
         setShowLoginModal(false);
-      };
+    };
 
-
-  useEffect(() => {
-    if (!showLoginModal) return
-    const closeLoginModal = (e) => {
-      setShowLoginModal(false)
-    }
-  }, [showLoginModal])
-  return (
-    <div>
-      <button onClick={openLoginModal} type='button'>
-        Login
-      </button>
-      {showLoginModal && (
-        <Modal onClose={closeLoginModal}>
-          <LoginForm closeLoginModal={closeLoginModal} />
-        </Modal>
-      )}
-    </div>
-  );
+    return (
+        <div>
+            <button onClick={openLoginModal} type='button'>
+                Login
+            </button>
+            {showLoginModal && (
+                <Modal onClose={closeLoginModal}>
+                    <LoginModal closeLoginModal={closeLoginModal} />
+                </Modal>
+            )}
+        </div>
+    );
 };

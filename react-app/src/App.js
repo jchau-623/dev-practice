@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
-import SignUpForm from './components/auth/SignUpForm';
+import SignUpModal from './components/auth/SignUpModal'; // Import SignUpModal instead of SignUpForm
 import NavBar from './NavBar';
 import ProtectedRoute from './components/auth/ProtectedRoute';
 import { authenticate } from './store/session';
@@ -29,7 +29,7 @@ function App() {
       <NavBar />
       <Switch>
         <Route path='/sign-up' exact={true}>
-          <SignUpForm />
+          <SignUpModal />
         </Route>
         <ProtectedRoute path='/' exact={true} >
           <HomePage />
