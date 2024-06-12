@@ -16,18 +16,27 @@ export default function NavBar() {
 
   useEffect(() => {
     if (!showDropdown) return;
-    const handleClick = (e) => {
-      setShowDropdown(false);
+    const handleClickOutside = (e) => {
+      if (!e.target.closest('.dropdown')) {
+        console.log('Clicked outside dropdown, closing dropdown.');
+        setShowDropdown(false);
+      }
     };
-    document.addEventListener('click', handleClick);
-    return () => document.removeEventListener('click', handleClick);
+    document.addEventListener('click', handleClickOutside);
+    return () => {
+      document.removeEventListener('click', handleClickOutside);
+    };
   }, [showDropdown]);
 
-  const toggleDropdown = () => {
+  const toggleDropdown = (e) => {
+    e.stopPropagation();
+    console.log('Toggling dropdown');
     setShowDropdown(prev => !prev);
   };
 
-  const handleLogout = () => {
+  const handleLogout = (e) => {
+    e.stopPropagation();
+    console.log('Logging out...');
     dispatch(logout());
     setShowLoginModal(false);
   };
@@ -56,16 +65,24 @@ export default function NavBar() {
         <div className="navbar-user">
           <div className={`dropdown ${showDropdown ? 'show-dropdown' : ''}`}>
             <button onClick={toggleDropdown} className="dropbtn">
-              <i class="fa-solid fa-bars"></i>
-              <i class="fa-solid fa-user"></i>
+              <i className="fa-solid fa-bars"></i>
+              <i className="fa-solid fa-user"></i>
             </button>
-            <div className="dropdown-content">
+            <div className="dropdown-content" onClick={(e) => e.stopPropagation()}>
               {user ? (
-                <button onClick={handleLogout}>Logout</button>
+                <div className="navbar-auth">
+                  <div onClick={handleLogout} className='auth-div'>
+                    <button>Logout</button>
+                  </div>
+                </div>
               ) : (
                 <div className="navbar-auth">
-                  <button onClick={() => setShowLoginModal(true)}>Login</button>
-                  <button onClick={() => setShowSignUpModal(true)}>Sign Up</button>
+                  <div className='auth-div' onClick={() => setShowLoginModal(true)}>
+                    <button>Login</button>
+                  </div>
+                  <div className='auth-div' onClick={() => setShowSignUpModal(true)}>
+                    <button>Sign Up</button>
+                  </div>
                 </div>
               )}
             </div>
@@ -73,10 +90,10 @@ export default function NavBar() {
         </div>
       </div>
       <div className="navbar-search">
-        <input type="text" placeholder="Search destinations" className="nav-search-input"/>
-        <input type="text" placeholder="Check in" className="nav-search-input"/>
-        <input type="text" placeholder="Check out" className="nav-search-input"/>
-        <input type="number" placeholder="Add guests" min="1" className="nav-search-input"/>
+        <input type="text" placeholder="Search destinations" className="nav-search-input" />
+        <input type="text" placeholder="Check in" className="nav-search-input" />
+        <input type="text" placeholder="Check out" className="nav-search-input" />
+        <input type="number" placeholder="Add guests" min="1" className="nav-search-input" />
         <button className="search-btn">Search</button>
       </div>
       {showLoginModal && (
