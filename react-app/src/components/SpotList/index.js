@@ -4,7 +4,7 @@ import { getSpots, updateCurrentImageIndex } from '../../store/spots';
 import { useHistory } from 'react-router-dom';
 import './SpotList.css';
 
-const SpotList = () => {
+export default function SpotList () {
     const dispatch = useDispatch();
     const spots = useSelector(state => Object.values(state.spots.spots)); // Updated to access spots from state.spots.spots
     const currentImageIndices = useSelector(state => state.spots.currentImageIndices); // Added to access currentImageIndices from state.spots
@@ -54,5 +54,3 @@ const SpotList = () => {
         </div>
     );
 };
-
-export default SpotList;

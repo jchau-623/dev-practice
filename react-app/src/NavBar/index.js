@@ -63,6 +63,7 @@ export default function NavBar() {
           </ul>
         </div>
         <div className="navbar-user">
+          <button className="airbnb-your-home">Airbnb your home</button>
           <div className={`dropdown ${showDropdown ? 'show-dropdown' : ''}`}>
             <button onClick={toggleDropdown} className="dropbtn">
               <i className="fa-solid fa-bars"></i>
