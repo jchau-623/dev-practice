@@ -1,33 +1,49 @@
 This is a web app inspired by AirBnB.
 
-# Technologies Used
+## Technologies
 
 <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg" height=40/><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/flask/flask-original.svg" height=40/><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/sqlalchemy/sqlalchemy-original.svg" height=40/><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/postgresql/postgresql-original-wordmark.svg" height=40 />
 <img  src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg"  height=40/><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg" height=40/><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/redux/redux-original.svg" height=40/><img  src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/css3/css3-original.svg"  height=40/><img  src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg"  height=40/><img  src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/git/git-original.svg"  height=40/><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/docker/docker-original.svg" height=40/><img  src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/vscode/vscode-original.svg"  height=40/><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/amazonwebservices/amazonwebservices-original-wordmark.svg" height=40 />
 
-- Amazon web services
-- Python
-- Flask
-- React
-- Redux
-- HTML
-- CSS
-- Node
-- Postgres
-- Sequel Alchemy
-- JavaScript
-- Docker
+JavaScript | Python | Flask | React | Redux | HTML | CSS | Node | Postgres | Sequel Alchemy
 
-Getting Started
-Clone the repository
+## Getting Started
 
-[git@github.com:jchau-623/dev-practice.git]
-CD into the /app directory and install dependencies
+1. Clone the project repository
+        
+        git clone (https://github.com/jchau-623/dev-practice.git)
+        
+2. CD into the app directory and install dependencies
+        
+        pipenv install
+        
+3. CD into the react-app directory and install dependencies
+        
+        npm install
+        
+4. Create your .env file based off the .env.example file
 
- pipenv install
-CD into the /react-app directory and install dependencies
+5. Setup your PostgreSQL user, password, database, and verify that it matches your .env file
 
- npm install
+6. Run these commands in order to start your shell, migrate the database, seed the database, and then run the flask app
+
+        pipenv shell
+
+
+        flask db upgrade
+
+
+        flask seed all
+
+
+        flask run
+        
+7. Open another terminal, CD into the react-app directory and run the React App
+
+        npm start
+
+
+ 
 Create a .env file based on the example with proper settings for your development environment
 
 Setup your PostgreSQL user, password and database and verify that it matches your .env file
