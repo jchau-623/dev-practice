@@ -56,7 +56,8 @@ export default function NavBar() {
         <div className="navbar-user">
           <div className={`dropdown ${showDropdown ? 'show-dropdown' : ''}`}>
             <button onClick={toggleDropdown} className="dropbtn">
-              &#9776; {/* Hamburger icon */}
+              <i class="fa-solid fa-bars"></i>
+              <i class="fa-solid fa-user"></i>
             </button>
             <div className="dropdown-content">
               {user ? (
