@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { NavLink } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import logo from '../assets/airbnb-logo.png';
-import { logout } from '../store/session'; // Import your logout action
+import { logout } from '../store/session';
 import LoginModal from '../components/auth/LoginModal';
 import SignUpModal from '../components/auth/SignUpModal';
 import './NavBar.css';
@@ -28,10 +28,7 @@ export default function NavBar() {
   };
 
   const handleLogout = () => {
-    // Dispatch the logout action
     dispatch(logout());
-
-    // Reset the login modal state
     setShowLoginModal(false);
   };
 
