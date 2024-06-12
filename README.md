@@ -11,7 +11,7 @@ JavaScript | Python | Flask | React | Redux | HTML | CSS | Node | Postgres | Seq
 
 1. Clone the project repository
         
-        git clone (https://github.com/jchau-623/dev-practice.git)
+        git clone https://github.com/jchau-623/dev-practice.git
         
 2. CD into the app directory and install dependencies
         
