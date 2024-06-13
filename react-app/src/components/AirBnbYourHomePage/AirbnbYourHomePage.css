@@ -1,0 +1,70 @@
+.content {
+  padding: 20px;
+  text-align: center;
+}
+
+.hero-section {
+  padding: 40px 20px;
+}
+
+.hero-section h1 {
+  font-size: 36px;
+  margin-bottom: 20px;
+}
+
+.earnings {
+  font-size: 24px;
+  margin: 10px 0;
+}
+
+.earnings-amount {
+  font-weight: bold;
+  font-size: 32px;
+  display: block;
+}
+
+.earnings-breakdown {
+  font-size: 16px;
+}
+
+.estimator {
+  margin: 40px 0;
+}
+
+.slider {
+  width: 80%;
+  margin: 20px 0;
+}
+
+.slider-label {
+  font-size: 16px;
+  color: #888;
+}
+
+.footer-section {
+  padding: 20px 0;
+}
+
+.footer-section p {
+  font-size: 16px;
+  margin: 5px 0;
+}
+
+
+.setup-button {
+  display: inline-block;
+  padding: 12px 24px;
+  background-color: #ff5a5f;
+  color: white;
+  text-decoration: none;
+  border-radius: 5px;
+  font-weight: bold;
+  font-size: 16px;
+  transition: background-color 0.3s ease;
+  border: none;
+  cursor: pointer;
+}
+
+.setup-button:hover {
+  background-color: #e53e3f;
+}

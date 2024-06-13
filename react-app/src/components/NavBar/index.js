@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { NavLink } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
-import logo from '../assets/airbnb-logo.png';
-import { logout } from '../store/session';
-import LoginModal from '../components/auth/LoginModal';
-import SignUpModal from '../components/auth/SignUpModal';
+import logo from '../../assets/airbnb-logo.png'
+import { logout } from '../../store/session';
+import LoginModal from '../auth/LoginModal';
+import SignUpModal from '../auth/SignUpModal';
 import './NavBar.css';
 
 export default function NavBar() {
@@ -63,7 +63,9 @@ export default function NavBar() {
           </ul>
         </div>
         <div className="navbar-user">
-          <button className="airbnb-your-home">Airbnb your home</button>
+        <NavLink to='/users/spots'>
+            <button className="airbnb-your-home">Airbnb your home</button>
+          </NavLink>
           <div className={`dropdown ${showDropdown ? 'show-dropdown' : ''}`}>
             <button onClick={toggleDropdown} className="dropbtn">
               <i className="fa-solid fa-bars"></i>
