@@ -1,6 +1,5 @@
 from .db import db
 
-
 class Spot(db.Model):
     __tablename__ = 'spots'
 
@@ -10,21 +9,22 @@ class Spot(db.Model):
     address = db.Column(db.String(255), nullable=False)
     city = db.Column(db.String(255), nullable=False)
     state = db.Column(db.String(255), nullable=False)
-    description = db.Column(db.String(1000), nullable=False)  # Increased length for detailed descriptions
+    description = db.Column(db.String(1000), nullable=False)
     price = db.Column(db.Float, nullable=False)
     image_urls = db.Column(db.ARRAY(db.String), nullable=False)
     num_bedrooms = db.Column(db.Integer, nullable=False)
-    num_bathrooms = db.Column(db.Float, nullable=False)  # Using float to accommodate half baths
+    num_bathrooms = db.Column(db.Float, nullable=False)
     max_guests = db.Column(db.Integer, nullable=False)
-    amenities = db.Column(db.ARRAY(db.String), nullable=True)  # List of amenities
+    amenities = db.Column(db.ARRAY(db.String), nullable=True)
     house_rules = db.Column(db.Text, nullable=True)
-    availability = db.Column(db.JSON, nullable=True)  # JSON to store availability calendar data
-    latitude = db.Column(db.Float, nullable=True)  # For map location
-    longitude = db.Column(db.Float, nullable=True)  # For map location
-    rating = db.Column(db.Float, nullable=True)  # Average rating of the spot
-    num_reviews = db.Column(db.Integer, nullable=True)  # Number of reviews
+    availability = db.Column(db.JSON, nullable=True)
+    latitude = db.Column(db.Float, nullable=True)
+    longitude = db.Column(db.Float, nullable=True)
+    rating = db.Column(db.Float, nullable=True)
+    num_reviews = db.Column(db.Integer, nullable=True)
 
     user = db.relationship('User', back_populates='spots')
+
 
     def to_dict(self):
         return {

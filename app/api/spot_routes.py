@@ -1,8 +1,33 @@
 from flask import Blueprint, request, jsonify
 from app.models import db, Spot
+from sqlalchemy import func
 from app.forms import SpotForm
 
 spot_routes = Blueprint('spots', __name__)
+
+@spot_routes.route('/search', methods=['GET'])
+def search_spots():
+    try:
+        # Get latitude and longitude from query parameters
+        latitude = float(request.args.get('latitude'))
+        longitude = float(request.args.get('longitude'))
+
+        # Query spots within a certain radius (e.g., 10 kilometers)
+        radius_in_km = 10
+        spots = Spot.query.filter(
+            func.ST_DistanceSphere(
+                func.ST_MakePoint(Spot.latitude, Spot.longitude),
+                func.ST_MakePoint(latitude, longitude)
+            ) <= radius_in_km * 1000
+        ).all()
+
+        # Serialize spots to JSON
+        spot_data = [spot.to_dict() for spot in spots]
+        return jsonify(spot_data), 200
+
+    except ValueError:
+        return jsonify({'error': 'Invalid coordinates provided'}), 400
+
 
 @spot_routes.route('/create', methods=['POST'])
 def create_spot():
