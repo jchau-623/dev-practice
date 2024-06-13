@@ -46,25 +46,6 @@
 }
 
 .footer-section p {
-  font-size: 16px;
+  font-size: 24px;
   margin: 5px 0;
-}
-
-
-.setup-button {
-  display: inline-block;
-  padding: 12px 24px;
-  background-color: #ff5a5f;
-  color: white;
-  text-decoration: none;
-  border-radius: 5px;
-  font-weight: bold;
-  font-size: 16px;
-  transition: background-color 0.3s ease;
-  border: none;
-  cursor: pointer;
-}
-
-.setup-button:hover {
-  background-color: #e53e3f;
 }

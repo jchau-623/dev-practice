@@ -44,19 +44,16 @@
 
 .login-form-group input {
   width: 400px;
-  /* Adjusted width */
   padding: 10px;
   font-size: 16px;
   border: 1px solid #ccc;
   border-radius: 5px;
   box-sizing: border-box;
-  /* Ensure padding is included in the width */
 }
 
 .login-form-submit {
   padding-bottom: 10px;
   text-align: center;
-  /* Center the button */
 }
 
 .login-form-submit button {
@@ -79,9 +76,7 @@
 .close-btn-login {
   position: absolute;
   top: 20px;
-  /* Adjust as needed for vertical positioning */
   left: 20px;
-  /* Adjust as needed for horizontal positioning */
   width: 30px;
   height: 30px;
   border: none;
@@ -90,7 +85,6 @@
   font-size: 20px;
   font-weight: bold;
   color: #333;
-  /* Adjust color as needed */
 }
 
 .close-btn-login:hover {

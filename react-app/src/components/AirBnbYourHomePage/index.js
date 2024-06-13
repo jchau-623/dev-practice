@@ -37,7 +37,6 @@ export default function AirbnbYourHomePage() {
                         onChange={handleSliderChange}
                         className="slider"
                     />
-                    <p className="slider-label">Drag to estimate your earnings</p>
                 </div>
 
                 <footer className="footer-section">
