@@ -190,18 +190,18 @@ def seed_spots():
                         'https://airbnbclone-bucket.s3.amazonaws.com/airbnb/modern10.webp',
                         'https://airbnbclone-bucket.s3.amazonaws.com/airbnb/modern11.webp',
                         'https://airbnbclone-bucket.s3.amazonaws.com/airbnb/modern12.webp',
-                        'https://airbnbclone-bucket.s3.amazonaws.com/airbnb/modern13.webp'
-                        'https://airbnbclone-bucket.s3.amazonaws.com/airbnb/modern14.webp'
-                        'https://airbnbclone-bucket.s3.amazonaws.com/airbnb/modern15.webp'
-                        'https://airbnbclone-bucket.s3.amazonaws.com/airbnb/modern16.webp'
-                        'https://airbnbclone-bucket.s3.amazonaws.com/airbnb/modern17.webp'
-                        'https://airbnbclone-bucket.s3.amazonaws.com/airbnb/modern18.webp'
-                        'https://airbnbclone-bucket.s3.amazonaws.com/airbnb/modern19.webp'
-                        'https://airbnbclone-bucket.s3.amazonaws.com/airbnb/modern20.webp'
-                        'https://airbnbclone-bucket.s3.amazonaws.com/airbnb/modern21.webp'
-                        'https://airbnbclone-bucket.s3.amazonaws.com/airbnb/modern22.webp'
-                        'https://airbnbclone-bucket.s3.amazonaws.com/airbnb/modern23.webp'
-                        'https://airbnbclone-bucket.s3.amazonaws.com/airbnb/modern24.webp'
+                        'https://airbnbclone-bucket.s3.amazonaws.com/airbnb/modern13.webp',
+                        'https://airbnbclone-bucket.s3.amazonaws.com/airbnb/modern14.webp',
+                        'https://airbnbclone-bucket.s3.amazonaws.com/airbnb/modern15.webp',
+                        'https://airbnbclone-bucket.s3.amazonaws.com/airbnb/modern16.webp',
+                        'https://airbnbclone-bucket.s3.amazonaws.com/airbnb/modern17.webp',
+                        'https://airbnbclone-bucket.s3.amazonaws.com/airbnb/modern18.webp',
+                        'https://airbnbclone-bucket.s3.amazonaws.com/airbnb/modern19.webp',
+                        'https://airbnbclone-bucket.s3.amazonaws.com/airbnb/modern20.webp',
+                        'https://airbnbclone-bucket.s3.amazonaws.com/airbnb/modern21.webp',
+                        'https://airbnbclone-bucket.s3.amazonaws.com/airbnb/modern22.webp',
+                        'https://airbnbclone-bucket.s3.amazonaws.com/airbnb/modern23.webp',
+                        'https://airbnbclone-bucket.s3.amazonaws.com/airbnb/modern24.webp',
                         ],
             num_bedrooms=5,
             num_bathrooms=7.0,
@@ -235,14 +235,14 @@ def seed_spots():
                         'https://airbnbclone-bucket.s3.amazonaws.com/airbnb/design6.webp',
                         'https://airbnbclone-bucket.s3.amazonaws.com/airbnb/design7.webp',
                         'https://airbnbclone-bucket.s3.amazonaws.com/airbnb/design8.webp',
-                        'https://airbnbclone-bucket.s3.amazonaws.com/airbnb/design9.webp'
-                        'https://airbnbclone-bucket.s3.amazonaws.com/airbnb/design10.webp'
-                        'https://airbnbclone-bucket.s3.amazonaws.com/airbnb/design11.webp'
-                        'https://airbnbclone-bucket.s3.amazonaws.com/airbnb/design12.webp'
-                        'https://airbnbclone-bucket.s3.amazonaws.com/airbnb/design13.webp'
-                        'https://airbnbclone-bucket.s3.amazonaws.com/airbnb/design14.webp'
-                        'https://airbnbclone-bucket.s3.amazonaws.com/airbnb/design15.webp'
-                        'https://airbnbclone-bucket.s3.amazonaws.com/airbnb/design16.webp'
+                        'https://airbnbclone-bucket.s3.amazonaws.com/airbnb/design9.webp',
+                        'https://airbnbclone-bucket.s3.amazonaws.com/airbnb/design10.webp',
+                        'https://airbnbclone-bucket.s3.amazonaws.com/airbnb/design11.webp',
+                        'https://airbnbclone-bucket.s3.amazonaws.com/airbnb/design12.webp',
+                        'https://airbnbclone-bucket.s3.amazonaws.com/airbnb/design13.webp',
+                        'https://airbnbclone-bucket.s3.amazonaws.com/airbnb/design14.webp',
+                        'https://airbnbclone-bucket.s3.amazonaws.com/airbnb/design15.webp',
+                        'https://airbnbclone-bucket.s3.amazonaws.com/airbnb/design16.webp',
                         ],
             num_bedrooms=4,
             num_bathrooms=4.0,
