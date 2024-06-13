@@ -6,8 +6,8 @@ import './SpotList.css';
 
 export default function SpotList () {
     const dispatch = useDispatch();
-    const spots = useSelector(state => Object.values(state.spots.spots)); // Updated to access spots from state.spots.spots
-    const currentImageIndices = useSelector(state => state.spots.currentImageIndices); // Added to access currentImageIndices from state.spots
+    const spots = useSelector(state => Object.values(state.spots.spots));
+    const currentImageIndices = useSelector(state => state.spots.currentImageIndices);
     const history = useHistory();
 
     useEffect(() => {
@@ -20,7 +20,7 @@ export default function SpotList () {
 
     const handleArrowClick = (e, direction, spotId) => {
         e.stopPropagation();
-        const currentIndex = currentImageIndices[spotId] || 0; // Updated to retrieve currentImageIndex for the specific spot
+        const currentIndex = currentImageIndices[spotId] || 0;
         const spot = spots.find(spot => spot.id === spotId);
         if (direction === 'prev') {
             dispatch(updateCurrentImageIndex(spotId, currentIndex === 0 ? spot.image_urls.length - 1 : currentIndex - 1));
@@ -40,13 +40,13 @@ export default function SpotList () {
                     </div>
                     <div className="spot-info">
                         <div className="spotinfo-header">
-                            <h3 className="spot-name">{spot.name}</h3>
+                            <h3 className="spot-name">{spot.name.length > 30 ? spot.name.slice(0, 30) + '...' : spot.name}</h3>
                             <div className="rating">
                                 <i className="fas fa-star"></i>
                                 <p className="spot-rating">{spot.rating}</p>
                             </div>
                         </div>
-                        <p className="spot-description">{spot.description.length > 50 ? spot.description.slice(0, 50) + '...' : spot.description}</p>
+                        <p className="spot-description">{spot.description.length > 45 ? spot.description.slice(0, 44) + '...' : spot.description}</p>
                         <p className="spot-price">${spot.price} per night</p>
                     </div>
                 </div>

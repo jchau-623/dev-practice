@@ -9,8 +9,8 @@
 }
 
 .photo-item img {
-    width: 100%;
-    height: auto;
+    width: 200px;
+    height: 135px;
     object-fit: cover;
     cursor: pointer;
 }

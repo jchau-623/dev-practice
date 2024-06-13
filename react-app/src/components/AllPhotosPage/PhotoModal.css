@@ -11,15 +11,15 @@
     z-index: 1000;
 }
 
-.modal-content {
+.photo-modal-content {
     position: relative;
     max-width: 90%;
     max-height: 90%;
 }
 
-.modal-content img {
-    width: 100%;
-    height: auto;
+.photo-modal-content img {
+    width: 800px;
+    height: 560px;
     display: block;
 }
 

@@ -7,7 +7,7 @@ export default function PhotoModal({ imageUrl, onClose }) {
             <button className="close-btn-photo" onClick={onClose}>
                 X Close
             </button>
-            <div className="modal-content">
+            <div className="photo-modal-content">
                 <img src={imageUrl} alt="Spot" />
             </div>
         </div>
