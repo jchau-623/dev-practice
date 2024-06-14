@@ -65,11 +65,11 @@
 
 .show-all-photos-button .ellipsis-icon {
     margin-right: 8px;
-    font-size: 14px; /* Adjust the font size */
+    font-size: 14px;
     color: black;
     display: inline-block;
-    width: 20px; /* Width of the grid */
-    height: 20px; /* Height of the grid */
+    width: 20px;
+    height: 20px;
     position: relative;
 }
 

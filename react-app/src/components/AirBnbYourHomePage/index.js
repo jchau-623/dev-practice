@@ -1,14 +1,24 @@
 import React, { useState } from 'react';
 import AirbnbYourHomePageNavbar from './AirbnbYourHomePageHeader';
+import { Modal } from '../../context/Modal';
+import EarningsModal from './EarningsModal';
 import './AirbnbYourHomePage.css';
 
 export default function AirbnbYourHomePage() {
     const [nights, setNights] = useState(7);
+    const [isModalOpen, setIsModalOpen] = useState(false);
     const pricePerNight = 379;
     const estimatedEarnings = nights * pricePerNight;
 
     const handleSliderChange = (e) => {
         setNights(e.target.value);
+    };
+
+    const toggleModal = (e) => {
+        if (e) {
+            e.stopPropagation();
+        }
+        setIsModalOpen(!isModalOpen);
     };
 
     return (
@@ -40,11 +50,19 @@ export default function AirbnbYourHomePage() {
                 </div>
 
                 <footer className="footer-section">
-                    <p>Learn how we estimate your earnings</p>
+                    <button className="earnings-button" onClick={toggleModal}>Learn how we estimate your earnings</button>
                     <p>Queens</p>
                     <p>Entire place, 2 bedrooms</p>
                 </footer>
             </div>
+            {isModalOpen && (
+                <Modal onClose={toggleModal}>
+                        <div onClick={toggleModal}>
+                        <EarningsModal />
+                            <button onClick={toggleModal}>Close</button>
+                        </div>
+                </Modal>
+            )}
         </div>
     );
 }

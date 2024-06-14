@@ -1,28 +1,29 @@
 import React, { useState } from 'react';
-import { Modal } from '../../context/Modal'; // Assuming you have a modal context for rendering modals
-import LoginModal from './LoginModal'; // Import your LoginModal component
+import { Modal } from '../../context/Modal';
+import LoginModal from './LoginModal';
 
 export default function LoginButton() {
-    const [showLoginModal, setShowLoginModal] = useState(false);
+    const [isModalOpen, setIsModalOpen] = useState(false);
 
-    const openLoginModal = () => {
-        setShowLoginModal(true);
-    };
-
-    const closeLoginModal = () => {
-        setShowLoginModal(false);
+    const toggleModal = (e) => {
+        if (e) {
+            e.stopPropagation();
+        }
+        setIsModalOpen(!isModalOpen);
     };
 
     return (
         <div>
-            <button onClick={openLoginModal} type='button'>
-                Login
+            <button onClick={toggleModal} type='button'>
+                Log In
             </button>
-            {showLoginModal && (
-                <Modal onClose={closeLoginModal}>
-                    <LoginModal closeLoginModal={closeLoginModal} />
+            {isModalOpen && (
+                <Modal onClose={toggleModal}>
+                    <div onClick={toggleModal}>
+                        <LoginModal />
+                    </div>
                 </Modal>
             )}
         </div>
     );
-};
+}

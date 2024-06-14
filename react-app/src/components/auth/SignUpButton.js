@@ -1,28 +1,29 @@
 import React, { useState } from 'react';
-import { Modal } from '../../context/Modal'; // Assuming you have a modal context for rendering modals
-import SignUpModal from './SignUpModal'; // Import your SignUpModal component
+import { Modal } from '../../context/Modal';
+import SignUpModal from './SignUpModal';
 
 export default function SignUpButton() {
-    const [showSignUpModal, setShowSignUpModal] = useState(false);
+    const [SignUpModalOpen, SetSignUpModalOpen] = useState(false);
 
-    const openSignUpModal = () => {
-        setShowSignUpModal(true);
-    };
-
-    const closeSignUpModal = () => {
-        setShowSignUpModal(false);
+    const toggleSignUpModal = (e) => {
+        if (e) {
+            e.stopPropagation();
+        }
+        SetSignUpModalOpen(!SignUpModalOpen);
     };
 
     return (
         <div>
-            <button onClick={openSignUpModal} type='button'>
+            <button onClick={toggleSignUpModal} type='button'>
                 Sign Up
             </button>
-            {showSignUpModal && (
-                <Modal onClose={closeSignUpModal}>
-                    <SignUpModal closeSignUpModal={closeSignUpModal} />
+            {SignUpModalOpen && (
+                <Modal onClose={toggleSignUpModal}>
+                    <div onClick={toggleSignUpModal}>
+                        <SignUpModal />
+                    </div>
                 </Modal>
             )}
         </div>
     );
-};
+}
