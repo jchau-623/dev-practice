@@ -7,6 +7,7 @@ import './SpotList.css';
 export default function SpotList () {
     const dispatch = useDispatch();
     const spots = useSelector(state => Object.values(state.spots.spots));
+    console.log(spots, spots)
     const currentImageIndices = useSelector(state => state.spots.currentImageIndices);
     const history = useHistory();
 
@@ -41,6 +42,7 @@ export default function SpotList () {
                     <div className="spot-info">
                         <div className="spotinfo-header">
                             <h3 className="spot-name">{spot.name.length > 30 ? spot.name.slice(0, 30) + '...' : spot.name}</h3>
+                            <p>Hosted by: {spot.user_id}</p>
                             <div className="rating">
                                 <i className="fas fa-star"></i>
                                 <p className="spot-rating">{spot.rating}</p>
