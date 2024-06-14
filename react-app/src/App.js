@@ -47,7 +47,7 @@ function App() {
         <Route path='/users/spots' exact={true}>
           <AirbnbYourHomePage />
         </Route>
-        <ProtectedRoute path='create-spot' exact={true}>
+        <ProtectedRoute path='/create-spot' exact={true}>
           <CreateSpotPage />
         </ProtectedRoute>
       </Switch>

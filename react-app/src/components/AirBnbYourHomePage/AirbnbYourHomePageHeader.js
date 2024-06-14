@@ -15,7 +15,7 @@ export default function AirbnbYourHomePageNavbar() {
             </div>
             <div className="header-right">
                 <h2>Ready to Airbnb it?</h2>
-                <NavLink to="/setup" className="setup-button">
+                <NavLink to="/create-spot" className="setup-button">
                 <i className="fa-regular fa-house-medical" />
                     Airbnb Setup
                 </NavLink>

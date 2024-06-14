@@ -1,5 +1,10 @@
+import React from 'react';
+
 export default function CreateSpotPage () {
     return (
-        <h1>create spot page</h1>
-    )
+        <div>
+            <h1>Create Spot Page</h1>
+            {/* Add content for creating a spot */}
+        </div>
+    );
 }
