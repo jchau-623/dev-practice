@@ -9,7 +9,8 @@ import HomePage from './components/HomePage';
 import SpotPage from './components/SpotPage';
 import AllPhotosPage from './components/AllPhotosPage';
 import AirbnbYourHomePage from './components/AirBnbYourHomePage';
-import CreateSpotPage from './components/CreateSpotPage';
+import CreateSpotPage from './components/CreateSpotPage/index'
+import OverviewPage from './components/CreateSpotPage/Overview'
 
 function App() {
   const [loaded, setLoaded] = useState(false);
@@ -49,6 +50,9 @@ function App() {
         </Route>
         <ProtectedRoute path='/create-spot' exact={true}>
           <CreateSpotPage />
+        </ProtectedRoute>
+        <ProtectedRoute path='/create-spot/overview' exact>
+          <OverviewPage />
         </ProtectedRoute>
       </Switch>
     </BrowserRouter>
