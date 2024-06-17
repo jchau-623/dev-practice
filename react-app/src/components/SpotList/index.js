@@ -4,10 +4,9 @@ import { getSpots, updateCurrentImageIndex } from '../../store/spots';
 import { useHistory } from 'react-router-dom';
 import './SpotList.css';
 
-export default function SpotList () {
+export default function SpotList() {
     const dispatch = useDispatch();
     const spots = useSelector(state => Object.values(state.spots.spots));
-    console.log(spots, spots)
     const currentImageIndices = useSelector(state => state.spots.currentImageIndices);
     const history = useHistory();
 
@@ -41,15 +40,15 @@ export default function SpotList () {
                     </div>
                     <div className="spot-info">
                         <div className="spotinfo-header">
-                            <h3 className="spot-name">{spot.name.length > 30 ? spot.name.slice(0, 30) + '...' : spot.name}</h3>
-                            <p>Hosted by: {spot.user_id}</p>
+                            <h3 className="spot-name">{spot.name.length > 27 ? spot.name.slice(0, 27) + '...' : spot.name}</h3>
                             <div className="rating">
                                 <i className="fas fa-star"></i>
                                 <p className="spot-rating">{spot.rating}</p>
                             </div>
                         </div>
-                        <p className="spot-description">{spot.description.length > 45 ? spot.description.slice(0, 44) + '...' : spot.description}</p>
-                        <p className="spot-price">${spot.price} per night</p>
+                        <div className="spot-hosted">Hosted by: {spot.user_id}</div>
+                        {/* <p className="spot-description">{spot.description.length > 45 ? spot.description.slice(0, 44) + '...' : spot.description}</p> */}
+                        <div className="spot-price">${spot.price} per night</div>
                     </div>
                 </div>
             ))}
