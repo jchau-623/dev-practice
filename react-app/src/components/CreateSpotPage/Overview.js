@@ -10,7 +10,7 @@ const initialState = {
     bathrooms: '',
     guests: '',
     description: '',
-    imageURL: '',
+    imageURL: '', // Remove imageURL from here, as we'll manage file directly
     amenities: '',
     houseRules: '',
     availability: '',
@@ -23,6 +23,9 @@ const CreateSpotForm = () => {
     const [formData, setFormData] = useState(initialState);
     const [currentStep, setCurrentStep] = useState(1);
     const [formErrors, setFormErrors] = useState([]);
+    const [imageFile, setImageFile] = useState(null);
+    const [imageUrl, setImageUrl] = useState(null);
+    const [fileError, setFileError] = useState(null);
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -37,12 +40,16 @@ const CreateSpotForm = () => {
         const errors = validateForm(formData);
         if (errors.length === 0) {
             if (currentStep === 4) {
-                const spot = {
-                    user_id: sessionUser.id,
-                    ...formData
-                };
-                const newSpot = await dispatch(createSpot(spot));
-                alert('Spot created successfully!'); // Replace with navigation or feedback logic
+                if (imageFile) {
+                    const spot = {
+                        user_id: sessionUser.id,
+                        ...formData,
+                        imageFile // Add imageFile to the spot data
+                    };
+                    const newSpot = await dispatch(createSpot(spot));
+                } else {
+                    setFormErrors(['Image is required']);
+                }
             } else {
                 setCurrentStep(currentStep + 1);
             }
@@ -58,7 +65,6 @@ const CreateSpotForm = () => {
             if (!data.city) errors.push("City is required");
             if (!data.state) errors.push("State is required");
             if (!data.description) errors.push("Description is required");
-            if (!data.imageURL) errors.push("Image URL is required");
         } else if (currentStep === 2) {
             if (!data.bedrooms) errors.push("Bedrooms is required");
             if (!data.bathrooms) errors.push("Bathrooms is required");
@@ -72,6 +78,35 @@ const CreateSpotForm = () => {
         return errors;
     };
 
+    const handleFileChange = (e) => {
+        const file = e.target.files[0];
+        setFile(file);
+    };
+
+    const setFile = (file) => {
+        const reader = new FileReader();
+        reader.readAsDataURL(file);
+        reader.onload = (e) => handleFileReader(e, file);
+    };
+
+    const handleFileReader = (e, file) => {
+        const dataUrl = e.target.result;
+
+        const allowedFileTypes = ['image/png', 'image/jpeg', 'image/jpg'];
+        const fileType = file.type;
+
+        if (!allowedFileTypes.includes(fileType)) {
+            setFileError('Must upload a PNG, JPG, or JPEG image.');
+            setImageFile(null);
+            setImageUrl(null);
+            return;
+        }
+
+        setImageFile(file);
+        setImageUrl(dataUrl);
+        setFileError(null);
+    };
+
     const renderFormStep = () => {
         switch (currentStep) {
             case 1:
@@ -82,7 +117,6 @@ const CreateSpotForm = () => {
                         <input type="text" name="city" value={formData.city} onChange={handleChange} placeholder="City" />
                         <input type="text" name="state" value={formData.state} onChange={handleChange} placeholder="State" />
                         <textarea name="description" value={formData.description} onChange={handleChange} placeholder="Description" />
-                        <input type="text" name="imageURL" value={formData.imageURL} onChange={handleChange} placeholder="Image URL" />
                     </div>
                 );
             case 2:
@@ -108,7 +142,11 @@ const CreateSpotForm = () => {
                 return (
                     <div className="form-step">
                         <h2>Step 4: Add Photos</h2>
-                        <input type="file" accept="image/*" multiple />
+                        <input type="file" accept="image/*" onChange={handleFileChange} />
+                        {imageUrl && (
+                            <img src={imageUrl} alt="Preview" style={{ maxWidth: '100%', marginTop: '10px' }} />
+                        )}
+                        {fileError && <p style={{ color: 'red' }}>{fileError}</p>}
                     </div>
                 );
             default:
