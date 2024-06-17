@@ -57,10 +57,12 @@ export default function AirbnbYourHomePage() {
             </div>
             {isModalOpen && (
                 <Modal onClose={toggleModal}>
-                        <div onClick={toggleModal}>
-                        <EarningsModal />
-                            <button onClick={toggleModal}>Close</button>
+                    <div className='earnings-modal'>
+                        <div className='modal-content'>
+                            <EarningsModal />
+                            <button className='close-btn-login' onClick={toggleModal}>X</button>
                         </div>
+                    </div>
                 </Modal>
             )}
         </div>

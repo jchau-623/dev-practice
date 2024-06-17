@@ -50,7 +50,7 @@
   margin: 5px 0;
 }
 
-earnings-button {
+.earnings-button {
   background: none;
   border: none;
   color: inherit;
@@ -59,4 +59,18 @@ earnings-button {
   text-decoration: underline;
   padding: 0;
   margin: 0;
+}
+
+.earnings-modal {
+  position: fixed;
+  transform: translate(-50%, -50%);
+  background-color: #fff;
+  width: 675px;
+  height:975px;
+  overflow-y: auto;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  font-size:24px;
+  border-radius: 8px;
 }
