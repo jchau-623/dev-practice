@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import AirbnbYourHomePageNavbar from './AirbnbYourHomePageHeader';
+import AirbnbYourHomePageNavbar from './AirbnbYourHomePageNavbar';
 import { Modal } from '../../context/Modal';
 import EarningsModal from './EarningsModal';
 import './AirbnbYourHomePage.css';

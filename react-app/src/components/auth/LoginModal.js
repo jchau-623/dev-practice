@@ -1,15 +1,12 @@
 import React, { useState } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import { Redirect, useHistory } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
 import { login } from '../../store/session';
 import './LoginModal.css';
 
 export default function LoginModal({ closeLoginModal }) {
-  const history = useHistory();
   const [errors, setErrors] = useState([]);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const user = useSelector(state => state.session.user);
   const dispatch = useDispatch();
 
   const handleInputChange = (e, setter) => {
@@ -22,23 +19,18 @@ export default function LoginModal({ closeLoginModal }) {
     if (data) {
       setErrors(data);
     } else {
-      // Check if closeLoginModal is a function before calling it
       if (typeof closeLoginModal === 'function') {
-        closeLoginModal(); // Close modal on successful login
+        closeLoginModal();
       }
     }
   };
 
   const demoLogin = async (e) => {
     e.preventDefault();
-    let email = 'demo@aa.io'
-    let password = 'password'
-    await dispatch(login(email, password))
-    history.push("/");
-  }
-
-  if (user) {
-    return <Redirect to='/' />;
+    let email = 'demo@aa.io';
+    let password = 'password';
+    await dispatch(login(email, password));
+    closeLoginModal();
   }
 
   return (
@@ -49,7 +41,7 @@ export default function LoginModal({ closeLoginModal }) {
           <button className="close-btn-login" onClick={closeLoginModal}>X</button>
         </div>
         <form onSubmit={handleLogin}>
-        <div className="error-handling">
+          <div className="error-handling">
             {errors.map((error, ind) => (
               <div key={ind}>{error}</div>
             ))}

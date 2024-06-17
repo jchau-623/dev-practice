@@ -42,6 +42,28 @@
   align-items: center;
 }
 
+.setup-button-unauthenticated {
+  padding: 10px 20px;
+  background-color: #ff385c;
+  display: inline-block;
+  width: 240px;
+  height: 68px;
+  text-align: center;
+  color: white;
+  text-decoration: none;
+  border-radius: 8px;
+  font-size: 24px;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+}
+
+.setup-button-unauthenticated i {
+  padding-right: 10px;
+  font-size: 35px;
+}
+
 .setup-button i {
   padding-right: 10px;
   font-size: 35px;
