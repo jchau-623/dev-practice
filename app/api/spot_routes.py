@@ -63,7 +63,12 @@ def create_spot():
         db.session.add(new_spot)
         db.session.commit()
         return jsonify(new_spot.to_dict()), 201
+
+    for field, errors in form.errors.items():
+        for error in errors:
+            print(f"Error in {field}: {error}")
     return jsonify(form.errors), 400
+
 
 @spot_routes.route('/<int:id>', methods=['GET'])
 def get_spot(id):

@@ -19,9 +19,9 @@ class SpotForm(FlaskForm):
     num_bedrooms = IntegerField('Number of Bedrooms', validators=[DataRequired(), NumberRange(min=1)])
     num_bathrooms = FloatField('Number of Bathrooms', validators=[DataRequired(), NumberRange(min=0.5)])
     max_guests = IntegerField('Maximum Number of Guests', validators=[DataRequired(), NumberRange(min=1)])
-    amenities = FieldList(StringField('Amenity'), min_entries=1)  # Allow adding multiple amenities
+    amenities = FieldList(StringField('Amenity'), min_entries=1)
     house_rules = TextAreaField('House Rules')
-    availability = FieldList(FormField(AvailabilityForm))  # Nested form for availability
+    availability = FieldList(FormField(AvailabilityForm))
     latitude = FloatField('Latitude', validators=[NumberRange(min=-90, max=90)])
     longitude = FloatField('Longitude', validators=[NumberRange(min=-180, max=180)])
     rating = FloatField('Rating', validators=[NumberRange(min=0, max=5)], default=0)

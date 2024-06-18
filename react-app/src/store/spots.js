@@ -51,33 +51,38 @@ export const getSpots = () => async (dispatch) => {
     }
 };
 
-export const createSpot = (spot) => async (dispatch) => {
+export const createSpot = (spotData) => async (dispatch) => {
     const response = await fetch('/api/spots/create', {
         method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(spot)
+        body: spotData
     });
     if (response.ok) {
         const data = await response.json();
         dispatch(addSpot(data));
+    } else {
+        const errorData = await response.json();
+        throw new Error(errorData.errors ? errorData.errors.join(', ') : 'An error occurred');
     }
 };
 
-export const updateSpot = (spot) => async (dispatch) => {
-    const response = await fetch(`/api/spots/${spot.id}`, {
+
+
+
+export const updateSpot = (spotData) => async (dispatch) => {
+    const response = await fetch(`/api/spots/${spotData.get('id')}`, {
         method: 'PUT',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(spot)
+        body: spotData
     });
     if (response.ok) {
         const data = await response.json();
         dispatch(editSpot(data));
+        return data; // Return the updated spot data
+    } else {
+        const errorData = await response.json();
+        throw new Error(errorData.message || 'Failed to update spot');
     }
 };
+
 
 export const removeSpot = (spotId) => async (dispatch) => {
     const response = await fetch(`/api/spots/${spotId}`, {
@@ -121,9 +126,12 @@ const spotsReducer = (state = initialState, action) => {
         case UPDATE_CURRENT_IMAGE_INDEX:
             return {
                 ...state,
-                currentImageIndices: {
-                    ...state.currentImageIndices,
-                    [action.spotId]: action.index
+                spots: {
+                    ...state.spots,
+                    [action.spotId]: {
+                        ...state.spots[action.spotId],
+                        currentImageIndex: action.index
+                    }
                 }
             };
         default:

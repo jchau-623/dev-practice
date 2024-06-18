@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { createSpot } from '../../store/spots';
 
 const initialState = {
+    name: '',
     address: '',
     city: '',
     state: '',
@@ -10,11 +11,12 @@ const initialState = {
     bathrooms: '',
     guests: '',
     description: '',
-    imageURL: '', // Remove imageURL from here, as we'll manage file directly
     amenities: '',
     houseRules: '',
     availability: '',
     price: '',
+    latitude: '',
+    longitude: ''
 };
 
 const CreateSpotForm = () => {
@@ -41,12 +43,20 @@ const CreateSpotForm = () => {
         if (errors.length === 0) {
             if (currentStep === 4) {
                 if (imageFile) {
-                    const spot = {
-                        user_id: sessionUser.id,
-                        ...formData,
-                        imageFile // Add imageFile to the spot data
-                    };
-                    const newSpot = await dispatch(createSpot(spot));
+                    const spotData = new FormData();
+                    spotData.append('user_id', sessionUser.id);
+                    Object.keys(formData).forEach(key => {
+                        spotData.append(key, formData[key]);
+                    });
+                    spotData.append('image_urls', imageFile);
+
+                    try {
+                        const newSpot = await dispatch(createSpot(spotData));
+                        // Handle successful spot creation (e.g., redirect or show success message)
+                    } catch (err) {
+                        console.error('Error creating spot:', err);
+                        setFormErrors([err.message]);
+                    }
                 } else {
                     setFormErrors(['Image is required']);
                 }
@@ -61,6 +71,7 @@ const CreateSpotForm = () => {
     const validateForm = (data) => {
         const errors = [];
         if (currentStep === 1) {
+            if (!data.name) errors.push("Name is required");
             if (!data.address) errors.push("Address is required");
             if (!data.city) errors.push("City is required");
             if (!data.state) errors.push("State is required");
@@ -91,7 +102,6 @@ const CreateSpotForm = () => {
 
     const handleFileReader = (e, file) => {
         const dataUrl = e.target.result;
-
         const allowedFileTypes = ['image/png', 'image/jpeg', 'image/jpg'];
         const fileType = file.type;
 
@@ -112,7 +122,8 @@ const CreateSpotForm = () => {
             case 1:
                 return (
                     <div className="form-step">
-                        <h2>Step 1: Address and Description</h2>
+                        <h2>Step 1: Name, Address, and Description</h2>
+                        <input type="text" name="name" value={formData.name} onChange={handleChange} placeholder="Name" />
                         <input type="text" name="address" value={formData.address} onChange={handleChange} placeholder="Address" />
                         <input type="text" name="city" value={formData.city} onChange={handleChange} placeholder="City" />
                         <input type="text" name="state" value={formData.state} onChange={handleChange} placeholder="State" />
@@ -153,6 +164,7 @@ const CreateSpotForm = () => {
                 return null;
         }
     };
+
     return (
         <div className="container">
             <h1>Create Spot - Overview Page</h1>
