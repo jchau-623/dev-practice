@@ -153,7 +153,6 @@ const CreateSpotForm = () => {
                 return null;
         }
     };
-
     return (
         <div className="container">
             <h1>Create Spot - Overview Page</h1>
