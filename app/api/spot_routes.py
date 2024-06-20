@@ -5,70 +5,74 @@ from app.forms import SpotForm
 from werkzeug.utils import secure_filename
 from app.aws import (
     upload_file_to_s3, allowed_file, get_unique_filename)
-from form_utils import validate_and_parse_form
-import os
-import json
+from app.form_utils import validate_and_parse_form
+import traceback
 
 spot_routes = Blueprint('spots', __name__)
 
 @spot_routes.route('/create', methods=['POST'])
 def create_spot():
-    print("Form data:", request.form)
-    print("Files:", request.files)
-
-    form_data, error_response, status_code = validate_and_parse_form()
-    if error_response:
-        return error_response, status_code
-
-    image_files = request.files.getlist('image_urls')
-    if not image_files:
-        print("No image files found")
-        return jsonify({'error': 'Image is required'}), 400
-
-    image_url_paths = []
-    for image in image_files:
-        if allowed_file(image.filename):
-            unique_filename = get_unique_filename(image.filename)
-            image.filename = unique_filename
-            upload_response = upload_file_to_s3(image)
-            if "url" in upload_response:
-                image_url_paths.append(upload_response["url"])
-            else:
-                print(f"Error uploading file to S3: {upload_response}")
-                return jsonify(upload_response), 400
-        else:
-            print(f"Invalid file type: {image.filename}")
-            return jsonify({'error': 'Invalid file type'}), 400
-
-    new_spot = Spot(
-        name=form_data['name'],
-        user_id=form_data['user_id'],
-        address=form_data['address'],
-        city=form_data['city'],
-        state=form_data['state'],
-        description=form_data['description'],
-        price=form_data['price'],
-        image_urls=image_url_paths,
-        num_bedrooms=form_data['num_bedrooms'],
-        num_bathrooms=form_data['num_bathrooms'],
-        max_guests=form_data['max_guests'],
-        amenities=form_data['amenities'],
-        house_rules=form_data['house_rules'],
-        availability=form_data['availability'],
-        latitude=form_data['latitude'],
-        longitude=form_data['longitude'],
-        rating=form_data['rating'],
-        num_reviews=form_data['num_reviews']
-    )
-
     try:
-        db.session.add(new_spot)
-        db.session.commit()
-        return jsonify(new_spot.to_dict()), 201
+        print("Form data:", request.form)
+        print("Files:", request.files)
+
+        form_data, error_response, status_code = validate_and_parse_form()
+        if error_response:
+            return error_response, status_code
+
+        image_files = request.files.getlist('image_urls')
+        if not image_files:
+            print("No image files found")
+            return jsonify({'error': 'Image is required'}), 400
+
+        image_url_paths = []
+        for image in image_files:
+            if allowed_file(image.filename):
+                unique_filename = get_unique_filename(image.filename)
+                image.filename = unique_filename
+                upload_response = upload_file_to_s3(image)
+                if "url" in upload_response:
+                    image_url_paths.append(upload_response["url"])
+                else:
+                    print(f"Error uploading file to S3: {upload_response}")
+                    return jsonify(upload_response), 400
+            else:
+                print(f"Invalid file type: {image.filename}")
+                return jsonify({'error': 'Invalid file type'}), 400
+
+        new_spot = Spot(
+            name=form_data['name'],
+            user_id=form_data['user_id'],
+            address=form_data['address'],
+            city=form_data['city'],
+            state=form_data['state'],
+            description=form_data['description'],
+            price=form_data['price'],
+            image_urls=image_url_paths,
+            num_bedrooms=form_data['num_bedrooms'],
+            num_bathrooms=form_data['num_bathrooms'],
+            max_guests=form_data['max_guests'],
+            amenities=form_data['amenities'],
+            house_rules=form_data['house_rules'],
+            availability=form_data['availability'],
+            latitude=form_data['latitude'],
+            longitude=form_data['longitude'],
+            rating=form_data['rating'],
+            num_reviews=form_data['num_reviews']
+        )
+
+        try:
+            db.session.add(new_spot)
+            db.session.commit()
+            return jsonify(new_spot.to_dict()), 201
+        except Exception as e:
+            db.session.rollback()
+            print(f"Error committing to database: {e}")
+            return jsonify({'error': str(e)}), 500
     except Exception as e:
-        db.session.rollback()
-        print(f"Error committing to database: {e}")
-        return jsonify({'error': str(e)}), 500
+        print(f"Unhandled exception: {e}")
+        traceback.print_exc()
+        return jsonify({'error': 'Internal Server Error'}), 500
 
 @spot_routes.route('/<int:id>', methods=['GET'])
 def get_spot(id):
