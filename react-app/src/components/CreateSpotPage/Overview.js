@@ -11,12 +11,15 @@ const initialState = {
     bathrooms: '',
     guests: '',
     description: '',
+    imageUrls: '', // This will be a comma-separated string initially
     amenities: '',
     houseRules: '',
-    availability: '',
+    availability: '', // This might need to be an array depending on how you're handling it
     price: '',
     latitude: '',
-    longitude: ''
+    longitude: '',
+    rating: '',
+    numReviews: ''
 };
 
 const CreateSpotForm = () => {
@@ -37,25 +40,60 @@ const CreateSpotForm = () => {
         });
     };
 
+    const getCookie = (name) => {
+        const value = `; ${document.cookie}`;
+        const parts = value.split(`; ${name}=`);
+        if (parts.length === 2) return parts.pop().split(';').shift();
+    };
+
     const handleSubmit = async (e) => {
         e.preventDefault();
         const errors = validateForm(formData);
         if (errors.length === 0) {
             if (currentStep === 4) {
                 if (imageFile) {
-                    const spotData = new FormData();
-                    spotData.append('user_id', sessionUser.id);
-                    Object.keys(formData).forEach(key => {
-                        spotData.append(key, formData[key]);
-                    });
-                    spotData.append('image_urls', imageFile);
+                    // Prepare the data to match the structure expected by the server
+                    const spotData = {
+                        name: formData.name,
+                        user_id: sessionUser.id,
+                        address: formData.address,
+                        city: formData.city,
+                        state: formData.state,
+                        description: formData.description,
+                        price: parseFloat(formData.price),
+                        image_urls: formData.imageUrls.split(',').map(url => url.trim()), // Convert to array
+                        num_bedrooms: parseInt(formData.bedrooms, 10),
+                        num_bathrooms: parseFloat(formData.bathrooms),
+                        max_guests: parseInt(formData.guests, 10),
+                        amenities: formData.amenities.split(',').map(amenity => amenity.trim()), // Convert amenities to an array
+                        availability: JSON.parse(formData.availability || '[]'), // Parse availability if provided
+                        latitude: parseFloat(formData.latitude),
+                        longitude: parseFloat(formData.longitude),
+                        rating: parseFloat(formData.rating),
+                        num_reviews: parseInt(formData.numReviews, 10)
+                    };
+
+                    console.log('Submitting form data:', spotData);
 
                     try {
-                        const newSpot = await dispatch(createSpot(spotData));
-                        // Handle successful spot creation (e.g., redirect or show success message)
+                        const response = await fetch('/api/spots/create', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json',
+                                'X-CSRFToken': getCookie('csrf_token') // Include CSRF token
+                            },
+                            body: JSON.stringify(spotData)
+                        });
+
+                        if (response.ok) {
+                            const newSpot = await response.json();
+                            // Handle successful spot creation
+                        } else {
+                            const errorData = await response.json();
+                            console.error('Error creating spot:', errorData);
+                        }
                     } catch (err) {
                         console.error('Error creating spot:', err);
-                        setFormErrors([err.message]);
                     }
                 } else {
                     setFormErrors(['Image is required']);
@@ -83,7 +121,6 @@ const CreateSpotForm = () => {
         } else if (currentStep === 3) {
             if (!data.amenities) errors.push("Amenities is required");
             if (!data.houseRules) errors.push("House Rules is required");
-            if (!data.availability) errors.push("Availability is required");
             if (!data.price) errors.push("Price is required");
         }
         return errors;
@@ -102,6 +139,7 @@ const CreateSpotForm = () => {
 
     const handleFileReader = (e, file) => {
         const dataUrl = e.target.result;
+
         const allowedFileTypes = ['image/png', 'image/jpeg', 'image/jpg'];
         const fileType = file.type;
 
@@ -122,7 +160,7 @@ const CreateSpotForm = () => {
             case 1:
                 return (
                     <div className="form-step">
-                        <h2>Step 1: Name, Address, and Description</h2>
+                        <h2>Step 1: Address and Description</h2>
                         <input type="text" name="name" value={formData.name} onChange={handleChange} placeholder="Name" />
                         <input type="text" name="address" value={formData.address} onChange={handleChange} placeholder="Address" />
                         <input type="text" name="city" value={formData.city} onChange={handleChange} placeholder="City" />
@@ -143,10 +181,13 @@ const CreateSpotForm = () => {
                 return (
                     <div className="form-step">
                         <h2>Step 3: Amenities, House Rules, Availability, Price</h2>
-                        <textarea name="amenities" value={formData.amenities} onChange={handleChange} placeholder="Amenities" />
+                        <textarea name="amenities" value={formData.amenities} onChange={handleChange} placeholder="Amenities (comma separated)" />
                         <textarea name="houseRules" value={formData.houseRules} onChange={handleChange} placeholder="House Rules" />
-                        <input type="text" name="availability" value={formData.availability} onChange={handleChange} placeholder="Availability" />
+                        <input type="text" name="latitude" value={formData.latitude} onChange={handleChange} placeholder="Latitude" />
+                        <input type="text" name="longitude" value={formData.longitude} onChange={handleChange} placeholder="Longitude" />
                         <input type="number" name="price" value={formData.price} onChange={handleChange} placeholder="Price per night" />
+                        <input type="number" name="rating" value={formData.rating} onChange={handleChange} placeholder="Rating" />
+                        <input type="number" name="numReviews" value={formData.numReviews} onChange={handleChange} placeholder="Number of Reviews" />
                     </div>
                 );
             case 4:

@@ -51,6 +51,7 @@ export const getSpots = () => async (dispatch) => {
     }
 };
 
+
 export const createSpot = (spotData) => async (dispatch) => {
     const response = await fetch('/api/spots/create', {
         method: 'POST',
@@ -59,9 +60,10 @@ export const createSpot = (spotData) => async (dispatch) => {
     if (response.ok) {
         const data = await response.json();
         dispatch(addSpot(data));
+        return data;
     } else {
         const errorData = await response.json();
-        throw new Error(errorData.errors ? errorData.errors.join(', ') : 'An error occurred');
+        throw new Error(errorData.error || 'An error occurred');
     }
 };
 

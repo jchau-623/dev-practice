@@ -2,6 +2,8 @@ from flask import Blueprint, request, jsonify
 from app.models import db, Spot
 from sqlalchemy import func
 from app.forms import SpotForm
+from werkzeug.utils import secure_filename
+import os
 
 spot_routes = Blueprint('spots', __name__)
 
@@ -33,6 +35,8 @@ def search_spots():
 def create_spot():
     form = SpotForm()
     form['csrf_token'].data = request.cookies['csrf_token']
+    print("Form data received:", request.json)  # Log the incoming data
+
     if form.validate_on_submit():
         availability_data = []
         for entry in form.availability.entries:
@@ -66,7 +70,8 @@ def create_spot():
 
     for field, errors in form.errors.items():
         for error in errors:
-            print(f"Error in {field}: {error}")
+            print(f"Error in {field}: {error}")  # Log form errors
+
     return jsonify(form.errors), 400
 
 
