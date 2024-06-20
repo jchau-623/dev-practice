@@ -5,6 +5,7 @@ from app.forms import SpotForm
 from werkzeug.utils import secure_filename
 from app.aws import (
     upload_file_to_s3, allowed_file, get_unique_filename)
+from form_utils import validate_and_parse_form
 import os
 import json
 
@@ -12,50 +13,13 @@ spot_routes = Blueprint('spots', __name__)
 
 @spot_routes.route('/create', methods=['POST'])
 def create_spot():
-    # Log the incoming form data and files for debugging
     print("Form data:", request.form)
     print("Files:", request.files)
 
-    # Use request.form to get form data
-    name = request.form.get('name')
-    user_id = request.form.get('user_id')
-    address = request.form.get('address')
-    city = request.form.get('city')
-    state = request.form.get('state')
-    description = request.form.get('description')
-    price = request.form.get('price')
-    num_bedrooms = request.form.get('num_bedrooms')
-    num_bathrooms = request.form.get('num_bathrooms')
-    max_guests = request.form.get('max_guests')
-    amenities = request.form.get('amenities')
-    house_rules = request.form.get('house_rules')
-    availability = request.form.get('availability')
-    latitude = request.form.get('latitude')
-    longitude = request.form.get('longitude')
-    rating = request.form.get('rating')
-    num_reviews = request.form.get('num_reviews')
+    form_data, error_response, status_code = validate_and_parse_form()
+    if error_response:
+        return error_response, status_code
 
-    # Handle missing required fields
-    missing_fields = [field for field in ['name', 'user_id', 'address', 'city', 'state', 'description', 'price', 'num_bedrooms', 'num_bathrooms', 'max_guests'] if not request.form.get(field)]
-    if missing_fields:
-        print(f"Missing required fields: {missing_fields}")
-        return jsonify({'error': f'Missing required fields: {", ".join(missing_fields)}'}), 400
-
-    # Validate and parse numeric fields
-    try:
-        price = float(price)
-        num_bedrooms = int(num_bedrooms)
-        num_bathrooms = float(num_bathrooms)
-        max_guests = int(max_guests)
-        latitude = float(latitude) if latitude else None
-        longitude = float(longitude) if longitude else None
-        rating = float(rating) if rating else None
-        num_reviews = int(num_reviews) if num_reviews else None
-    except ValueError as e:
-        print(f"Invalid value for a numeric field: {e}")
-        return jsonify({'error': f'Invalid value for a numeric field: {str(e)}'}), 400
-
-    # Handle file upload
     image_files = request.files.getlist('image_urls')
     if not image_files:
         print("No image files found")
@@ -71,43 +35,30 @@ def create_spot():
                 image_url_paths.append(upload_response["url"])
             else:
                 print(f"Error uploading file to S3: {upload_response}")
-                return jsonify(upload_response), 400  # If there's an error in upload, return it
+                return jsonify(upload_response), 400
         else:
             print(f"Invalid file type: {image.filename}")
             return jsonify({'error': 'Invalid file type'}), 400
 
-    # Process availability
-    try:
-        availability_data = json.loads(availability) if availability else []
-    except json.JSONDecodeError as e:
-        print(f"Invalid JSON for availability: {e}")
-        return jsonify({'error': 'Invalid JSON for availability'}), 400
-
-    try:
-        amenities_list = json.loads(amenities) if amenities else []
-    except json.JSONDecodeError as e:
-        print(f"Invalid JSON for amenities: {e}")
-        return jsonify({'error': 'Invalid JSON for amenities'}), 400
-
     new_spot = Spot(
-        name=name,
-        user_id=user_id,
-        address=address,
-        city=city,
-        state=state,
-        description=description,
-        price=price,
+        name=form_data['name'],
+        user_id=form_data['user_id'],
+        address=form_data['address'],
+        city=form_data['city'],
+        state=form_data['state'],
+        description=form_data['description'],
+        price=form_data['price'],
         image_urls=image_url_paths,
-        num_bedrooms=num_bedrooms,
-        num_bathrooms=num_bathrooms,
-        max_guests=max_guests,
-        amenities=amenities_list,
-        house_rules=house_rules,
-        availability=availability_data,
-        latitude=latitude,
-        longitude=longitude,
-        rating=rating,
-        num_reviews=num_reviews
+        num_bedrooms=form_data['num_bedrooms'],
+        num_bathrooms=form_data['num_bathrooms'],
+        max_guests=form_data['max_guests'],
+        amenities=form_data['amenities'],
+        house_rules=form_data['house_rules'],
+        availability=form_data['availability'],
+        latitude=form_data['latitude'],
+        longitude=form_data['longitude'],
+        rating=form_data['rating'],
+        num_reviews=form_data['num_reviews']
     )
 
     try:
