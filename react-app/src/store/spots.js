@@ -67,9 +67,6 @@ export const createSpot = (spotData) => async (dispatch) => {
     }
 };
 
-
-
-
 export const updateSpot = (spotData) => async (dispatch) => {
     const response = await fetch(`/api/spots/${spotData.get('id')}`, {
         method: 'PUT',

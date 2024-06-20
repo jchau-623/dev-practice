@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { createSpot } from '../../store/spots';
 
@@ -11,7 +11,6 @@ const initialState = {
     bathrooms: '',
     guests: '',
     description: '',
-    imageUrls: '', // This will be a comma-separated string initially
     amenities: '',
     houseRules: '',
     availability: '', // This might need to be an array depending on how you're handling it
@@ -29,7 +28,6 @@ const CreateSpotForm = () => {
     const [currentStep, setCurrentStep] = useState(1);
     const [formErrors, setFormErrors] = useState([]);
     const [imageFile, setImageFile] = useState(null);
-    const [imageUrl, setImageUrl] = useState(null);
     const [fileError, setFileError] = useState(null);
 
     const handleChange = (e) => {
@@ -40,58 +38,38 @@ const CreateSpotForm = () => {
         });
     };
 
-    const getCookie = (name) => {
-        const value = `; ${document.cookie}`;
-        const parts = value.split(`; ${name}=`);
-        if (parts.length === 2) return parts.pop().split(';').shift();
-    };
-
     const handleSubmit = async (e) => {
         e.preventDefault();
         const errors = validateForm(formData);
         if (errors.length === 0) {
             if (currentStep === 4) {
                 if (imageFile) {
-                    // Prepare the data to match the structure expected by the server
-                    const spotData = {
-                        name: formData.name,
-                        user_id: sessionUser.id,
-                        address: formData.address,
-                        city: formData.city,
-                        state: formData.state,
-                        description: formData.description,
-                        price: parseFloat(formData.price),
-                        image_urls: formData.imageUrls.split(',').map(url => url.trim()), // Convert to array
-                        num_bedrooms: parseInt(formData.bedrooms, 10),
-                        num_bathrooms: parseFloat(formData.bathrooms),
-                        max_guests: parseInt(formData.guests, 10),
-                        amenities: formData.amenities.split(',').map(amenity => amenity.trim()), // Convert amenities to an array
-                        availability: JSON.parse(formData.availability || '[]'), // Parse availability if provided
-                        latitude: parseFloat(formData.latitude),
-                        longitude: parseFloat(formData.longitude),
-                        rating: parseFloat(formData.rating),
-                        num_reviews: parseInt(formData.numReviews, 10)
-                    };
+                    const spotData = new FormData();
+                    spotData.append('name', formData.name);
+                    spotData.append('user_id', sessionUser.id);
+                    spotData.append('address', formData.address);
+                    spotData.append('city', formData.city);
+                    spotData.append('state', formData.state);
+                    spotData.append('description', formData.description);
+                    spotData.append('price', parseFloat(formData.price));
+                    spotData.append('num_bedrooms', parseInt(formData.bedrooms, 10));
+                    spotData.append('num_bathrooms', parseFloat(formData.bathrooms));
+                    spotData.append('max_guests', parseInt(formData.guests, 10));
+                    spotData.append('amenities', JSON.stringify(formData.amenities.split(',').map(amenity => amenity.trim())));
+                    spotData.append('availability', formData.availability ? formData.availability : JSON.stringify([]));
+                    spotData.append('latitude', parseFloat(formData.latitude));
+                    spotData.append('longitude', parseFloat(formData.longitude));
+                    spotData.append('rating', parseFloat(formData.rating));
+                    spotData.append('num_reviews', parseInt(formData.numReviews, 10));
+
+                    // Append the image file
+                    spotData.append('image_urls', imageFile);
 
                     console.log('Submitting form data:', spotData);
 
                     try {
-                        const response = await fetch('/api/spots/create', {
-                            method: 'POST',
-                            headers: {
-                                'Content-Type': 'application/json',
-                                'X-CSRFToken': getCookie('csrf_token') // Include CSRF token
-                            },
-                            body: JSON.stringify(spotData)
-                        });
-
-                        if (response.ok) {
-                            const newSpot = await response.json();
-                            // Handle successful spot creation
-                        } else {
-                            const errorData = await response.json();
-                            console.error('Error creating spot:', errorData);
-                        }
+                        const newSpot = await dispatch(createSpot(spotData));
+                        // Handle successful spot creation
                     } catch (err) {
                         console.error('Error creating spot:', err);
                     }
@@ -105,6 +83,8 @@ const CreateSpotForm = () => {
             setFormErrors(errors);
         }
     };
+
+
 
     const validateForm = (data) => {
         const errors = [];
@@ -146,12 +126,10 @@ const CreateSpotForm = () => {
         if (!allowedFileTypes.includes(fileType)) {
             setFileError('Must upload a PNG, JPG, or JPEG image.');
             setImageFile(null);
-            setImageUrl(null);
             return;
         }
 
         setImageFile(file);
-        setImageUrl(dataUrl);
         setFileError(null);
     };
 
@@ -195,9 +173,6 @@ const CreateSpotForm = () => {
                     <div className="form-step">
                         <h2>Step 4: Add Photos</h2>
                         <input type="file" accept="image/*" onChange={handleFileChange} />
-                        {imageUrl && (
-                            <img src={imageUrl} alt="Preview" style={{ maxWidth: '100%', marginTop: '10px' }} />
-                        )}
                         {fileError && <p style={{ color: 'red' }}>{fileError}</p>}
                     </div>
                 );
