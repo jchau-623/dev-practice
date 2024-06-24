@@ -71,6 +71,7 @@ export default function CreateSpotForm() {
                     console.log('Submitting form data:', spotData);
 
                     try {
+                        /* eslint-disable no-unused-vars */
                         const newSpot = await dispatch(createSpot(spotData));
                         // Handle successful spot creation
                     } catch (err) {
@@ -80,6 +81,7 @@ export default function CreateSpotForm() {
                     setFormErrors(['Image is required']);
                 }
             } else {
+                setFormErrors([]);
                 setCurrentStep(currentStep + 1);
             }
         } else {
@@ -121,6 +123,7 @@ export default function CreateSpotForm() {
     };
 
     const handleFileReader = (e, file) => {
+        /* eslint-disable no-unused-vars */
         const dataUrl = e.target.result;
 
         const allowedFileTypes = ['image/png', 'image/jpeg', 'image/jpg'];
@@ -233,7 +236,10 @@ export default function CreateSpotForm() {
                     )}
                     <div className="buttons">
                         {currentStep !== 1 && <button type="button" className="button button-previous" onClick={() => setCurrentStep(currentStep - 1)}>Previous</button>}
-                        {currentStep !== 5 ? <button type="submit" className="button button-next">Next</button> : <button type="submit" className="button button-submit">Create Spot</button>}
+                        {currentStep !== 5 ?
+                            <button type="submit" className="button button-next" onClick={() => setFormErrors([])}>Next</button> :
+                            <button type="submit" className="button button-submit">Create Spot</button>
+                        }
                     </div>
                 </form>
             </div>
