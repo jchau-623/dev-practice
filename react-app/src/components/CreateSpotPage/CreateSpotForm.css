@@ -22,6 +22,37 @@
     gap: 20px;
 }
 
+.form-step-onboarding {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #f7f7f7;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+.form-step-onboarding h1 {
+    font-size: 2.5rem;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+.onboarding-step {
+    margin-bottom: 30px;
+}
+
+.onboarding-step h2 {
+    font-size: 1.8rem;
+    color: #444;
+    margin-bottom: 10px;
+}
+
+.onboarding-step p {
+    font-size: 1.2rem;
+    color: #666;
+}
+
 .form-step {
     padding: 20px;
     background-color: #fff;
