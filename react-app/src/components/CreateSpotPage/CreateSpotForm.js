@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { createSpot } from '../../store/spots';
+import './CreateSpotForm.css';
 
 const initialState = {
     name: '',
@@ -13,7 +14,7 @@ const initialState = {
     description: '',
     amenities: '',
     houseRules: '',
-    availability: '', // This might need to be an array depending on how you're handling it
+    availability: '',
     price: '',
     latitude: '',
     longitude: '',
@@ -21,7 +22,7 @@ const initialState = {
     numReviews: ''
 };
 
-const CreateSpotForm = () => {
+export default function CreateSpotForm () {
     const dispatch = useDispatch();
     const sessionUser = useSelector(state => state?.session?.user);
     const [formData, setFormData] = useState(initialState);
@@ -84,8 +85,6 @@ const CreateSpotForm = () => {
         }
     };
 
-
-
     const validateForm = (data) => {
         const errors = [];
         if (currentStep === 1) {
@@ -137,43 +136,43 @@ const CreateSpotForm = () => {
         switch (currentStep) {
             case 1:
                 return (
-                    <div className="form-step">
+                    <div className="form-step form-step-1">
                         <h2>Step 1: Address and Description</h2>
-                        <input type="text" name="name" value={formData.name} onChange={handleChange} placeholder="Name" />
-                        <input type="text" name="address" value={formData.address} onChange={handleChange} placeholder="Address" />
-                        <input type="text" name="city" value={formData.city} onChange={handleChange} placeholder="City" />
-                        <input type="text" name="state" value={formData.state} onChange={handleChange} placeholder="State" />
-                        <textarea name="description" value={formData.description} onChange={handleChange} placeholder="Description" />
+                        <input type="text" className="input-field input-name" name="name" value={formData.name} onChange={handleChange} placeholder="Name" />
+                        <input type="text" className="input-field input-address" name="address" value={formData.address} onChange={handleChange} placeholder="Address" />
+                        <input type="text" className="input-field input-city" name="city" value={formData.city} onChange={handleChange} placeholder="City" />
+                        <input type="text" className="input-field input-state" name="state" value={formData.state} onChange={handleChange} placeholder="State" />
+                        <textarea name="description" className="input-field input-description" value={formData.description} onChange={handleChange} placeholder="Description" />
                     </div>
                 );
             case 2:
                 return (
-                    <div className="form-step">
+                    <div className="form-step form-step-2">
                         <h2>Step 2: Bedrooms, Bathrooms, Guests</h2>
-                        <input type="number" name="bedrooms" value={formData.bedrooms} onChange={handleChange} placeholder="Bedrooms" />
-                        <input type="number" name="bathrooms" value={formData.bathrooms} onChange={handleChange} placeholder="Bathrooms" />
-                        <input type="number" name="guests" value={formData.guests} onChange={handleChange} placeholder="Guests" />
+                        <input type="number" className="input-field input-bedrooms" name="bedrooms" value={formData.bedrooms} onChange={handleChange} placeholder="Bedrooms" />
+                        <input type="number" className="input-field input-bathrooms" name="bathrooms" value={formData.bathrooms} onChange={handleChange} placeholder="Bathrooms" />
+                        <input type="number" className="input-field input-guests" name="guests" value={formData.guests} onChange={handleChange} placeholder="Guests" />
                     </div>
                 );
             case 3:
                 return (
-                    <div className="form-step">
+                    <div className="form-step form-step-3">
                         <h2>Step 3: Amenities, House Rules, Availability, Price</h2>
-                        <textarea name="amenities" value={formData.amenities} onChange={handleChange} placeholder="Amenities (comma separated)" />
-                        <textarea name="houseRules" value={formData.houseRules} onChange={handleChange} placeholder="House Rules" />
-                        <input type="text" name="latitude" value={formData.latitude} onChange={handleChange} placeholder="Latitude" />
-                        <input type="text" name="longitude" value={formData.longitude} onChange={handleChange} placeholder="Longitude" />
-                        <input type="number" name="price" value={formData.price} onChange={handleChange} placeholder="Price per night" />
-                        <input type="number" name="rating" value={formData.rating} onChange={handleChange} placeholder="Rating" />
-                        <input type="number" name="numReviews" value={formData.numReviews} onChange={handleChange} placeholder="Number of Reviews" />
+                        <textarea name="amenities" className="input-field input-amenities" value={formData.amenities} onChange={handleChange} placeholder="Amenities (comma separated)" />
+                        <textarea name="houseRules" className="input-field input-houseRules" value={formData.houseRules} onChange={handleChange} placeholder="House Rules" />
+                        <input type="text" className="input-field input-latitude" name="latitude" value={formData.latitude} onChange={handleChange} placeholder="Latitude" />
+                        <input type="text" className="input-field input-longitude" name="longitude" value={formData.longitude} onChange={handleChange} placeholder="Longitude" />
+                        <input type="number" className="input-field input-price" name="price" value={formData.price} onChange={handleChange} placeholder="Price per night" />
+                        <input type="number" className="input-field input-rating" name="rating" value={formData.rating} onChange={handleChange} placeholder="Rating" />
+                        <input type="number" className="input-field input-numReviews" name="numReviews" value={formData.numReviews} onChange={handleChange} placeholder="Number of Reviews" />
                     </div>
                 );
             case 4:
                 return (
-                    <div className="form-step">
+                    <div className="form-step form-step-4">
                         <h2>Step 4: Add Photos</h2>
-                        <input type="file" accept="image/*" onChange={handleFileChange} />
-                        {fileError && <p style={{ color: 'red' }}>{fileError}</p>}
+                        <input type="file" className="input-file" accept="image/*" onChange={handleFileChange} />
+                        {fileError && <p className="error-file" style={{ color: 'red' }}>{fileError}</p>}
                     </div>
                 );
             default:
@@ -182,9 +181,9 @@ const CreateSpotForm = () => {
     };
 
     return (
-        <div className="container">
+        <div className="container create-spot-container">
             <h1>Create Spot - Overview Page</h1>
-            <form onSubmit={handleSubmit} className="form">
+            <form onSubmit={handleSubmit} className="form create-spot-form">
                 {renderFormStep()}
                 {formErrors.length > 0 && (
                     <div className="error-container">
@@ -196,12 +195,10 @@ const CreateSpotForm = () => {
                     </div>
                 )}
                 <div className="buttons">
-                    {currentStep !== 1 && <button type="button" onClick={() => setCurrentStep(currentStep - 1)}>Previous</button>}
-                    {currentStep !== 4 ? <button type="submit">Next</button> : <button type="submit">Create Spot</button>}
+                    {currentStep !== 1 && <button type="button" className="button button-previous" onClick={() => setCurrentStep(currentStep - 1)}>Previous</button>}
+                    {currentStep !== 4 ? <button type="submit" className="button button-next">Next</button> : <button type="submit" className="button button-submit">Create Spot</button>}
                 </div>
             </form>
         </div>
     );
 };
-
-export default CreateSpotForm;

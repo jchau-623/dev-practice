@@ -10,7 +10,7 @@ import SpotPage from './components/SpotPage';
 import AllPhotosPage from './components/AllPhotosPage';
 import AirbnbYourHomePage from './components/AirBnbYourHomePage';
 import CreateSpotPage from './components/CreateSpotPage/index'
-import OverviewPage from './components/CreateSpotPage/Overview'
+import CreateSpotForm from './components/CreateSpotPage/CreateSpotForm'
 
 function App() {
   const [loaded, setLoaded] = useState(false);
@@ -52,7 +52,7 @@ function App() {
           <CreateSpotPage />
         </ProtectedRoute>
         <ProtectedRoute path='/create-spot/overview' exact>
-          <OverviewPage />
+          <CreateSpotForm />
         </ProtectedRoute>
       </Switch>
     </BrowserRouter>
