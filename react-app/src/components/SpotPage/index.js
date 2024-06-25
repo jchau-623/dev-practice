@@ -18,6 +18,7 @@ export default function SpotPage() {
         }
     }, [dispatch, spotId, spot]);
 
+
     if (!spot) {
         return <div>Loading...</div>;
     }

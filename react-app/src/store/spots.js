@@ -94,10 +94,10 @@ export const removeSpot = (spotId) => async (dispatch) => {
 
 const initialState = {
     spots: {},
-    currentImageIndices: {}
 };
 
-const spotsReducer = (state = initialState, action) => {
+
+export default function spotsReducer (state = initialState, action) {
     switch (action.type) {
         case LOAD_SPOTS:
             const spots = {};
@@ -137,5 +137,3 @@ const spotsReducer = (state = initialState, action) => {
             return state;
     }
 };
-
-export default spotsReducer;

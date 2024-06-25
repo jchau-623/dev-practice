@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { createSpot } from '../../store/spots';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useHistory } from 'react-router-dom';
 import logo from '../../assets/airbnb-logo.png';
 import './CreateSpotForm.css';
 
@@ -26,11 +26,12 @@ const initialState = {
 
 export default function CreateSpotForm() {
     const dispatch = useDispatch();
+    const history = useHistory();
     const sessionUser = useSelector(state => state?.session?.user);
     const [formData, setFormData] = useState(initialState);
     const [currentStep, setCurrentStep] = useState(1);
     const [formErrors, setFormErrors] = useState([]);
-    const [imageFile, setImageFile] = useState(null);
+    const [imageFiles, setImageFiles] = useState([]);
     const [fileError, setFileError] = useState(null);
 
     const handleChange = (e) => {
@@ -46,7 +47,7 @@ export default function CreateSpotForm() {
         const errors = validateForm(formData);
         if (errors.length === 0) {
             if (currentStep === 5) {
-                if (imageFile) {
+                if (imageFiles.length > 0) {
                     const spotData = new FormData();
                     spotData.append('name', formData.name);
                     spotData.append('user_id', sessionUser.id);
@@ -54,26 +55,27 @@ export default function CreateSpotForm() {
                     spotData.append('city', formData.city);
                     spotData.append('state', formData.state);
                     spotData.append('description', formData.description);
-                    spotData.append('price', parseFloat(formData.price));
-                    spotData.append('num_bedrooms', parseInt(formData.bedrooms, 10));
-                    spotData.append('num_bathrooms', parseFloat(formData.bathrooms));
-                    spotData.append('max_guests', parseInt(formData.guests, 10));
+                    spotData.append('price', parseFloat(formData.price) || 0);
+                    spotData.append('num_bedrooms', parseInt(formData.bedrooms, 10) || 0);
+                    spotData.append('num_bathrooms', parseFloat(formData.bathrooms) || 0);
+                    spotData.append('max_guests', parseInt(formData.guests, 10) || 0);
                     spotData.append('amenities', JSON.stringify(formData.amenities.split(',').map(amenity => amenity.trim())));
                     spotData.append('availability', formData.availability ? formData.availability : JSON.stringify([]));
-                    spotData.append('latitude', parseFloat(formData.latitude));
-                    spotData.append('longitude', parseFloat(formData.longitude));
-                    spotData.append('rating', parseFloat(formData.rating));
-                    spotData.append('num_reviews', parseInt(formData.numReviews, 10));
+                    spotData.append('latitude', parseFloat(formData.latitude) || 0);
+                    spotData.append('longitude', parseFloat(formData.longitude) || 0);
+                    spotData.append('rating', parseFloat(formData.rating) || 0);
+                    spotData.append('num_reviews', parseInt(formData.numReviews, 10) || 0);
 
-                    // Append the image file
-                    spotData.append('image_urls', imageFile);
+                    imageFiles.forEach(file => {
+                        spotData.append('image_urls', file);
+                    });
 
                     console.log('Submitting form data:', spotData);
 
                     try {
-                        /* eslint-disable no-unused-vars */
+                         /* eslint-disable no-unused-vars */
                         const newSpot = await dispatch(createSpot(spotData));
-                        // Handle successful spot creation
+                        history.push('/');
                     } catch (err) {
                         console.error('Error creating spot:', err);
                     }
@@ -106,36 +108,27 @@ export default function CreateSpotForm() {
             if (!data.houseRules) errors.push("House Rules is required");
             if (!data.price) errors.push("Price is required");
         } else if (currentStep === 5) {
-            if (!imageFile) errors.push("Image is required");
+            if (imageFiles.length === 0) errors.push("Image is required");
         }
         return errors;
     };
 
     const handleFileChange = (e) => {
-        const file = e.target.files[0];
-        setFile(file);
+        const files = Array.from(e.target.files);
+        setFiles(files);
     };
 
-    const setFile = (file) => {
-        const reader = new FileReader();
-        reader.readAsDataURL(file);
-        reader.onload = (e) => handleFileReader(e, file);
-    };
-
-    const handleFileReader = (e, file) => {
-        /* eslint-disable no-unused-vars */
-        const dataUrl = e.target.result;
-
+    const setFiles = (files) => {
         const allowedFileTypes = ['image/png', 'image/jpeg', 'image/jpg'];
-        const fileType = file.type;
+        const invalidFiles = files.filter(file => !allowedFileTypes.includes(file.type));
 
-        if (!allowedFileTypes.includes(fileType)) {
-            setFileError('Must upload a PNG, JPG, or JPEG image.');
-            setImageFile(null);
+        if (invalidFiles.length > 0) {
+            setFileError('All files must be PNG, JPG, or JPEG images.');
+            setImageFiles([]);
             return;
         }
 
-        setImageFile(file);
+        setImageFiles(prevFiles => [...prevFiles, ...files]);
         setFileError(null);
     };
 
@@ -185,19 +178,25 @@ export default function CreateSpotForm() {
                         <h2>Step 3: Amenities, House Rules, Availability, Price</h2>
                         <textarea name="amenities" className="input-field input-amenities" value={formData.amenities} onChange={handleChange} placeholder="Amenities (comma separated)" />
                         <textarea name="houseRules" className="input-field input-houseRules" value={formData.houseRules} onChange={handleChange} placeholder="House Rules" />
-                        {/* <input type="text" className="input-field input-latitude" name="latitude" value={formData.latitude} onChange={handleChange} placeholder="Latitude" /> */}
-                        {/* <input type="text" className="input-field input-longitude" name="longitude" value={formData.longitude} onChange={handleChange} placeholder="Longitude" /> */}
                         <input type="number" className="input-field input-price" name="price" value={formData.price} onChange={handleChange} placeholder="Price per night" />
-                        {/* <input type="number" className="input-field input-rating" name="rating" value={formData.rating} onChange={handleChange} placeholder="Rating" /> */}
-                        {/* <input type="number" className="input-field input-numReviews" name="numReviews" value={formData.numReviews} onChange={handleChange} placeholder="Number of Reviews" /> */}
                     </div>
                 );
             case 5:
                 return (
                     <div className="form-step form-step-5">
                         <h2>Step 4: Add Photos</h2>
-                        <input type="file" className="input-file" accept="image/*" onChange={handleFileChange} />
+                        <input type="file" className="input-file" accept="image/*" multiple onChange={handleFileChange} />
                         {fileError && <p className="error-file" style={{ color: 'red' }}>{fileError}</p>}
+                        <div className="image-preview-container">
+                            {imageFiles.map((file, index) => (
+                                <img
+                                    key={index}
+                                    src={URL.createObjectURL(file)}
+                                    alt={`preview-${index}`}
+                                    className="image-preview"
+                                />
+                            ))}
+                        </div>
                     </div>
                 );
             default:

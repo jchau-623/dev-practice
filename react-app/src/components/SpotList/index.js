@@ -7,7 +7,6 @@ import './SpotList.css';
 export default function SpotList() {
     const dispatch = useDispatch();
     const spots = useSelector(state => Object.values(state.spots.spots));
-    const currentImageIndices = useSelector(state => state.spots.currentImageIndices);
     const history = useHistory();
 
     useEffect(() => {
@@ -20,8 +19,8 @@ export default function SpotList() {
 
     const handleArrowClick = (e, direction, spotId) => {
         e.stopPropagation();
-        const currentIndex = currentImageIndices[spotId] || 0;
         const spot = spots.find(spot => spot.id === spotId);
+        const currentIndex = spot.currentImageIndex || 0;
         if (direction === 'prev') {
             dispatch(updateCurrentImageIndex(spotId, currentIndex === 0 ? spot.image_urls.length - 1 : currentIndex - 1));
         } else {
@@ -31,10 +30,10 @@ export default function SpotList() {
 
     return (
         <div className="spot-list">
-            {spots.map((spot, index) => (
+            {spots.map((spot) => (
                 <div key={spot.id} className="spot-card" onClick={() => handleSpotClick(spot)}>
                     <div className="spot-image-container">
-                        <img src={spot.image_urls[currentImageIndices[spot.id] || 0]} alt="Spot" className="spot-image" />
+                        <img src={spot.image_urls[spot.currentImageIndex || 0]} alt="Spot" className="spot-image" />
                         <button className="arrow left-arrow" onClick={(e) => handleArrowClick(e, 'prev', spot.id)}>&lt;</button>
                         <button className="arrow right-arrow" onClick={(e) => handleArrowClick(e, 'next', spot.id)}>&gt;</button>
                     </div>
