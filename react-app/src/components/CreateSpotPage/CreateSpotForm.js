@@ -235,12 +235,35 @@ export default function CreateSpotForm() {
                         </div>
                     )}
                     <div className="buttons">
-                        {currentStep !== 1 && <button type="button" className="button button-previous" onClick={() => setCurrentStep(currentStep - 1)}>Previous</button>}
+                        {currentStep !== 1 &&
+                            <button
+                                type="button"
+                                className="button button-previous"
+                                onClick={() => {
+                                    setFormErrors([]);
+                                    setCurrentStep(currentStep - 1);
+                                }}
+                            >
+                                Previous
+                            </button>
+                        }
                         {currentStep !== 5 ?
-                            <button type="submit" className="button button-next" onClick={() => setFormErrors([])}>Next</button> :
-                            <button type="submit" className="button button-submit">Create Spot</button>
+                            <button
+                                type="submit"
+                                className="button button-next"
+                                onClick={() => setFormErrors([])}
+                            >
+                                Next
+                            </button> :
+                            <button
+                                type="submit"
+                                className="button button-submit"
+                            >
+                                Create Spot
+                            </button>
                         }
                     </div>
+
                 </form>
             </div>
         </div>
