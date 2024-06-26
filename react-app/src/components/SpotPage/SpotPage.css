@@ -1,3 +1,48 @@
+.spot-page {
+    font-family: 'Circular', Arial, sans-serif; /* Apply Circular font to the entire page */
+}
+
+.spot-header {
+    position: relative;
+    margin-top: 30px;
+}
+
+.spot-title {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.name {
+    font-weight: bold;
+    font-size: 24px;
+}
+
+.spot-page-delete-button {
+    background-color: transparent;
+    border: none;
+    color: #ff5a5f;
+    cursor: pointer;
+    font-size: 16px;
+    padding: 10px 15px;
+    text-align: center;
+    transition: background-color 0.3s, color 0.3s;
+    border-radius: 20px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    border: 2px solid #ff5a5f;
+
+}
+
+.spot-page-delete-button:hover {
+    background-color: #ff5a5f;
+    color: #fff;
+}
+
+.address {
+    font-size: 16px; /* Set the font size */
+    color: #484848; /* Set the font color */
+}
+
 .spot-images {
     display: grid;
     grid-template-columns: repeat(4, 1fr); /* Four columns */
@@ -25,7 +70,7 @@
     grid-column: span 2; /* Span two columns */
     grid-row: span 2; /* Span two rows */
     cursor: pointer;
-    height:800px;
+    height: 800px;
 }
 
 /* Smaller images */
@@ -38,8 +83,8 @@
 
 .show-all-photos-button {
     position: absolute;
-    bottom: 290px;
-    right: 50px;
+    bottom: 50px;
+    right: 20px;
     padding: 10px 15px;
     background-color: #fff;
     color: black;
@@ -64,7 +109,7 @@
 }
 
 .show-all-photos-button .ellipsis-icon {
-    margin-right: 8px;
+    margin-right: 7px;
     font-size: 14px;
     color: black;
     display: inline-block;
@@ -131,20 +176,6 @@
     right: 0;
 }
 
-.spot-page {
-    font-family: 'Circular', Arial, sans-serif; /* Apply Circular font to the entire page */
-}
-
-.name {
-    font-weight: bold; /* Make the font bold */
-    font-size: 24px; /* Set the font size */
-}
-
-.address {
-    font-size: 16px; /* Set the font size */
-    color: #484848; /* Set the font color */
-}
-
 .description {
     font-size: 18px; /* Set the font size */
     color: #484848; /* Set the font color */
@@ -156,7 +187,7 @@
 }
 
 .spotpage-info {
-    padding: 20px;
+    padding: 10px;
     font-family: 'Circular', sans-serif;
     font-size: 18px;
 }

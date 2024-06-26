@@ -1,0 +1,84 @@
+/* Container for the delete spot form */
+.delete-form-container {
+    position: relative;
+    width: 400px;
+    padding: 40px;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+  }
+
+  .delete-form-header {
+    text-align: center;
+    margin-bottom: 20px;
+  }
+
+  .delete-form-header h2 {
+    font-size: 24px;
+    font-weight: 700;
+    margin: 0;
+  }
+
+  .delete-form-message {
+    font-size: 18px;
+    margin-bottom: 20px;
+  }
+
+  .delete-form-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+  }
+
+  .delete-button {
+    width: 100%;
+    padding: 14px;
+    font-size: 16px;
+    font-weight: 600;
+    color: #fff;
+    background-color: #ff5a5f;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+
+  .delete-button:hover {
+    background-color: #ff232b;
+  }
+
+  .cancel-button {
+    width: 100%;
+    padding: 14px;
+    font-size: 16px;
+    font-weight: 600;
+    color: #333;
+    background-color: #ccc;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+
+  .cancel-button:hover {
+    background-color: #bbb;
+  }
+
+  .close-btn-delete {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    width: 30px;
+    height: 30px;
+    border: none;
+    background-color: transparent;
+    cursor: pointer;
+    font-size: 20px;
+    font-weight: bold;
+    color: #333;
+  }
+
+  .close-btn-delete:hover {
+    border-radius: 50%;
+    background-color: rgba(150, 150, 150, 0.1);
+  }

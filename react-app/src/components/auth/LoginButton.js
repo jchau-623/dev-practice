@@ -19,9 +19,7 @@ export default function LoginButton() {
             </button>
             {isModalOpen && (
                 <Modal onClose={toggleModal}>
-                    <div onClick={toggleModal}>
-                        <LoginModal />
-                    </div>
+                    <LoginModal closeLoginModal={toggleModal} />
                 </Modal>
             )}
         </div>

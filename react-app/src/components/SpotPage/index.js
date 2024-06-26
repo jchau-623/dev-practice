@@ -1,7 +1,8 @@
-import React, { useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { getSpots, removeSpot } from '../../store/spots';
+import { getSpots } from '../../store/spots';
 import { useParams, useHistory } from 'react-router-dom';
+import DeleteSpotModal from '../DeleteSpotModal';
 import './SpotPage.css';
 
 export default function SpotPage() {
@@ -11,13 +12,13 @@ export default function SpotPage() {
     const spot = spots[spotId];
     const history = useHistory();
     const currentUser = useSelector(state => state.session.user);
+    const [showDeleteModal, setShowDeleteModal] = useState(false);
 
     useEffect(() => {
         if (!spot) {
             dispatch(getSpots());
         }
     }, [dispatch, spotId, spot]);
-
 
     if (!spot) {
         return <div>Loading...</div>;
@@ -28,19 +29,24 @@ export default function SpotPage() {
     };
 
     const handleDeleteSpot = () => {
-        dispatch(removeSpot(spotId)).then(() => {
-            history.push('/');
-        });
+        setShowDeleteModal(true);
     };
 
     return (
         <div className="spot-page">
             <div className="spot-header">
-                <h1 className="name">{spot.name}</h1>
+                <div className="spot-title">
+                    <h1 className="name">{spot.name}</h1>
+                    {currentUser && currentUser.id === spot.user_id && (
+                        <button onClick={handleDeleteSpot} className="spot-page-delete-button">Delete Spot</button>
+                    )}
+                    <DeleteSpotModal
+                    show={showDeleteModal}
+                    handleClose={() => setShowDeleteModal(false)}
+                    spotId={spotId}
+                    />
+                </div>
                 <p className="address">{spot.address}, {spot.city}, {spot.state}</p>
-                {currentUser && currentUser.id === spot.user_id && (
-                    <button onClick={handleDeleteSpot} className="delete-button">Delete Spot</button>
-                )}
                 <div className="spot-images">
                     <div onClick={handleShowAllPhotos} className="grid-item first-image">
                         <img src={spot.image_urls[0]} alt="Spot 1" />
@@ -76,5 +82,6 @@ export default function SpotPage() {
                 </p>
             </div>
         </div>
+
     );
 }

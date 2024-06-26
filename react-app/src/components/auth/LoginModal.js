@@ -30,7 +30,9 @@ export default function LoginModal({ closeLoginModal }) {
     let email = 'demo@aa.io';
     let password = 'password';
     await dispatch(login(email, password));
-    closeLoginModal();
+    if (typeof closeLoginModal === 'function') {
+      closeLoginModal();
+    }
   }
 
   return (
