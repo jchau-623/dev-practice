@@ -83,12 +83,11 @@
 }
 
 .airbnb-your-home {
-  margin-right:20px;
-  margin-left:-200px;
-  height:50px;
-  width:auto;
+  margin-right: 20px;
+  margin-left: -200px;
+  height: 50px;
+  width: auto;
 }
-
 
 .airbnb-your-home:hover {
   background-color: #f2f2f2;
@@ -104,7 +103,6 @@
   padding: 10px 0;
   font-size: 30px;
   transition: box-shadow 0.3s ease;
-
 }
 
 .dropdown:hover {
@@ -120,8 +118,8 @@
   padding: 16px;
   left: -160px;
   top: 70px;
-  height:auto;
-  width:240px;
+  height: auto;
+  width: 240px;
 }
 
 .dropdown-content a {
@@ -129,7 +127,6 @@
   text-decoration: none;
   display: block;
 }
-
 
 /* Show the dropdown menu when the dropdown button is clicked */
 .dropdown.show-dropdown .dropdown-content {
@@ -148,7 +145,7 @@
 }
 
 .navbar-auth button {
-  display:block;
+  display: block;
   font-size: 20px;
 }
 

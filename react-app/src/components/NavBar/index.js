@@ -18,7 +18,6 @@ export default function NavBar() {
     if (!showDropdown) return;
     const handleClickOutside = (e) => {
       if (!e.target.closest('.dropdown')) {
-        console.log('Clicked outside dropdown, closing dropdown.');
         setShowDropdown(false);
       }
     };
@@ -30,13 +29,11 @@ export default function NavBar() {
 
   const toggleDropdown = (e) => {
     e.stopPropagation();
-    console.log('Toggling dropdown');
     setShowDropdown(prev => !prev);
   };
 
   const handleLogout = (e) => {
     e.stopPropagation();
-    console.log('Logging out...');
     dispatch(logout());
     setShowLoginModal(false);
   };
@@ -49,7 +46,7 @@ export default function NavBar() {
             <img src={logo} alt='logo' />
           </NavLink>
         </div>
-        <div className="navbar-links">
+        {/* <div className="navbar-links">
           <ul>
             <li>
               <NavLink to='/stays' activeClassName='active'>Stays</NavLink>
@@ -61,9 +58,9 @@ export default function NavBar() {
               <NavLink to='/online-experiences' activeClassName='active'>Online Experiences</NavLink>
             </li>
           </ul>
-        </div>
+        </div> */}
         <div className="navbar-user">
-        <NavLink to='/users/spots'>
+          <NavLink to='/users/spots'>
             <button className="airbnb-your-home">Airbnb your home</button>
           </NavLink>
           <div className={`dropdown ${showDropdown ? 'show-dropdown' : ''}`}>
@@ -94,8 +91,8 @@ export default function NavBar() {
       </div>
       <div className="navbar-search">
         <input type="text" placeholder="Search destinations" className="nav-search-input" />
-        <input type="text" placeholder="Check in" className="nav-search-input" />
-        <input type="text" placeholder="Check out" className="nav-search-input" />
+        <input type="date" placeholder="Check in" className="nav-search-input" />
+        <input type="date" placeholder="Check out" className="nav-search-input" />
         <input type="number" placeholder="Add guests" min="1" className="nav-search-input" />
         <button className="search-btn">Search</button>
       </div>
