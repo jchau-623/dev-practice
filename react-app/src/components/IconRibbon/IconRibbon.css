@@ -88,16 +88,3 @@
 .scroll-button.right {
     right: 10px;
 }
-
-
-
-.show-more-btn {
-    background-color: #ff385c;
-    color: white;
-    border: none;
-    padding: 10px 20px;
-    cursor: pointer;
-    border-radius: 5px;
-    margin-top: 10px;
-    align-self: center;
-}

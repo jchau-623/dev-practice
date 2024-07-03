@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { NavLink } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
-import logo from '../../assets/airbnb-logo.png'
+import logo from '../../assets/airbnb-logo.png';
 import { logout } from '../../store/session';
 import LoginModal from '../auth/LoginModal';
 import SignUpModal from '../auth/SignUpModal';
@@ -46,19 +46,6 @@ export default function NavBar() {
             <img src={logo} alt='logo' />
           </NavLink>
         </div>
-        {/* <div className="navbar-links">
-          <ul>
-            <li>
-              <NavLink to='/stays' activeClassName='active'>Stays</NavLink>
-            </li>
-            <li>
-              <NavLink to='/experiences' activeClassName='active'>Experiences</NavLink>
-            </li>
-            <li>
-              <NavLink to='/online-experiences' activeClassName='active'>Online Experiences</NavLink>
-            </li>
-          </ul>
-        </div> */}
         <div className="navbar-user">
           <NavLink to='/users/spots'>
             <button className="airbnb-your-home">Airbnb your home</button>
@@ -91,9 +78,6 @@ export default function NavBar() {
       </div>
       <div className="navbar-search">
         <input type="text" placeholder="Search destinations" className="nav-search-input" />
-        <input type="date" placeholder="Check in" className="nav-search-input" />
-        <input type="date" placeholder="Check out" className="nav-search-input" />
-        <input type="number" placeholder="Add guests" min="1" className="nav-search-input" />
         <button className="search-btn">Search</button>
       </div>
       {showLoginModal && (

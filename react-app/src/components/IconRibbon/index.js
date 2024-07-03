@@ -1,8 +1,7 @@
-import React, { useState, useRef } from 'react';
+import React, { useRef } from 'react';
 import './IconRibbon.css';
 
 export default function IconRibbon() {
-    const [showAll, setShowAll] = useState(false);
     const scrollRef = useRef(null);
 
     const icons = [
@@ -35,21 +34,23 @@ export default function IconRibbon() {
         { name: 'Caves', icon: '⛰️' }
     ];
 
-    const visibleIcons = showAll ? icons : icons.slice(0, 10);
-
     const scrollLeft = () => {
-        scrollRef.current.scrollBy({ left: -200, behavior: 'smooth' });
+        if (scrollRef.current) {
+            scrollRef.current.scrollBy({ left: -200, behavior: 'smooth' });
+        }
     };
 
     const scrollRight = () => {
-        scrollRef.current.scrollBy({ left: 200, behavior: 'smooth' });
+        if (scrollRef.current) {
+            scrollRef.current.scrollBy({ left: 200, behavior: 'smooth' });
+        }
     };
 
     return (
         <div className="icon-ribbon-container">
             <button className="scroll-button left" onClick={scrollLeft}>&lt;</button>
             <div className="icon-ribbon" ref={scrollRef}>
-                {visibleIcons.map((item, index) => (
+                {icons.map((item, index) => (
                     <div key={index} className="icon-item">
                         <span className="icon">{item.icon}</span>
                         <span className="icon-label">{item.name}</span>

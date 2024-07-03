@@ -27,7 +27,7 @@
 
 .setup-button {
   padding: 10px 20px;
-  background-color: #ff385c;
+  background-color: #ff5a5f;
   display: inline-block;
   width: 200px;
   height: 48px;
@@ -44,7 +44,7 @@
 
 .setup-button-unauthenticated {
   padding: 10px 20px;
-  background-color: #ff385c;
+  background-color: #ff5a5f;
   display: inline-block;
   width: 240px;
   height: 68px;
@@ -57,6 +57,14 @@
   cursor: pointer;
   display: flex;
   align-items: center;
+}
+
+.setup-button:hover {
+  background-color: #ff4449;
+}
+
+.setup-button-unauthenticated:hover {
+  background-color: #ff4449;
 }
 
 .setup-button-unauthenticated i {
