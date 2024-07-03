@@ -1,8 +1,10 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import './IconRibbon.css';
 
 export default function IconRibbon() {
     const [showAll, setShowAll] = useState(false);
+    const scrollRef = useRef(null);
+
     const icons = [
         { name: 'Beach', icon: '🏖️' },
         { name: 'Mountain', icon: '🏔️' },
@@ -35,19 +37,26 @@ export default function IconRibbon() {
 
     const visibleIcons = showAll ? icons : icons.slice(0, 10);
 
+    const scrollLeft = () => {
+        scrollRef.current.scrollBy({ left: -200, behavior: 'smooth' });
+    };
+
+    const scrollRight = () => {
+        scrollRef.current.scrollBy({ left: 200, behavior: 'smooth' });
+    };
+
     return (
         <div className="icon-ribbon-container">
-            <div className="icon-ribbon">
+            <button className="scroll-button left" onClick={scrollLeft}>&lt;</button>
+            <div className="icon-ribbon" ref={scrollRef}>
                 {visibleIcons.map((item, index) => (
                     <div key={index} className="icon-item">
                         <span className="icon">{item.icon}</span>
                         <span className="icon-label">{item.name}</span>
                     </div>
                 ))}
-                <button className="show-more-btn" onClick={() => setShowAll(!showAll)}>
-                    {showAll ? 'Show Less' : 'Show More'}
-                </button>
             </div>
+            <button className="scroll-button right" onClick={scrollRight}>&gt;</button>
         </div>
     );
 }
