@@ -1,0 +1,15 @@
+.listing-item {
+    margin-bottom: 20px;
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+}
+
+.listing-item h2 {
+    margin: 0 0 10px;
+    font-size: 1.5rem;
+}
+
+.listing-item p {
+    margin: 0;
+    color: #666;
+}

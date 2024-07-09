@@ -19,7 +19,7 @@
     padding: 15px 30px;
     font-size: 1.2rem;
     color: #fff;
-    background-color: #007BFF;
+    background-color: #ff5a5f;
     border: none;
     border-radius: 5px;
     text-decoration: none;
@@ -28,5 +28,5 @@
 }
 
 .create-listing-button:hover {
-    background-color: #0056b3;
+    background-color: #ff4449;
 }

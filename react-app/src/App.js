@@ -11,6 +11,7 @@ import AllPhotosPage from './components/AllPhotosPage';
 import AirbnbYourHomePage from './components/AirBnbYourHomePage';
 import CreateSpotPage from './components/CreateSpotPage/index'
 import CreateSpotForm from './components/CreateSpotPage/CreateSpotForm'
+import MySpotsPage from './components/MySpotsPage';
 
 function App() {
   const [loaded, setLoaded] = useState(false);
@@ -53,6 +54,9 @@ function App() {
         </ProtectedRoute>
         <ProtectedRoute path='/create-spot/overview' exact>
           <CreateSpotForm />
+        </ProtectedRoute>
+        <ProtectedRoute path='/my-listings' exact>
+          <MySpotsPage />
         </ProtectedRoute>
       </Switch>
     </BrowserRouter>
