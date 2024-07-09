@@ -2,7 +2,8 @@ import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Redirect } from 'react-router-dom';
 import { signUp } from '../../store/session';
-import './SignUpModal.css'; // Import your SignUpModal.css file
+import { Modal } from '../../context/Modal';
+import './SignUpModal.css';
 
 export default function SignUpModal({ closeSignUpModal }) {
     const [errors, setErrors] = useState([]);
@@ -37,6 +38,7 @@ export default function SignUpModal({ closeSignUpModal }) {
     }
 
     return (
+        <Modal >
         <div className="sign-up-modal">
             <div className="sign-up-form-container">
                 <div className="sign-up-form-header">
@@ -91,5 +93,6 @@ export default function SignUpModal({ closeSignUpModal }) {
                 </form>
             </div>
         </div>
+        </Modal>
     );
 }

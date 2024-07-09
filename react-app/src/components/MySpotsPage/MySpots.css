@@ -3,6 +3,7 @@
     padding: 10px;
     border-bottom: 1px solid #ddd;
     transition: background-color 0.3s ease;
+    display:flex;
 }
 
 .listing-item:hover {
@@ -36,4 +37,12 @@
     padding: 10px;
     font-size:18px;
 }
-
+.edit-button {
+    padding: 5px 10px;
+    background-color: #ff5a5f;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}

@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { login } from '../../store/session';
+import { Modal } from '../../context/Modal';
 import './LoginModal.css';
 
 export default function LoginModal({ closeLoginModal }) {
@@ -36,7 +37,7 @@ export default function LoginModal({ closeLoginModal }) {
   }
 
   return (
-    <div className="login-modal">
+    <Modal onClose={closeLoginModal}>
       <div className="login-form-container">
         <div className="login-form-header">
           <h2>Welcome to AirBnB</h2>
@@ -74,6 +75,6 @@ export default function LoginModal({ closeLoginModal }) {
           </div>
         </form>
       </div>
-    </div>
+    </Modal>
   );
 }

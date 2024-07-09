@@ -4,7 +4,8 @@ import { getSpots } from '../../store/spots';
 import { NavLink } from 'react-router-dom';
 import './MySpots.css';
 import NavBar from '../NavBar';
-import Pagination from '../Pagination'; // Import the reusable Pagination component
+import Pagination from '../Pagination';
+import EditSpotModal from '../EditSpotModal';
 
 export default function MySpotsPage() {
   const dispatch = useDispatch();
@@ -14,6 +15,8 @@ export default function MySpotsPage() {
   );
 
   const [currentPage, setCurrentPage] = useState(1);
+  const [showEditModal, setShowEditModal] = useState(false);
+  const [currentSpot, setCurrentSpot] = useState(null);
   const spotsPerPage = 5;
 
   useEffect(() => {
@@ -26,6 +29,16 @@ export default function MySpotsPage() {
 
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
+  const handleEditClick = (spot) => {
+    setCurrentSpot(spot);
+    setShowEditModal(true);
+  };
+
+  const handleCloseModal = () => {
+    setShowEditModal(false);
+    setCurrentSpot(null);
+  };
+
   return (
     <div className="my-listings-container">
       <NavBar />
@@ -33,6 +46,7 @@ export default function MySpotsPage() {
       {currentSpots.length > 0 ? (
         currentSpots.map(spot => (
           <div key={spot.id} className="listing-item">
+            <button className="edit-button" onClick={() => handleEditClick(spot)}>Edit</button>
             <NavLink to={`/spots/${spot.id}`} className="spot-link">
               <h2>{spot.name}</h2>
               <p>{spot.description}</p>
@@ -48,6 +62,13 @@ export default function MySpotsPage() {
         paginate={paginate}
         currentPage={currentPage}
       />
+      {showEditModal && (
+        <EditSpotModal
+          show={showEditModal}
+          handleClose={handleCloseModal}
+          spot={currentSpot}
+        />
+      )}
     </div>
   );
 }
