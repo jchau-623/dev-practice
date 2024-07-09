@@ -35,7 +35,7 @@
   margin: 0 5px;
   font-size: 16px;
   flex-grow: 1;
-  width: calc(100% - 120px); /* Adjust to accommodate button width */
+  width: calc(100% - 120px);
 }
 
 .search-btn {
@@ -78,6 +78,27 @@
   border-radius: 20px;
 }
 
+.navbar-links {
+  list-style: none;
+}
+
+.my-listings-button {
+  padding: 8px 16px;
+  background-color: transparent;
+  color: #333;
+  border: none;
+  font-size: 24px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  height: 50px;
+  margin-right: 20px;
+}
+
+.my-listings-button:hover {
+  background-color: #f2f2f2;
+  border-radius: 20px;
+}
+
 /* Dropdown container */
 .dropdown {
   position: relative;
@@ -111,7 +132,6 @@
   text-decoration: none;
   display: block;
 }
-
 
 .dropdown.show-dropdown .dropdown-content {
   display: block;

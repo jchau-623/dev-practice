@@ -46,6 +46,15 @@ export default function NavBar() {
             <img src={logo} alt='logo' />
           </NavLink>
         </div>
+        {user && (
+          <ul className="navbar-links">
+            <li>
+              <NavLink to='/my-listings'>
+                <button className='my-listings-button'>My Listings</button>
+              </NavLink>
+            </li>
+          </ul>
+        )}
         <div className="navbar-user">
           <NavLink to='/users/spots'>
             <button className="airbnb-your-home">Airbnb your home</button>
