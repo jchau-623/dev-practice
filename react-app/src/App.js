@@ -55,7 +55,7 @@ function App() {
         <ProtectedRoute path='/create-spot/overview' exact>
           <CreateSpotForm />
         </ProtectedRoute>
-        <ProtectedRoute path='/my-listings' exact>
+        <ProtectedRoute path='/my-spots' exact>
           <MySpotsPage />
         </ProtectedRoute>
       </Switch>

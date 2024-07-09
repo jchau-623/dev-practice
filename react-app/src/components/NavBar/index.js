@@ -49,8 +49,8 @@ export default function NavBar() {
         {user && (
           <ul className="navbar-links">
             <li>
-              <NavLink to='/my-listings'>
-                <button className='my-listings-button'>My Listings</button>
+              <NavLink to='/my-spots'>
+                <button className='my-listings-button'>My Spots</button>
               </NavLink>
             </li>
           </ul>

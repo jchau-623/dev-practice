@@ -1,0 +1,29 @@
+.pagination-nav {
+    margin-top: 20px;
+    display: flex;
+    justify-content: center;
+}
+
+.pagination {
+    list-style: none;
+    display: flex;
+    gap: 10px;
+}
+
+.page-item {
+    display: inline;
+}
+
+.page-link {
+    padding: 8px 16px;
+    border: 1px solid #ddd;
+    color: #333;
+    cursor: pointer;
+    text-decoration: none;
+}
+
+.page-item.active .page-link {
+    background-color: #ff5a5f;
+    color: white;
+    border: 1px solid #ff5a5f;
+}

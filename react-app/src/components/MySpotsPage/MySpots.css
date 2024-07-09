@@ -21,11 +21,12 @@
 
 .my-listings-container h1 {
     padding: 10px;
+    font-size:1.9rem;
 }
 
 .listing-item h2 {
     margin: 0 0 10px;
-    font-size: 1.5rem;
+    font-size:1.8rem;
     padding: 10px;
 }
 
@@ -33,4 +34,6 @@
     margin: 0;
     color: #666;
     padding: 10px;
+    font-size:18px;
 }
+
