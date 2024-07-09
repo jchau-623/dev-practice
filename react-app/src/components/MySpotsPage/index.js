@@ -8,7 +8,7 @@ export default function MySpotsPage() {
   const dispatch = useDispatch();
   const user = useSelector(({ session }) => session.user);
   const spots = useSelector(({ spots }) =>
-    Object.values(spots.spots).filter(spot => spot.ownerId === user.id)
+    Object.values(spots.spots).filter(spot => spot.user_id === user.id)
   );
 
   useEffect(() => {

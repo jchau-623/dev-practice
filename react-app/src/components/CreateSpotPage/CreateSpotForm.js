@@ -73,7 +73,7 @@ export default function CreateSpotForm() {
                     console.log('Submitting form data:', spotData);
 
                     try {
-                         /* eslint-disable no-unused-vars */
+                        /* eslint-disable no-unused-vars */
                         const newSpot = await dispatch(createSpot(spotData));
                         history.push('/');
                     } catch (err) {
@@ -234,7 +234,7 @@ export default function CreateSpotForm() {
                         </div>
                     )}
                     <div className="buttons">
-                        {currentStep !== 1 &&
+                        {currentStep !== 1 && (
                             <button
                                 type="button"
                                 className="button button-previous"
@@ -245,24 +245,24 @@ export default function CreateSpotForm() {
                             >
                                 Previous
                             </button>
-                        }
-                        {currentStep !== 5 ?
+                        )}
+                        {currentStep !== 5 ? (
                             <button
                                 type="submit"
                                 className="button button-next"
                                 onClick={() => setFormErrors([])}
                             >
-                                Next
-                            </button> :
+                                {currentStep === 1 ? "Get started" : "Next"}
+                            </button>
+                        ) : (
                             <button
                                 type="submit"
                                 className="button button-submit"
                             >
                                 Create Spot
                             </button>
-                        }
+                        )}
                     </div>
-
                 </form>
             </div>
         </div>
