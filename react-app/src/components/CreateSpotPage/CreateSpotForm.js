@@ -221,7 +221,6 @@ export default function CreateSpotForm() {
                 </div>
             </div>
             <div className="container create-spot-container">
-                <h1>Create Spot - Overview Page</h1>
                 <form onSubmit={handleSubmit} className="form create-spot-form">
                     {renderFormStep()}
                     {formErrors.length > 0 && (

@@ -73,6 +73,7 @@ export default function SpotPage() {
                 </div>
             </div>
             <div className="spotpage-info">
+                <p className='description'>Hosted by: {spot.username}</p>
                 <p className="description">{spot.description}</p>
                 <p className="details">
                     {spot.max_guests} Guests &bull; {spot.num_bedrooms} Bedrooms &bull; {spot.num_bathrooms} Bathrooms
