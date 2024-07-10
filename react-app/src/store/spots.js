@@ -51,7 +51,6 @@ export const getSpots = () => async (dispatch) => {
     }
 };
 
-
 export const createSpot = (spotData) => async (dispatch) => {
     const response = await fetch('/api/spots/create', {
         method: 'POST',
@@ -82,7 +81,6 @@ export const updateSpot = (spotData) => async (dispatch) => {
     }
 };
 
-
 export const removeSpot = (spotId) => async (dispatch) => {
     const response = await fetch(`/api/spots/${spotId}`, {
         method: 'DELETE'
@@ -95,7 +93,6 @@ export const removeSpot = (spotId) => async (dispatch) => {
 const initialState = {
     spots: {},
 };
-
 
 export default function spotsReducer (state = initialState, action) {
     switch (action.type) {

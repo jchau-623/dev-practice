@@ -12,7 +12,7 @@ def seed_spots():
             address=fake.street_address(),
             city=fake.city(),
             state=fake.state(),
-            description='Welcome to The Good Place - our newly renovated lakefront home with  spectacular panoramic water views from the moment you walk in!  .',
+            description='Welcome to The Good Place - our newly renovated lakefront home with  spectacular panoramic water views from the moment you walk in!',
             price=400.00,
             image_urls=[
                 'https://airbnbclone-bucket.s3.amazonaws.com/airbnb/lakeview1.webp',

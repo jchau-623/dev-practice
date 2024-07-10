@@ -45,7 +45,7 @@ export default function SpotList() {
                                 <p className="spot-rating">{spot.rating}</p>
                             </div>
                         </div>
-                        <div className="spot-hosted">Hosted by: {spot.user_id}</div>
+                        <div className="spot-hosted">Hosted by: {spot.username}</div>
                         {/* <p className="spot-description">{spot.description.length > 45 ? spot.description.slice(0, 44) + '...' : spot.description}</p> */}
                         <div className="spot-price">${spot.price} per night</div>
                     </div>
