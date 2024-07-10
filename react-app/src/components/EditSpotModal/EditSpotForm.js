@@ -32,28 +32,28 @@ export default function EditSpotForm({ spot, handleClose }) {
     const [fileError, setFileError] = useState(null);
 
     useEffect(() => {
-        if (spot) {
-            setFormData({
-                name: spot.name,
-                address: spot.address,
-                city: spot.city,
-                state: spot.state,
-                bedrooms: spot.num_bedrooms,
-                bathrooms: spot.num_bathrooms,
-                guests: spot.max_guests,
-                description: spot.description,
-                amenities: spot.amenities.join(', '),
-                houseRules: spot.house_rules,
-                availability: JSON.stringify(spot.availability),
-                price: spot.price,
-                latitude: spot.latitude,
-                longitude: spot.longitude,
-                rating: spot.rating,
-                numReviews: spot.num_reviews,
-                image_urls: spot.image_urls
-            });
-        }
-    }, [spot]);
+      if (spot) {
+          setFormData({
+              name: spot.name || '',
+              address: spot.address || '',
+              city: spot.city || '',
+              state: spot.state || '',
+              bedrooms: spot.num_bedrooms?.toString() || '',
+              bathrooms: spot.num_bathrooms?.toString() || '',
+              guests: spot.max_guests?.toString() || '',
+              description: spot.description || '',
+              amenities: spot.amenities?.join(', ') || '',
+              houseRules: spot.house_rules || '',
+              availability: JSON.stringify(spot.availability || []),
+              price: spot.price?.toString() || '',
+              latitude: spot.latitude?.toString() || '',
+              longitude: spot.longitude?.toString() || '',
+              rating: spot.rating?.toString() || '',
+              numReviews: spot.num_reviews?.toString() || '',
+              image_urls: spot.image_urls || []
+          });
+      }
+  }, [spot]);
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -64,48 +64,52 @@ export default function EditSpotForm({ spot, handleClose }) {
     };
 
     const handleSubmit = async (e) => {
-        e.preventDefault();
-        const errors = validateForm(formData);
-        if (errors.length === 0) {
-            if (currentStep === 5) {
-                const spotData = new FormData();
-                spotData.append('id', spot.id);
-                spotData.append('name', formData.name);
-                spotData.append('address', formData.address);
-                spotData.append('city', formData.city);
-                spotData.append('state', formData.state);
-                spotData.append('description', formData.description);
-                spotData.append('price', parseFloat(formData.price) || 0);
-                spotData.append('num_bedrooms', parseInt(formData.bedrooms, 10) || 0);
-                spotData.append('num_bathrooms', parseFloat(formData.bathrooms) || 0);
-                spotData.append('max_guests', parseInt(formData.guests, 10) || 0);
-                spotData.append('amenities', JSON.stringify(formData.amenities.split(',').map(amenity => amenity.trim())));
-                spotData.append('availability', formData.availability ? formData.availability : JSON.stringify([]));
-                spotData.append('latitude', parseFloat(formData.latitude) || 0);
-                spotData.append('longitude', parseFloat(formData.longitude) || 0);
-                spotData.append('rating', parseFloat(formData.rating) || 0);
-                spotData.append('num_reviews', parseInt(formData.numReviews, 10) || 0);
+      e.preventDefault();
+      const errors = validateForm(formData);
+      if (errors.length === 0) {
+          if (currentStep === 4) {
+              const spotData = new FormData();
+              spotData.append('id', spot.id);
+              spotData.append('name', formData.name);
+              // spotData.append('user_id', formData.user_id);
+              spotData.append('address', formData.address);
+              spotData.append('city', formData.city);
+              spotData.append('state', formData.state);
+              spotData.append('description', formData.description);
+              spotData.append('price', parseFloat(formData.price) || 0);
+              spotData.append('num_bedrooms', parseInt(formData.bedrooms, 10) || 0);
+              spotData.append('num_bathrooms', parseFloat(formData.bathrooms) || 0);
+              spotData.append('max_guests', parseInt(formData.guests, 10) || 0);
+              spotData.append('amenities', JSON.stringify(formData.amenities.split(',').map(amenity => amenity.trim())));
+              spotData.append('availability', formData.availability ? formData.availability : JSON.stringify([]));
+              spotData.append('latitude', parseFloat(formData.latitude) || 0);
+              spotData.append('longitude', parseFloat(formData.longitude) || 0);
+              spotData.append('rating', parseFloat(formData.rating) || 0);
+              spotData.append('num_reviews', parseInt(formData.numReviews, 10) || 0);
 
-                imageFiles.forEach(file => {
-                    spotData.append('image_urls', file);
-                });
+              imageFiles.forEach(file => {
+                  spotData.append('image_urls', file);
+              });
 
-                console.log('Submitting form data:', spotData);
+              // Log the form data for debugging
+              for (let [key, value] of spotData.entries()) {
+                  console.log(key, value);
+              }
 
-                try {
-                    const updatedSpot = await dispatch(updateSpot(spotData));
-                    handleClose();
-                } catch (err) {
-                    console.error('Error updating spot:', err);
-                }
-            } else {
-                setFormErrors([]);
-                setCurrentStep(currentStep + 1);
-            }
-        } else {
-            setFormErrors(errors);
-        }
-    };
+              try {
+                  const updatedSpot = await dispatch(updateSpot(spotData));
+                  handleClose();
+              } catch (err) {
+                  console.error('Error updating spot:', err);
+              }
+          } else {
+              setFormErrors([]);
+              setCurrentStep(currentStep + 1);
+          }
+      } else {
+          setFormErrors(errors);
+      }
+  };
 
     const validateForm = (data) => {
         const errors = [];

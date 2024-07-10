@@ -5,7 +5,7 @@ from app.forms import SpotForm
 from werkzeug.utils import secure_filename
 from app.aws import (
     upload_file_to_s3, allowed_file, get_unique_filename)
-from app.form_utils import validate_and_parse_form
+from app.form_utils import validate_and_parse_form, update_and_parse_form
 import traceback
 
 spot_routes = Blueprint('spots', __name__)
@@ -93,7 +93,7 @@ def update_spot(id):
         if not spot:
             return jsonify({'error': 'Spot not found'}), 404
 
-        form_data, error_response, status_code = validate_and_parse_form()
+        form_data, error_response, status_code = update_and_parse_form()
         if error_response:
             return error_response, status_code
 
@@ -115,23 +115,23 @@ def update_spot(id):
             spot.image_urls = image_url_paths
 
         # Update spot fields
-        spot.name = form_data['name']
-        spot.user_id = form_data['user_id']
-        spot.address = form_data['address']
-        spot.city = form_data['city']
-        spot.state = form_data['state']
-        spot.description = form_data['description']
-        spot.price = form_data['price']
-        spot.num_bedrooms = form_data['num_bedrooms']
-        spot.num_bathrooms = form_data['num_bathrooms']
-        spot.max_guests = form_data['max_guests']
-        spot.amenities = form_data['amenities']
-        spot.house_rules = form_data['house_rules']
-        spot.availability = form_data['availability']
-        spot.latitude = form_data['latitude']
-        spot.longitude = form_data['longitude']
-        spot.rating = form_data['rating']
-        spot.num_reviews = form_data['num_reviews']
+        spot.name = form_data.get('name', spot.name)
+        spot.user_id = form_data.get('user_id', spot.user_id)
+        spot.address = form_data.get('address', spot.address)
+        spot.city = form_data.get('city', spot.city)
+        spot.state = form_data.get('state', spot.state)
+        spot.description = form_data.get('description', spot.description)
+        spot.price = form_data.get('price', spot.price)
+        spot.num_bedrooms = form_data.get('num_bedrooms', spot.num_bedrooms)
+        spot.num_bathrooms = form_data.get('num_bathrooms', spot.num_bathrooms)
+        spot.max_guests = form_data.get('max_guests', spot.max_guests)
+        spot.amenities = form_data.get('amenities', spot.amenities)
+        spot.house_rules = form_data.get('house_rules', spot.house_rules)
+        spot.availability = form_data.get('availability', spot.availability)
+        spot.latitude = form_data.get('latitude', spot.latitude)
+        spot.longitude = form_data.get('longitude', spot.longitude)
+        spot.rating = form_data.get('rating', spot.rating)
+        spot.num_reviews = form_data.get('num_reviews', spot.num_reviews)
 
         db.session.commit()
         return jsonify(spot.to_dict())
