@@ -114,9 +114,7 @@ def update_spot(id):
                     return jsonify({'error': 'Invalid file type'}), 400
             spot.image_urls = image_url_paths
 
-        # Update spot fields
         spot.name = form_data.get('name', spot.name)
-        spot.user_id = form_data.get('user_id', spot.user_id)
         spot.address = form_data.get('address', spot.address)
         spot.city = form_data.get('city', spot.city)
         spot.state = form_data.get('state', spot.state)
