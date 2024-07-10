@@ -79,7 +79,7 @@ export default function SpotPage() {
                     {spot.max_guests} Guests &bull; {spot.num_bedrooms} Bedrooms &bull; {spot.num_bathrooms} Bathrooms
                 </p>
                 <p className="rating">
-                    <i className="fas fa-star"></i> {spot.rating} ({spot.num_reviews} Reviews)
+                    {/* <i className="fas fa-star"></i> {spot.rating} ({spot.num_reviews} Reviews) */}
                 </p>
             </div>
         </div>

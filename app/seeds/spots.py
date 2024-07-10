@@ -38,8 +38,6 @@ def seed_spots():
             },
             latitude=37.7749,
             longitude=-122.4194,
-            rating=4.8,
-            num_reviews=120
         ),
         Spot(
             name='Mountain Retreat',
@@ -83,12 +81,9 @@ def seed_spots():
                 "2023-06-01": "booked",
                 "2023-06-02": "available",
                 "2023-06-03": "booked",
-                # Add more dates as needed
             },
             latitude=39.7392,
             longitude=-104.9903,
-            rating=4.6,
-            num_reviews=75
         ),
         Spot(
             name='Urban Apartment',
@@ -128,8 +123,6 @@ def seed_spots():
             },
             latitude=34.0522,
             longitude=-118.2437,
-            rating=4.93,
-            num_reviews=123
         ),
         Spot(
             name='Beachside Mansion',
@@ -167,8 +160,6 @@ def seed_spots():
             },
             latitude=36.7783,
             longitude=-119.4179,
-            rating=4.7,
-            num_reviews=85
         ),
         Spot(
             name='*Heated Pool Open* Garrison Modern 5B hottub sauna',
@@ -216,8 +207,6 @@ def seed_spots():
             },
             latitude=37.7512,
             longitude=-104.4129,
-            rating=4.98,
-            num_reviews=119
         ),
              Spot(
             name='Designer Dream',
@@ -257,8 +246,6 @@ def seed_spots():
             },
             latitude=23.1232,
             longitude=-432.123,
-            rating=4.91,
-            num_reviews=11
         ),
     ]
 

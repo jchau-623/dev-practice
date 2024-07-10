@@ -20,8 +20,7 @@ const initialState = {
     price: '',
     latitude: '',
     longitude: '',
-    rating: '',
-    numReviews: ''
+
 };
 
 export default function CreateSpotForm() {
@@ -63,8 +62,6 @@ export default function CreateSpotForm() {
                     spotData.append('availability', formData.availability ? formData.availability : JSON.stringify([]));
                     spotData.append('latitude', parseFloat(formData.latitude) || 0);
                     spotData.append('longitude', parseFloat(formData.longitude) || 0);
-                    spotData.append('rating', parseFloat(formData.rating) || 0);
-                    spotData.append('num_reviews', parseInt(formData.numReviews, 10) || 0);
 
                     imageFiles.forEach(file => {
                         spotData.append('image_urls', file);

@@ -1,11 +1,9 @@
 from flask import Blueprint, request, jsonify
 from app.models import db, Spot
-from sqlalchemy import func
-from app.forms import SpotForm
-from werkzeug.utils import secure_filename
-from app.aws import (
-    upload_file_to_s3, allowed_file, get_unique_filename)
+from app.forms.spot_form import SpotForm
 from app.form_utils import validate_and_parse_form, update_and_parse_form
+from werkzeug.utils import secure_filename
+from app.aws import upload_file_to_s3, allowed_file, get_unique_filename
 import traceback
 
 spot_routes = Blueprint('spots', __name__)
@@ -13,16 +11,13 @@ spot_routes = Blueprint('spots', __name__)
 @spot_routes.route('/create', methods=['POST'])
 def create_spot():
     try:
-        print("Form data:", request.form)
-        print("Files:", request.files)
-
-        form_data, error_response, status_code = validate_and_parse_form()
+        form = SpotForm()
+        form_data, error_response, status_code = validate_and_parse_form(form)
         if error_response:
             return error_response, status_code
 
         image_files = request.files.getlist('image_urls')
         if not image_files:
-            print("No image files found")
             return jsonify({'error': 'Image is required'}), 400
 
         image_url_paths = []
@@ -34,10 +29,8 @@ def create_spot():
                 if "url" in upload_response:
                     image_url_paths.append(upload_response["url"])
                 else:
-                    print(f"Error uploading file to S3: {upload_response}")
                     return jsonify(upload_response), 400
             else:
-                print(f"Invalid file type: {image.filename}")
                 return jsonify({'error': 'Invalid file type'}), 400
 
         new_spot = Spot(
@@ -57,8 +50,6 @@ def create_spot():
             availability=form_data['availability'],
             latitude=form_data['latitude'],
             longitude=form_data['longitude'],
-            rating=form_data['rating'],
-            num_reviews=form_data['num_reviews']
         )
 
         try:
@@ -67,10 +58,8 @@ def create_spot():
             return jsonify(new_spot.to_dict()), 201
         except Exception as e:
             db.session.rollback()
-            print(f"Error committing to database: {e}")
             return jsonify({'error': str(e)}), 500
     except Exception as e:
-        print(f"Unhandled exception: {e}")
         traceback.print_exc()
         return jsonify({'error': 'Internal Server Error'}), 500
 
@@ -93,7 +82,8 @@ def update_spot(id):
         if not spot:
             return jsonify({'error': 'Spot not found'}), 404
 
-        form_data, error_response, status_code = update_and_parse_form()
+        form = SpotForm()
+        form_data, error_response, status_code = update_and_parse_form(form)
         if error_response:
             return error_response, status_code
 
@@ -128,14 +118,11 @@ def update_spot(id):
         spot.availability = form_data.get('availability', spot.availability)
         spot.latitude = form_data.get('latitude', spot.latitude)
         spot.longitude = form_data.get('longitude', spot.longitude)
-        spot.rating = form_data.get('rating', spot.rating)
-        spot.num_reviews = form_data.get('num_reviews', spot.num_reviews)
 
         db.session.commit()
         return jsonify(spot.to_dict())
     except Exception as e:
         db.session.rollback()
-        print(f"Error updating spot: {e}")
         traceback.print_exc()
         return jsonify({'error': 'Internal Server Error'}), 500
 

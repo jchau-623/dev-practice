@@ -24,5 +24,3 @@ class SpotForm(FlaskForm):
     availability = FieldList(FormField(AvailabilityForm))
     latitude = FloatField('Latitude', validators=[NumberRange(min=-90, max=90)])
     longitude = FloatField('Longitude', validators=[NumberRange(min=-180, max=180)])
-    rating = FloatField('Rating', validators=[NumberRange(min=0, max=5)], default=0)
-    num_reviews = IntegerField('Number of Reviews', validators=[NumberRange(min=0)], default=0)

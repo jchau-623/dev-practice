@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { updateSpot } from '../../store/spots';
 import './EditSpotForm.css';
 
@@ -18,8 +18,6 @@ const initialState = {
     price: '',
     latitude: '',
     longitude: '',
-    rating: '',
-    numReviews: '',
     image_urls: []
 };
 
@@ -48,8 +46,6 @@ export default function EditSpotForm({ spot, handleClose }) {
               price: spot.price?.toString() || '',
               latitude: spot.latitude?.toString() || '',
               longitude: spot.longitude?.toString() || '',
-              rating: spot.rating?.toString() || '',
-              numReviews: spot.num_reviews?.toString() || '',
               image_urls: spot.image_urls || []
           });
       }
@@ -84,8 +80,6 @@ export default function EditSpotForm({ spot, handleClose }) {
               spotData.append('availability', formData.availability ? formData.availability : JSON.stringify([]));
               spotData.append('latitude', parseFloat(formData.latitude) || 0);
               spotData.append('longitude', parseFloat(formData.longitude) || 0);
-              spotData.append('rating', parseFloat(formData.rating) || 0);
-              spotData.append('num_reviews', parseInt(formData.numReviews, 10) || 0);
 
               imageFiles.forEach(file => {
                   spotData.append('image_urls', file);
@@ -97,6 +91,7 @@ export default function EditSpotForm({ spot, handleClose }) {
               }
 
               try {
+                /* eslint-disable no-unused-vars */
                   const updatedSpot = await dispatch(updateSpot(spotData));
                   handleClose();
               } catch (err) {

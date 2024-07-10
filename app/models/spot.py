@@ -20,11 +20,9 @@ class Spot(db.Model):
     availability = db.Column(db.JSON, nullable=True)
     latitude = db.Column(db.Float, nullable=True)
     longitude = db.Column(db.Float, nullable=True)
-    rating = db.Column(db.Float, nullable=True)
-    num_reviews = db.Column(db.Integer, nullable=True)
 
     user = db.relationship('User', back_populates='spots')
-
+    reviews = db.relationship('Review', back_populates='spot', cascade='all, delete-orphan')
 
     def to_dict(self):
         return {
@@ -46,6 +44,5 @@ class Spot(db.Model):
             'availability': self.availability,
             'latitude': self.latitude,
             'longitude': self.longitude,
-            'rating': self.rating,
-            'num_reviews': self.num_reviews
+            'reviews': [review.to_dict() for review in self.reviews]
         }

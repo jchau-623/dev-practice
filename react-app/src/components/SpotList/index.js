@@ -1,17 +1,27 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { getSpots, updateCurrentImageIndex } from '../../store/spots';
+import { getReviews } from '../../store/reviews';
 import { useHistory } from 'react-router-dom';
 import './SpotList.css';
 
 export default function SpotList() {
     const dispatch = useDispatch();
     const spots = useSelector(state => Object.values(state.spots.spots));
+    const reviews = useSelector(state => state.reviews);
     const history = useHistory();
 
     useEffect(() => {
         dispatch(getSpots());
     }, [dispatch]);
+
+    useEffect(() => {
+        if (spots.length > 0) {
+            spots.forEach(spot => {
+                dispatch(getReviews(spot.id));
+            });
+        }
+    }, [dispatch, spots]);
 
     const handleSpotClick = (spot) => {
         history.push(`/spots/${spot.id}`);
@@ -28,6 +38,13 @@ export default function SpotList() {
         }
     };
 
+    const calculateAverageRating = (spotId) => {
+        const spotReviews = reviews[spotId] || [];
+        if (spotReviews.length === 0) return null;
+        const totalRating = spotReviews.reduce((total, review) => total + review.rating, 0);
+        return (totalRating / spotReviews.length).toFixed(1);
+    };
+
     return (
         <div className="spot-list">
             {spots.map((spot) => (
@@ -42,15 +59,14 @@ export default function SpotList() {
                             <h3 className="spot-name">{spot.name.length > 27 ? spot.name.slice(0, 27) + '...' : spot.name}</h3>
                             <div className="rating">
                                 <i className="fas fa-star"></i>
-                                <p className="spot-rating">{spot.rating}</p>
+                                <p className="spot-rating">{calculateAverageRating(spot.id) || 'No reviews yet'}</p>
                             </div>
                         </div>
                         <div className="spot-hosted">Hosted by: {spot.username}</div>
-                        {/* <p className="spot-description">{spot.description.length > 45 ? spot.description.slice(0, 44) + '...' : spot.description}</p> */}
                         <div className="spot-price">${spot.price} per night</div>
                     </div>
                 </div>
             ))}
         </div>
     );
-};
+}
