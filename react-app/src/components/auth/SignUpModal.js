@@ -20,13 +20,12 @@ export default function SignUpModal({ closeSignUpModal }) {
 
     const onSignUp = async (e) => {
         e.preventDefault();
-        console.log("Attempting to sign up...");
         if (password === repeatPassword) {
-            const data = await dispatch(signUp(username, email, password,repeatPassword));
+            const data = await dispatch(signUp(username, email, password, repeatPassword));
             if (data) {
-                setErrors(data)
+                setErrors(data);
             } else {
-                closeSignUpModal(); // Close modal on successful signup
+                closeSignUpModal();
             }
         } else {
             setErrors(["Passwords do not match"]);
@@ -38,8 +37,7 @@ export default function SignUpModal({ closeSignUpModal }) {
     }
 
     return (
-        <Modal >
-        <div className="sign-up-modal">
+        <Modal onClose={closeSignUpModal}>
             <div className="sign-up-form-container">
                 <div className="sign-up-form-header">
                     <h2>Sign Up</h2>
@@ -92,7 +90,6 @@ export default function SignUpModal({ closeSignUpModal }) {
                     </div>
                 </form>
             </div>
-        </div>
         </Modal>
     );
 }

@@ -3,7 +3,9 @@
     padding: 10px;
     border-bottom: 1px solid #ddd;
     transition: background-color 0.3s ease;
-    display:flex;
+    display: flex;
+    justify-content: space-between;
+    align-items: center; 
 }
 
 .listing-item:hover {
@@ -14,6 +16,7 @@
     text-decoration: none;
     color: black;
     transition: color 0.3s ease;
+    flex-grow: 1;
 }
 
 .spot-link:hover {
@@ -22,12 +25,12 @@
 
 .my-listings-container h1 {
     padding: 10px;
-    font-size:1.9rem;
+    font-size: 1.9rem;
 }
 
 .listing-item h2 {
     margin: 0 0 10px;
-    font-size:1.8rem;
+    font-size: 1.8rem;
     padding: 10px;
 }
 
@@ -35,8 +38,9 @@
     margin: 0;
     color: #666;
     padding: 10px;
-    font-size:18px;
+    font-size: 18px;
 }
+
 .edit-button {
     padding: 5px 10px;
     background-color: #ff5a5f;
@@ -45,4 +49,10 @@
     border-radius: 4px;
     cursor: pointer;
     transition: background-color 0.3s ease;
+    margin-left: 10px; /* Add some space between the button and the text */
+    font-size: 0.9rem;
+}
+
+.edit-button:hover {
+    background-color: #e14b50;
 }
