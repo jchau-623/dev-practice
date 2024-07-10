@@ -1,8 +1,11 @@
-import React, { useEffect } from 'react';
+// src/components/SpotList/SpotList.js
+
+import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { getSpots, updateCurrentImageIndex } from '../../store/spots';
 import { getReviews } from '../../store/reviews';
 import { useHistory } from 'react-router-dom';
+import { calculateAverageRating } from '../utils';
 import './SpotList.css';
 
 export default function SpotList() {
@@ -10,18 +13,32 @@ export default function SpotList() {
     const spots = useSelector(state => Object.values(state.spots.spots));
     const reviews = useSelector(state => state.reviews);
     const history = useHistory();
+    const [fetchedSpots, setFetchedSpots] = useState(new Set());
 
     useEffect(() => {
-        dispatch(getSpots());
+        const fetchSpots = async () => {
+            await dispatch(getSpots());
+        };
+
+        fetchSpots();
     }, [dispatch]);
 
     useEffect(() => {
+        const fetchReviewsForSpots = async () => {
+            const newFetchedSpots = new Set(fetchedSpots);
+            for (const spot of spots) {
+                if (!fetchedSpots.has(spot.id)) {
+                    await dispatch(getReviews(spot.id));
+                    newFetchedSpots.add(spot.id);
+                }
+            }
+            setFetchedSpots(newFetchedSpots);
+        };
+
         if (spots.length > 0) {
-            spots.forEach(spot => {
-                dispatch(getReviews(spot.id));
-            });
+            fetchReviewsForSpots();
         }
-    }, [dispatch, spots]);
+    }, [dispatch, spots, fetchedSpots]);
 
     const handleSpotClick = (spot) => {
         history.push(`/spots/${spot.id}`);
@@ -38,13 +55,6 @@ export default function SpotList() {
         }
     };
 
-    const calculateAverageRating = (spotId) => {
-        const spotReviews = reviews[spotId] || [];
-        if (spotReviews.length === 0) return null;
-        const totalRating = spotReviews.reduce((total, review) => total + review.rating, 0);
-        return (totalRating / spotReviews.length).toFixed(1);
-    };
-
     return (
         <div className="spot-list">
             {spots.map((spot) => (
@@ -59,7 +69,7 @@ export default function SpotList() {
                             <h3 className="spot-name">{spot.name.length > 27 ? spot.name.slice(0, 27) + '...' : spot.name}</h3>
                             <div className="rating">
                                 <i className="fas fa-star"></i>
-                                <p className="spot-rating">{calculateAverageRating(spot.id) || 'No reviews yet'}</p>
+                                <p className="spot-rating">{calculateAverageRating(reviews, spot.id)}</p>
                             </div>
                         </div>
                         <div className="spot-hosted">Hosted by: {spot.username}</div>

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { getSpots } from '../../store/spots';
+import { getReviews } from '../../store/reviews';
 import { useParams, useHistory } from 'react-router-dom';
 import DeleteSpotModal from '../DeleteSpotModal';
 import './SpotPage.css';
@@ -12,12 +13,14 @@ export default function SpotPage() {
     const spot = spots[spotId];
     const history = useHistory();
     const currentUser = useSelector(state => state.session.user);
+    const reviews = useSelector(state => state.reviews[spotId] || []);
     const [showDeleteModal, setShowDeleteModal] = useState(false);
 
     useEffect(() => {
         if (!spot) {
             dispatch(getSpots());
         }
+        dispatch(getReviews(spotId));
     }, [dispatch, spotId, spot]);
 
     if (!spot) {
@@ -32,6 +35,12 @@ export default function SpotPage() {
         setShowDeleteModal(true);
     };
 
+    const calculateAverageRating = (reviews) => {
+        if (reviews.length === 0) return null;
+        const totalRating = reviews.reduce((total, review) => total + review.rating, 0);
+        return (totalRating / reviews.length).toFixed(1);
+    };
+
     return (
         <div className="spot-page">
             <div className="spot-header">
@@ -41,9 +50,9 @@ export default function SpotPage() {
                         <button onClick={handleDeleteSpot} className="spot-page-delete-button">Delete Spot</button>
                     )}
                     <DeleteSpotModal
-                    show={showDeleteModal}
-                    handleClose={() => setShowDeleteModal(false)}
-                    spotId={spotId}
+                        show={showDeleteModal}
+                        handleClose={() => setShowDeleteModal(false)}
+                        spotId={spotId}
                     />
                 </div>
                 <p className="address">{spot.address}, {spot.city}, {spot.state}</p>
@@ -79,10 +88,9 @@ export default function SpotPage() {
                     {spot.max_guests} Guests &bull; {spot.num_bedrooms} Bedrooms &bull; {spot.num_bathrooms} Bathrooms
                 </p>
                 <p className="rating">
-                    {/* <i className="fas fa-star"></i> {spot.rating} ({spot.num_reviews} Reviews) */}
+                    <i className="fas fa-star"></i> {calculateAverageRating(reviews)} ({reviews.length} Reviews)
                 </p>
             </div>
         </div>
-
     );
 }
