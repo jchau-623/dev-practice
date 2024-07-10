@@ -46,11 +46,13 @@ export default function MySpotsPage() {
       {currentSpots.length > 0 ? (
         currentSpots.map(spot => (
           <div key={spot.id} className="listing-item">
-            <button className="edit-button" onClick={() => handleEditClick(spot)}>Edit</button>
             <NavLink to={`/spots/${spot.id}`} className="spot-link">
-              <h2>{spot.name}</h2>
-              <p>{spot.description}</p>
+              <div>
+                <h2>{spot.name}</h2>
+                <p>{spot.description}</p>
+              </div>
             </NavLink>
+            <button className="edit-button" onClick={() => handleEditClick(spot)}>Edit</button>
           </div>
         ))
       ) : (

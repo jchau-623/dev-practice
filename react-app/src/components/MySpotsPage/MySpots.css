@@ -5,7 +5,7 @@
     transition: background-color 0.3s ease;
     display: flex;
     justify-content: space-between;
-    align-items: center; 
+    align-items: center;
 }
 
 .listing-item:hover {
@@ -17,6 +17,7 @@
     color: black;
     transition: color 0.3s ease;
     flex-grow: 1;
+    margin-right: 10px;
 }
 
 .spot-link:hover {
@@ -49,8 +50,8 @@
     border-radius: 4px;
     cursor: pointer;
     transition: background-color 0.3s ease;
-    margin-left: 10px; /* Add some space between the button and the text */
-    font-size: 0.9rem;
+    font-size: 1.2rem;
+    width:60px;
 }
 
 .edit-button:hover {

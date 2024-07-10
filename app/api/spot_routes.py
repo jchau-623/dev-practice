@@ -88,38 +88,58 @@ def get_all_spots():
 
 @spot_routes.route('/<int:id>', methods=['PUT'])
 def update_spot(id):
-    form = SpotForm()
-    form['csrf_token'].data = request.cookies['csrf_token']
-    spot = Spot.query.get(id)
-    if spot and form.validate_on_submit():
-        availability_data = []
-        for entry in form.availability.entries:
-            availability_data.append({
-                "date": entry.data['date'],
-                "status": entry.data['status']
-            })
-        spot.name = form.name.data
-        spot.user_id = form.user_id.data
-        spot.address = form.address.data
-        spot.city = form.city.data
-        spot.state = form.state.data
-        spot.description = form.description.data
-        spot.price = form.price.data
-        spot.image_urls = form.image_urls.data
-        spot.num_bedrooms = form.num_bedrooms.data
-        spot.num_bathrooms = form.num_bathrooms.data
-        spot.max_guests = form.max_guests.data
-        spot.amenities = form.amenities.data
-        spot.house_rules = form.house_rules.data
-        spot.availability = availability_data
-        spot.latitude = form.latitude.data
-        spot.longitude = form.longitude.data
-        spot.rating = form.rating.data
-        spot.num_reviews = form.num_reviews.data
+    try:
+        spot = Spot.query.get(id)
+        if not spot:
+            return jsonify({'error': 'Spot not found'}), 404
+
+        form_data, error_response, status_code = validate_and_parse_form()
+        if error_response:
+            return error_response, status_code
+
+        # Handle image uploads if present
+        image_files = request.files.getlist('image_urls')
+        if image_files:
+            image_url_paths = []
+            for image in image_files:
+                if allowed_file(image.filename):
+                    unique_filename = get_unique_filename(image.filename)
+                    image.filename = unique_filename
+                    upload_response = upload_file_to_s3(image)
+                    if "url" in upload_response:
+                        image_url_paths.append(upload_response["url"])
+                    else:
+                        return jsonify(upload_response), 400
+                else:
+                    return jsonify({'error': 'Invalid file type'}), 400
+            spot.image_urls = image_url_paths
+
+        # Update spot fields
+        spot.name = form_data['name']
+        spot.user_id = form_data['user_id']
+        spot.address = form_data['address']
+        spot.city = form_data['city']
+        spot.state = form_data['state']
+        spot.description = form_data['description']
+        spot.price = form_data['price']
+        spot.num_bedrooms = form_data['num_bedrooms']
+        spot.num_bathrooms = form_data['num_bathrooms']
+        spot.max_guests = form_data['max_guests']
+        spot.amenities = form_data['amenities']
+        spot.house_rules = form_data['house_rules']
+        spot.availability = form_data['availability']
+        spot.latitude = form_data['latitude']
+        spot.longitude = form_data['longitude']
+        spot.rating = form_data['rating']
+        spot.num_reviews = form_data['num_reviews']
 
         db.session.commit()
         return jsonify(spot.to_dict())
-    return jsonify(form.errors), 400
+    except Exception as e:
+        db.session.rollback()
+        print(f"Error updating spot: {e}")
+        traceback.print_exc()
+        return jsonify({'error': 'Internal Server Error'}), 500
 
 @spot_routes.route('/<int:id>', methods=['DELETE'])
 def delete_spot(id):
