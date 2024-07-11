@@ -4,6 +4,7 @@ import { getSpots } from '../../store/spots';
 import { getReviews } from '../../store/reviews';
 import { useParams, useHistory } from 'react-router-dom';
 import DeleteSpotModal from '../DeleteSpotModal';
+import { calculateAverageRating } from '../utils/';
 import './SpotPage.css';
 
 export default function SpotPage() {
@@ -33,12 +34,6 @@ export default function SpotPage() {
 
     const handleDeleteSpot = () => {
         setShowDeleteModal(true);
-    };
-
-    const calculateAverageRating = (reviews) => {
-        if (reviews.length === 0) return null;
-        const totalRating = reviews.reduce((total, review) => total + review.rating, 0);
-        return (totalRating / reviews.length).toFixed(1);
     };
 
     return (

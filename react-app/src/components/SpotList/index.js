@@ -1,11 +1,9 @@
-// src/components/SpotList/SpotList.js
-
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { getSpots, updateCurrentImageIndex } from '../../store/spots';
 import { getReviews } from '../../store/reviews';
 import { useHistory } from 'react-router-dom';
-import { calculateAverageRating } from '../utils';
+import { calculateAverageRating } from '../utils/';
 import './SpotList.css';
 
 export default function SpotList() {
@@ -13,7 +11,7 @@ export default function SpotList() {
     const spots = useSelector(state => Object.values(state.spots.spots));
     const reviews = useSelector(state => state.reviews);
     const history = useHistory();
-    const [fetchedSpots, setFetchedSpots] = useState(new Set());
+    const fetchedSpotsRef = useRef(new Set());
 
     useEffect(() => {
         const fetchSpots = async () => {
@@ -25,20 +23,20 @@ export default function SpotList() {
 
     useEffect(() => {
         const fetchReviewsForSpots = async () => {
-            const newFetchedSpots = new Set(fetchedSpots);
-            for (const spot of spots) {
-                if (!fetchedSpots.has(spot.id)) {
+            const spotsToFetchReviews = spots.filter(spot => !fetchedSpotsRef.current.has(spot.id));
+
+            if (spotsToFetchReviews.length > 0) {
+                for (const spot of spotsToFetchReviews) {
                     await dispatch(getReviews(spot.id));
-                    newFetchedSpots.add(spot.id);
+                    fetchedSpotsRef.current.add(spot.id);
                 }
             }
-            setFetchedSpots(newFetchedSpots);
         };
 
         if (spots.length > 0) {
             fetchReviewsForSpots();
         }
-    }, [dispatch, spots, fetchedSpots]);
+    }, [dispatch, spots]);
 
     const handleSpotClick = (spot) => {
         history.push(`/spots/${spot.id}`);
@@ -69,7 +67,7 @@ export default function SpotList() {
                             <h3 className="spot-name">{spot.name.length > 27 ? spot.name.slice(0, 27) + '...' : spot.name}</h3>
                             <div className="rating">
                                 <i className="fas fa-star"></i>
-                                <p className="spot-rating">{calculateAverageRating(reviews, spot.id)}</p>
+                                <p className="spot-rating">{calculateAverageRating(reviews[spot.id])}</p>
                             </div>
                         </div>
                         <div className="spot-hosted">Hosted by: {spot.username}</div>
