@@ -39,6 +39,10 @@ export default function SpotPage() {
         setShowDeleteModal(true);
     };
 
+    const handleAddReview = () => {
+        history.push(`/spots/${spotId}/reviews/new`);
+    };
+
     const paginate = (pageNumber) => {
         setCurrentPage(pageNumber);
     };
@@ -53,8 +57,10 @@ export default function SpotPage() {
             <div className="spot-header">
                 <div className="spot-title">
                     <h1 className="name">{spot.name}</h1>
-                    {currentUser && currentUser.id === spot.user_id && (
+                    {currentUser && currentUser.id === spot.user_id ? (
                         <button onClick={handleDeleteSpot} className="spot-page-delete-button">Delete Spot</button>
+                    ) : (
+                        <button onClick={handleAddReview} className="spot-page-add-review-button">Did you stay here? Add a review!</button>
                     )}
                     <DeleteSpotModal
                         show={showDeleteModal}
