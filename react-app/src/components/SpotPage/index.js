@@ -5,6 +5,7 @@ import { getReviews } from '../../store/reviews';
 import { useParams, useHistory } from 'react-router-dom';
 import DeleteSpotModal from '../DeleteSpotModal';
 import { calculateAverageRating } from '../utils';
+import Pagination from '../Pagination';
 import './SpotPage.css';
 
 export default function SpotPage() {
@@ -16,6 +17,8 @@ export default function SpotPage() {
     const currentUser = useSelector(state => state.session.user);
     const reviews = useSelector(state => state.reviews[spotId] || []);
     const [showDeleteModal, setShowDeleteModal] = useState(false);
+    const [currentPage, setCurrentPage] = useState(1);
+    const reviewsPerPage = 5;
 
     useEffect(() => {
         if (!spot) {
@@ -35,6 +38,15 @@ export default function SpotPage() {
     const handleDeleteSpot = () => {
         setShowDeleteModal(true);
     };
+
+    const paginate = (pageNumber) => {
+        setCurrentPage(pageNumber);
+    };
+
+    // Calculate the reviews to display for the current page
+    const indexOfLastReview = currentPage * reviewsPerPage;
+    const indexOfFirstReview = indexOfLastReview - reviewsPerPage;
+    const currentReviews = reviews.slice(indexOfFirstReview, indexOfLastReview);
 
     return (
         <div className="spot-page">
@@ -85,6 +97,22 @@ export default function SpotPage() {
                 <p className="rating">
                     <i className="fas fa-star"></i> {calculateAverageRating(reviews)} ({reviews.length} Reviews)
                 </p>
+            </div>
+            <div className="reviews-section">
+                <h2>Reviews</h2>
+                {currentReviews.map(review => (
+                    <div key={review.id} className="review">
+                        <p>{review.username} says:</p>
+                        <p>{review.comment}</p>
+                        <p>Rating: {review.rating} stars</p>
+                    </div>
+                ))}
+                <Pagination
+                    itemsPerPage={reviewsPerPage}
+                    totalItems={reviews.length}
+                    paginate={paginate}
+                    currentPage={currentPage}
+                />
             </div>
         </div>
     );

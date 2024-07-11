@@ -219,3 +219,37 @@
     margin-right: 5px; /* Add spacing between the star icon and the rating */
     color: #ff385c; /* Set the font color */
 }
+.reviews-section {
+    margin-top: 30px;
+}
+
+.reviews-section h2 {
+    font-size: 1.5em;
+    margin-bottom: 15px;
+    border-bottom: 2px solid #ddd;
+    padding-bottom: 5px;
+}
+
+.review {
+    padding: 15px;
+    margin-bottom: 15px;
+}
+
+.review p {
+    margin: 0 0 10px;
+}
+
+.review p:last-child {
+    margin-bottom: 0;
+}
+
+.review .review-comment {
+    font-size: 1em;
+    color: #333;
+}
+
+.review .review-rating {
+    font-size: 1em;
+    font-weight: bold;
+    color: #555;
+}
