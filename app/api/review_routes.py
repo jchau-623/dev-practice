@@ -7,9 +7,13 @@ review_routes = Blueprint('reviews', __name__)
 
 @review_routes.route('/create', methods=['POST'])
 def create_review():
+    print("Received request to create review")  # Log the request
     form = ReviewForm()
+    form_data = request.get_json()  # Parse JSON data
+    form.process(data=form_data)  # Populate the form with the parsed data
     form_data, error_response, status_code = validate_and_parse_form(form)
     if error_response:
+        print("Form validation failed:", error_response.get_data(as_text=True))  # Log validation errors
         return error_response, status_code
 
     spot = Spot.query.get(form_data['spot_id'])
@@ -26,9 +30,11 @@ def create_review():
     try:
         db.session.add(new_review)
         db.session.commit()
+        print("Review created successfully:", new_review.to_dict())  # Log successful creation
         return jsonify(new_review.to_dict()), 201
     except Exception as e:
         db.session.rollback()
+        print("Error creating review:", str(e))  # Log exceptions
         return jsonify({'error': str(e)}), 500
 
 @review_routes.route('/<int:id>', methods=['GET'])

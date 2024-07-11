@@ -1,0 +1,36 @@
+.create-review-modal-container {
+    background: white;
+    padding: 2em;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    position: relative;
+    max-width: 600px;
+    margin: auto;
+    font-family: Arial, sans-serif;
+}
+
+.close-btn-create-modal {
+    position: absolute;
+    top: 1em;
+    right: 1em;
+    background: transparent;
+    border: none;
+    font-size: 1.5em;
+    cursor: pointer;
+    color: #ccc;
+}
+
+.close-btn-create-modal:hover {
+    color: #999;
+}
+
+.create-review-form-header {
+    margin-bottom: 1.5em;
+    text-align: center;
+}
+
+.create-review-form-header h2 {
+    margin: 0;
+    font-size: 1.5em;
+    color: #333;
+}

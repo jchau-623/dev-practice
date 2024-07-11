@@ -4,6 +4,7 @@ import { getSpots } from '../../store/spots';
 import { getReviews } from '../../store/reviews';
 import { useParams, useHistory } from 'react-router-dom';
 import DeleteSpotModal from '../DeleteSpotModal';
+import CreateReviewModal from '../CreateReviewModal';
 import { calculateAverageRating } from '../utils';
 import Pagination from '../Pagination';
 import './SpotPage.css';
@@ -17,6 +18,7 @@ export default function SpotPage() {
     const currentUser = useSelector(state => state.session.user);
     const reviews = useSelector(state => state.reviews[spotId] || []);
     const [showDeleteModal, setShowDeleteModal] = useState(false);
+    const [showCreateReviewModal, setShowCreateReviewModal] = useState(false);
     const [currentPage, setCurrentPage] = useState(1);
     const reviewsPerPage = 5;
 
@@ -40,7 +42,7 @@ export default function SpotPage() {
     };
 
     const handleAddReview = () => {
-        history.push(`/spots/${spotId}/reviews/new`);
+        setShowCreateReviewModal(true);
     };
 
     const paginate = (pageNumber) => {
@@ -65,6 +67,11 @@ export default function SpotPage() {
                     <DeleteSpotModal
                         show={showDeleteModal}
                         handleClose={() => setShowDeleteModal(false)}
+                        spotId={spotId}
+                    />
+                    <CreateReviewModal
+                        show={showCreateReviewModal}
+                        handleClose={() => setShowCreateReviewModal(false)}
                         spotId={spotId}
                     />
                 </div>

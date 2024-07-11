@@ -37,19 +37,32 @@ export const getReviews = (spotId) => async (dispatch) => {
 };
 
 export const createReview = (reviewData) => async (dispatch) => {
-    const response = await fetch('/api/reviews/create', {
-        method: 'POST',
-        body: reviewData,
-    });
-    if (response.ok) {
+    try {
+        console.log("Dispatching createReview with:", reviewData); // Log the review data
+        const response = await fetch('/api/reviews/create', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(reviewData), // Ensure JSON format
+        });
+
+        if (!response.ok) {
+            const errorData = await response.json();
+            console.error("Error response from server:", errorData); // Log server error
+            throw new Error(errorData.error || 'An error occurred');
+        }
+
         const data = await response.json();
+        console.log("Review created successfully:", data); // Log the response data
         dispatch(addReview(data));
         return data;
-    } else {
-        const errorData = await response.json();
-        throw new Error(errorData.error || 'An error occurred');
+    } catch (error) {
+        console.error("Error in createReview action:", error);
+        throw error;
     }
 };
+
 
 export const updateReview = (reviewData) => async (dispatch) => {
     const response = await fetch(`/api/reviews/${reviewData.get('id')}`, {
