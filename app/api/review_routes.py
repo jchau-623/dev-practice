@@ -1,8 +1,7 @@
 from flask import Blueprint, request, jsonify
-from app.models import db, Review
+from app.models import db, Review, Spot
 from app.forms.review_form import ReviewForm
 from app.form_utils import validate_and_parse_form, update_and_parse_form
-import traceback
 
 review_routes = Blueprint('reviews', __name__)
 
@@ -12,6 +11,10 @@ def create_review():
     form_data, error_response, status_code = validate_and_parse_form(form)
     if error_response:
         return error_response, status_code
+
+    spot = Spot.query.get(form_data['spot_id'])
+    if spot.user_id == form_data['user_id']:
+        return jsonify({'error': 'You cannot review your own spot.'}), 403
 
     new_review = Review(
         rating=form_data['rating'],

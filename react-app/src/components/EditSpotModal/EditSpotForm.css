@@ -1,61 +1,66 @@
 .edit-spot-form-container {
-    background: white;
-    padding: 20px;
-    border-radius: 5px;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-    max-width: 500px;
-    margin: 0 auto;
-  }
+  background: white;
+  padding: 20px;
+  border-radius: 5px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  max-width: 550px;
+  margin: 0 ;
+}
 
-  .edit-spot-form-header {
-    text-align: center;
-    margin-bottom: 20px;
-  }
+.edit-spot-form-header {
+  text-align: center;
+  margin-bottom: 20px;
+}
 
-  .edit-spot-form-header h2 {
-    margin: 0;
-    font-size: 1.5rem;
-  }
+.edit-spot-form-header h2 {
+  margin: 0;
+  font-size: 1.5rem;
+}
 
-  .edit-spot-form-group {
-    margin-bottom: 15px;
-  }
+.edit-spot-form-group {
+  margin-bottom: 15px;
+}
 
-  .edit-spot-form-group label {
-    display: block;
-    margin-bottom: 5px;
-    font-weight: bold;
-  }
+.edit-spot-form-group label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: bold;
+}
 
-  .edit-spot-form-group textarea,
-  .edit-spot-form-group input {
-    width: 100%;
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    font-size: 1rem;
-  }
+.edit-spot-form-group textarea,
+.edit-spot-form-group input {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 1rem;
+}
 
-  .edit-spot-form-buttons {
-    display: flex;
-    justify-content: space-between;
-    margin-top: 20px;
-  }
+.input-field.input-description {
+  height: 200px; /* Set the height as needed */
+  resize: none; /* Prevent resizing */
+}
 
-  .edit-spot-form-buttons button {
-    padding: 10px 20px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: 1rem;
-  }
+.edit-spot-form-buttons {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
+}
 
-  .edit-spot-form-buttons .save-button {
-    background-color: #4CAF50;
-    color: white;
-  }
+.edit-spot-form-buttons button {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 1rem;
+}
 
-  .edit-spot-form-buttons .close-button {
-    background-color: #f44336;
-    color: white;
-  }
+.edit-spot-form-buttons .save-button {
+  background-color: #4CAF50;
+  color: white;
+}
+
+.edit-spot-form-buttons .close-button {
+  background-color: #f44336;
+  color: white;
+}

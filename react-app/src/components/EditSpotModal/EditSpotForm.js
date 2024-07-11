@@ -67,7 +67,6 @@ export default function EditSpotForm({ spot, handleClose }) {
               const spotData = new FormData();
               spotData.append('id', spot.id);
               spotData.append('name', formData.name);
-              // spotData.append('user_id', formData.user_id);
               spotData.append('address', formData.address);
               spotData.append('city', formData.city);
               spotData.append('state', formData.state);
