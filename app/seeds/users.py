@@ -125,6 +125,8 @@ def seed_users():
         db.session.add(user)
     db.session.commit()
 
+    db.engine.execute("SELECT setval('users_id_seq', (SELECT MAX(id) FROM users) + 1);")
+
 
 # Uses a raw SQL query to TRUNCATE the users table.
 # SQLAlchemy doesn't have a built in function to do this
