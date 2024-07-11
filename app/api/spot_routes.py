@@ -11,13 +11,21 @@ spot_routes = Blueprint('spots', __name__)
 @spot_routes.route('/create', methods=['POST'])
 def create_spot():
     try:
+        print('Received request to create a spot')
         form = SpotForm()
-        form_data, error_response, status_code = validate_and_parse_form(form)
-        if error_response:
-            return error_response, status_code
+
+        # Manually add the CSRF token to the form
+        form['csrf_token'].data = request.cookies['csrf_token']
+
+        if not form.validate_on_submit():
+            print(f'Form validation errors: {form.errors}')
+            return jsonify({'errors': form.errors}), 400
+
+        print(f'Form data: {form.data}')
 
         image_files = request.files.getlist('image_urls')
         if not image_files:
+            print('No image files provided')
             return jsonify({'error': 'Image is required'}), 400
 
         image_url_paths = []
@@ -29,39 +37,60 @@ def create_spot():
                 if "url" in upload_response:
                     image_url_paths.append(upload_response["url"])
                 else:
+                    print(f'File upload failed: {upload_response}')
                     return jsonify(upload_response), 400
             else:
+                print(f'Invalid file type: {image.filename}')
                 return jsonify({'error': 'Invalid file type'}), 400
 
+        print(f'Image URLs: {image_url_paths}')
+
+        # Manually add image URLs to the form data
+        form.data['image_urls'] = image_url_paths
+
         new_spot = Spot(
-            name=form_data['name'],
-            user_id=form_data['user_id'],
-            address=form_data['address'],
-            city=form_data['city'],
-            state=form_data['state'],
-            description=form_data['description'],
-            price=form_data['price'],
+            name=form.data['name'],
+            user_id=form.data['user_id'],
+            address=form.data['address'],
+            city=form.data['city'],
+            state=form.data['state'],
+            description=form.data['description'],
+            price=form.data['price'],
             image_urls=image_url_paths,
-            num_bedrooms=form_data['num_bedrooms'],
-            num_bathrooms=form_data['num_bathrooms'],
-            max_guests=form_data['max_guests'],
-            amenities=form_data['amenities'],
-            house_rules=form_data['house_rules'],
-            availability=form_data['availability'],
-            latitude=form_data['latitude'],
-            longitude=form_data['longitude'],
+            num_bedrooms=form.data['num_bedrooms'],
+            num_bathrooms=form.data['num_bathrooms'],
+            max_guests=form.data['max_guests'],
+            amenities=form.data['amenities'],
+            house_rules=form.data['house_rules'],
+            availability=form.data['availability'],
+            latitude=form.data['latitude'],
+            longitude=form.data['longitude'],
         )
 
         try:
             db.session.add(new_spot)
             db.session.commit()
+            print('New spot created successfully')
             return jsonify(new_spot.to_dict()), 201
         except Exception as e:
             db.session.rollback()
+            print(f'Database error: {str(e)}')
             return jsonify({'error': str(e)}), 500
     except Exception as e:
         traceback.print_exc()
+        print(f'Unhandled error: {str(e)}')
         return jsonify({'error': 'Internal Server Error'}), 500
+
+
+
+
+
+
+
+
+
+
+
 
 @spot_routes.route('/<int:id>', methods=['GET'])
 def get_spot(id):
