@@ -87,7 +87,7 @@ def seed_spots():
         ),
         Spot(
             name='Urban Apartment',
-            user_id=1,
+            user_id=2,
             address=fake.street_address(),
             city=fake.city(),
             state=fake.state(),
@@ -126,7 +126,7 @@ def seed_spots():
         ),
         Spot(
             name='Beachside Mansion',
-            user_id=1,
+            user_id=3,
             address=fake.street_address(),
             city=fake.city(),
             state=fake.state(),
@@ -163,7 +163,7 @@ def seed_spots():
         ),
         Spot(
             name='*Heated Pool Open* Garrison Modern 5B hottub sauna',
-            user_id=1,
+            user_id=4,
             address=fake.street_address(),
             city=fake.city(),
             state=fake.state(),
@@ -210,7 +210,7 @@ def seed_spots():
         ),
              Spot(
             name='Designer Dream',
-            user_id=1,
+            user_id=5,
             address=fake.street_address(),
             city=fake.city(),
             state=fake.state(),

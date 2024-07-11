@@ -1,14 +1,38 @@
 from app.models import db, User
 from sqlalchemy import text
-def seed_users():
 
+def seed_users():
     users = [
-    User(
-        id=1,
-        username='Demo',
-        email='demo@aa.io',
-        password='password',
-    ),
+        User(
+            id=1,
+            username='Demo',
+            email='demo@aa.io',
+            password='password',
+        ),
+        User(
+            id=2,
+            username='Alice',
+            email='alice@example.com',
+            password='password',
+        ),
+        User(
+            id=3,
+            username='Bob',
+            email='bob@example.com',
+            password='password',
+        ),
+        User(
+            id=4,
+            username='Charlie',
+            email='charlie@example.com',
+            password='password',
+        ),
+        User(
+            id=5,
+            username='Eve',
+            email='eve@example.com',
+            password='password',
+        ),
     ]
 
 
