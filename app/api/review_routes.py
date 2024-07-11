@@ -37,7 +37,11 @@ def get_review(id):
 
 @review_routes.route('/', methods=['GET'])
 def get_all_reviews():
-    reviews = Review.query.all()
+    spot_id = request.args.get('spot_id')
+    if spot_id:
+        reviews = Review.query.filter_by(spot_id=spot_id).all()
+    else:
+        reviews = Review.query.all()
     return jsonify([review.to_dict() for review in reviews])
 
 @review_routes.route('/<int:id>', methods=['PUT'])

@@ -4,7 +4,7 @@ import { getSpots } from '../../store/spots';
 import { getReviews } from '../../store/reviews';
 import { useParams, useHistory } from 'react-router-dom';
 import DeleteSpotModal from '../DeleteSpotModal';
-import { calculateAverageRating } from '../utils/';
+import { calculateAverageRating } from '../utils';
 import './SpotPage.css';
 
 export default function SpotPage() {

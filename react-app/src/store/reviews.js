@@ -27,9 +27,11 @@ const deleteReview = (reviewId) => ({
 
 // Thunks
 export const getReviews = (spotId) => async (dispatch) => {
+    console.log('Fetching reviews for spotId:', spotId); // Debugging
     const response = await fetch(`/api/reviews?spot_id=${spotId}`);
     if (response.ok) {
         const data = await response.json();
+        console.log('Fetched reviews:', data); // Debugging
         dispatch(loadReviews(spotId, data));
     }
 };
@@ -80,6 +82,7 @@ const initialState = {};
 export default function reviewsReducer(state = initialState, action) {
     switch (action.type) {
         case LOAD_REVIEWS:
+            console.log('Loading reviews for spotId:', action.spotId, 'Reviews:', action.reviews); // Debugging
             return {
                 ...state,
                 [action.spotId]: action.reviews

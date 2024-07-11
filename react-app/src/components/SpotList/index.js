@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { getSpots, updateCurrentImageIndex } from '../../store/spots';
 import { getReviews } from '../../store/reviews';
 import { useHistory } from 'react-router-dom';
-import { calculateAverageRating } from '../utils/';
+import { calculateAverageRating } from '../utils';
 import './SpotList.css';
 
 export default function SpotList() {
@@ -67,7 +67,7 @@ export default function SpotList() {
                             <h3 className="spot-name">{spot.name.length > 27 ? spot.name.slice(0, 27) + '...' : spot.name}</h3>
                             <div className="rating">
                                 <i className="fas fa-star"></i>
-                                <p className="spot-rating">{calculateAverageRating(reviews[spot.id])}</p>
+                                <p className="spot-rating">{calculateAverageRating(reviews[spot.id] || [])}</p>
                             </div>
                         </div>
                         <div className="spot-hosted">Hosted by: {spot.username}</div>
