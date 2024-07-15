@@ -7,7 +7,7 @@ from app.aws import upload_file_to_s3, allowed_file, get_unique_filename
 import traceback
 
 spot_routes = Blueprint('spots', __name__)
-
+# TODO fix create spot route (issues with backend)
 @spot_routes.route('/create', methods=['POST'])
 def create_spot():
     try:
