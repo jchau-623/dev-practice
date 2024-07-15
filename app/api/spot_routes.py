@@ -82,16 +82,6 @@ def create_spot():
         return jsonify({'error': 'Internal Server Error'}), 500
 
 
-
-
-
-
-
-
-
-
-
-
 @spot_routes.route('/<int:id>', methods=['GET'])
 def get_spot(id):
     spot = Spot.query.get(id)
